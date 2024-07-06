@@ -1,4 +1,3 @@
-import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import {
   Sheet,
   SheetClose,
@@ -8,6 +7,7 @@ import {
   SheetTrigger,
 } from "../shadcn-components/ui/sheet";
 import { Link } from "react-router-dom";
+import { X,Menu } from "lucide-react";
 const navigation = [{ name: "Dashboard", href: "/dashboard" }];
 const Header = () => {
   return (
@@ -34,7 +34,7 @@ const Header = () => {
                 className="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700"
               >
                 <span className="sr-only">Open main menu</span>
-                <Bars3Icon aria-hidden="true" className="h-6 w-6" />
+                <Menu aria-hidden="true" className="h-6 w-6" />
               </button>
             </SheetTrigger>
             <SheetContent>
@@ -47,7 +47,7 @@ const Header = () => {
                       className="ml-auto -m-2.5 rounded-md p-2.5 text-gray-700"
                     >
                       <span className="sr-only">Close menu</span>
-                      <XMarkIcon aria-hidden="true" className="h-6 w-6" />
+                      <X aria-hidden="true" className="h-6 w-6" />
                     </button>
                   </div>
                 </SheetClose>
