@@ -6,6 +6,8 @@ import useLocalStorage from "./hooks/useLocalStorage";
 import Login from "./pages/Login";
 import Register from "./pages/Signup";
 import { Toaster } from "./shadcn-components/ui/toaster";
+import Locations from "./pages/Locations";
+import Location from "./pages/Location";
 function App() {
   const { setItem, getItem, delItem } = useLocalStorage();
   useEffect(() => {
@@ -25,10 +27,12 @@ function App() {
       <Toaster />
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/locations" element={<Locations />} />
         <Route path="/auth">
           <Route path="login" element={<Login />} />
           <Route path="signup" element={<Register />} />
         </Route>
+        <Route path="/location/:title" element={<Location />} />
       </Routes>
     </>
   );

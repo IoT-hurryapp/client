@@ -23,7 +23,7 @@ export default function Component() {
             An overview of the key air quality metrics for your location.
           </p>
         </div>
-        <div className="flex justify-center gap-10">
+        <div className="grid grid-cols-4 justify-center gap-10">
           <Card className="px-4">
             <CardContent className="flex flex-col items-center justify-center p-6">
               {/* <ThermometerIcon className="w-8 h-8 text-primary" /> */}
@@ -38,6 +38,22 @@ export default function Component() {
               {/* <CloudFogIcon className="w-8 h-8 text-primary" /> */}
               <div className="text-4xl font-bold mt-2">65%</div>
               <p className="text-muted-foreground text-sm mt-1">Humidity</p>
+            </CardContent>
+          </Card>
+          <Card className="px-4">
+            <CardContent className="flex flex-col items-center justify-center p-6">
+              {/* <CloudFogIcon className="w-8 h-8 text-primary" /> */}
+              <div className="text-4xl font-bold mt-2">65%</div>
+              <p className="text-muted-foreground text-sm mt-1">Pollution</p>
+            </CardContent>
+          </Card>
+          <Card className="px-4">
+            <CardContent className="flex flex-col items-center justify-center p-6">
+              {/* <CloudFogIcon className="w-8 h-8 text-primary" /> */}
+              <div className="text-4xl font-bold mt-2">65%</div>
+              <p className="text-muted-foreground text-sm mt-1">
+                Air quality index
+              </p>
             </CardContent>
           </Card>
         </div>

@@ -8,11 +8,7 @@ import {
   SheetTrigger,
 } from "../shadcn-components/ui/sheet";
 import { Link } from "react-router-dom";
-const navigation = [
-  { name: "Product", href: "#" },
-  { name: "Features", href: "#" },
-  { name: "About", href: "#" },
-];
+const navigation = [{ name: "Dashboard", href: "/dashboard" }];
 const Header = () => {
   return (
     <header className="absolute inset-x-0 top-0 z-50">
