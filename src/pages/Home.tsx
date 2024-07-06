@@ -1,8 +1,8 @@
 import { useRef, useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import SimpleStatistics from "../components/SimpleStatistics";
-import socket from "socket.io-client";
-import { io, Socket } from "socket.io-client";
+// import socket from "socket.io-client";
+import io, { Socket } from "socket.io-client";
 export default function Home() {
   const socketRef = useRef<Socket | null>(null);
   const [isConnected, setIsConnected] = useState(false);
@@ -11,10 +11,15 @@ export default function Home() {
       autoConnect: true,
     });
     socketRef.current.on("connect", () => setIsConnected(true));
+    console.log(isConnected);
+
     socketRef.current.on("disconnect", () => setIsConnected(false));
-    socketRef.current.on("data", (data) => {
-      console.log(data);
-    });
+    socketRef.current.on(
+      "data-089477f2-5249-4e58-b105-03ee8178b7c8",
+      (data) => {
+        console.log(data);
+      }
+    );
     return () => {
       socketRef.current?.off("connect", () => setIsConnected(true));
       socketRef.current?.off("disconnect", () => setIsConnected(false));

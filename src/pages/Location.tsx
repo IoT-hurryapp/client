@@ -1,3 +1,4 @@
+import { useRef, useState, useEffect } from "react";
 import {
   Card,
   CardHeader,
@@ -5,8 +6,43 @@ import {
   CardContent,
 } from "../shadcn-components/ui/card";
 import { ResponsiveLine } from "@nivo/line";
-import { Flashlight, Lightbulb, Sparkle } from "lucide-react";
+import { useParams } from "react-router-dom";
+import { getLocationQuery } from "../services/queries/locations";
+import { io, Socket } from "socket.io-client";
+interface IDeviceData {
+  id: string;
+  humidity: number;
+  temperature_c: number;
+  temperature_f: number;
+  mq135_value: number;
+  dust_concentration: number;
+}
 const Location = () => {
+  const params = useParams();
+  const locationId = params.id || "";
+  const getLocation = getLocationQuery(locationId);
+  const socketRef = useRef<Socket | null>(null);
+  const [isConnected, setIsConnected] = useState(false);
+  useEffect(() => {
+    console.log("connect the socket");
+
+    socketRef.current = io("http://192.168.45.159:2020");
+    socketRef.current.connect();
+    socketRef.current.on("connect", () => console.log("connect"));
+    socketRef.current.on("disconnect", () => setIsConnected(false));
+    socketRef.current.on(
+      "data-089477f2-5249-4e58-b105-03ee8178b7c8" || `data-${"device id"}`,
+      (data: IDeviceData) => {
+        console.log(data);
+      }
+    );
+    console.log(isConnected);
+
+    return () => {
+      socketRef.current?.off("connect", () => setIsConnected(true));
+      socketRef.current?.off("disconnect", () => setIsConnected(false));
+    };
+  }, []);
   return (
     <div className="container mx-auto px-4 md:px-6 py-8 pt-[10rem]">
       <div>

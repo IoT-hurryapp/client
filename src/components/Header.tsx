@@ -7,9 +7,9 @@ import {
   SheetTrigger,
 } from "../shadcn-components/ui/sheet";
 import { Link } from "react-router-dom";
-import { X,Menu } from "lucide-react";
-const navigation = [{ name: "Dashboard", href: "/dashboard" }];
-const Header = () => {
+import { X, Menu } from "lucide-react";
+const navigation = [{ name: "Locations", href: "/locations" }];
+const Header = ({ isLoggedIn }: { isLoggedIn: boolean }) => {
   return (
     <header className="absolute inset-x-0 top-0 z-50">
       <nav
@@ -28,14 +28,9 @@ const Header = () => {
         </div>
         <div className="flex lg:hidden">
           <Sheet>
-            <SheetTrigger>
-              <button
-                type="button"
-                className="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700"
-              >
-                <span className="sr-only">Open main menu</span>
-                <Menu aria-hidden="true" className="h-6 w-6" />
-              </button>
+            <SheetTrigger className="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700">
+              <span className="sr-only">Open main menu</span>
+              <Menu aria-hidden="true" className="h-6 w-6" />
             </SheetTrigger>
             <SheetContent>
               <SheetHeader>
@@ -56,23 +51,25 @@ const Header = () => {
                 <div className="-my-6 divide-y divide-gray-500/10">
                   <div className="space-y-2 py-6">
                     {navigation.map((item) => (
-                      <a
+                      <Link
                         key={item.name}
-                        href={item.href}
+                        to={item.href}
                         className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
                       >
                         {item.name}
-                      </a>
+                      </Link>
                     ))}
                   </div>
-                  <div className="py-6">
-                    <Link
-                      to="/auth/login"
-                      className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
-                    >
-                      Log in
-                    </Link>
-                  </div>
+                  {!isLoggedIn && (
+                    <div className="py-6">
+                      <Link
+                        to="/auth/login"
+                        className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
+                      >
+                        Log in
+                      </Link>
+                    </div>
+                  )}
                 </div>
               </div>
             </SheetContent>

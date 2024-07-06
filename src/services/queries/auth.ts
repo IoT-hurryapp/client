@@ -1,5 +1,5 @@
-import { useQueryClient, useMutation, useQuery } from "@tanstack/react-query"
-import { login, register, sendVerifyEmailToken, verifyEmailToken } from "../api/auth";
+import { useQueryClient, useMutation } from "@tanstack/react-query"
+import { login, register } from "../api/auth";
 import { IRegisterData, ILoginData } from "../types/auth";
 import { PROFILE_KEY } from "../keys";
 interface ILoginErrorBody {
@@ -22,9 +22,8 @@ export const useLoginMutation = () => {
     const queryClient = useQueryClient();
     return useMutation<{ success: boolean, username: string; }, ILoginErrorBody, ILoginData>({
         mutationFn: (data) => login(data),
-        onSuccess: ({ username }) => {
-            queryClient.invalidateQueries({ queryKey: [PROFILE_KEY, { username: "profile" }] });
-            queryClient.invalidateQueries({ queryKey: [PROFILE_KEY, { username: username }] });
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: [PROFILE_KEY] });
         },
     })
 };
@@ -32,8 +31,8 @@ export const useRegisterMutation = () => {
     const queryClient = useQueryClient();
     return useMutation<{ success: boolean, message: string }, IRegisterErrorBody, IRegisterData>({
         mutationFn: (data) => register(data),
-        onSuccess: (data) => {
-            queryClient.invalidateQueries({ queryKey: [PROFILE_KEY] });
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: [PROFILE_KEY], refetchType: "all" });
         },
     })
 };

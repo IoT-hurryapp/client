@@ -15,6 +15,7 @@ const Login = () => {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const loginMutation = useLoginMutation();
+  const navigate = useNavigate();
   const onSubmit = () => {
     const emailRegexp = new RegExp(
       /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
@@ -34,7 +35,13 @@ const Login = () => {
       });
     }
     loginMutation.mutate({ email, password });
+    console.log(loginMutation);
   };
+  if (loginMutation.isSuccess) {
+    setTimeout(() => {
+      navigate("/locations");
+    }, 500);
+  }
   return (
     <div className="flex justify-center items-center h-full w-full absolute top-0 l-0">
       <div className="lg:w-[45%] md:w-[75%] sm:w-[90%]">

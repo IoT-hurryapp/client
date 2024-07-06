@@ -9,17 +9,21 @@ import {
 import { Button } from "../shadcn-components/ui/button";
 const LocationList = ({ title }: { title: string }) => {
   return (
-    <Card className="w-full flex items-center justify-between">
+    <Card className="w-full">
       <CardHeader className="sr-only">
         <CardTitle>Card title</CardTitle>
       </CardHeader>
-      <CardContent className="flex items-center justify-center">
-        <p>{title}</p>
-        <span>Icon</span>
+      <CardContent className="w-full flex items-center justify-between p-3 px-8">
+        <div className="flex items-center justify-center h-fit p-0 pt-0">
+          <p>{title}</p>
+          <span>Icon</span>
+        </div>
+        <div>
+          <Button className="h-fit" variant={"destructive"}>
+            Delete
+          </Button>
+        </div>
       </CardContent>
-      <CardFooter className="flex items-center justify-between">
-        <Button variant={"destructive"}>Delete</Button>
-      </CardFooter>
     </Card>
   );
 };

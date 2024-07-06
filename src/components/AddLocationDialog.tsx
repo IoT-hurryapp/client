@@ -19,7 +19,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "../shadcn-components/ui/select";
-export function SelectDemo({ list }: { list: Array<string> }) {
+export function SelectDemo({ devicesList }: { devicesList: Array<string> }) {
   return (
     <Select>
       <SelectTrigger className="w-[180px]">
@@ -38,8 +38,15 @@ export function SelectDemo({ list }: { list: Array<string> }) {
     </Select>
   );
 }
-
-const AddLocationDialog = () => {
+const AddLocationDialog = ({
+  newLocationName,
+  setNewLocationName,
+  handleCreateLocation,
+}: {
+  newLocationName: string;
+  setNewLocationName: React.Dispatch<React.SetStateAction<string>>;
+  handleCreateLocation: () => void;
+}) => {
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -57,7 +64,13 @@ const AddLocationDialog = () => {
             <Label htmlFor="title" className="">
               Title
             </Label>
-            <Input id="title" value="Pedro Duarte" className="col-span-3" />
+            <Input
+              id="title"
+              placeholder="enter a location name"
+              value={newLocationName}
+              onChange={(e) => setNewLocationName(e.target.value)}
+              className="col-span-3"
+            />
           </div>
           {/* <div className="grid items-center gap-4">
             <Label htmlFor="devices" className="">
@@ -67,7 +80,11 @@ const AddLocationDialog = () => {
           </div> */}
         </div>
         <DialogFooter>
-          <Button className="mr-auto" type="submit">
+          <Button
+            onClick={handleCreateLocation}
+            className="mr-auto"
+            type="submit"
+          >
             Add
           </Button>
         </DialogFooter>

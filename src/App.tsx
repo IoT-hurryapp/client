@@ -8,8 +8,11 @@ import Register from "./pages/Signup";
 import { Toaster } from "./shadcn-components/ui/toaster";
 import Locations from "./pages/Locations";
 import Location from "./pages/Location";
+import { getUserQuery } from "./services/queries/user";
+import { Loader } from "lucide-react";
 function App() {
   const { setItem, getItem, delItem } = useLocalStorage();
+  const user = getUserQuery();
   useEffect(() => {
     const theme = getItem("theme");
     if (
@@ -21,18 +24,34 @@ function App() {
       document.documentElement.classList.remove("dark");
     }
   }, []);
+  if (user.isLoading) {
+    return <Loader />;
+  }
+  const isLoggedIn = !!user.data;
   return (
     <>
-      <Header />
+      <Header isLoggedIn={isLoggedIn} />
       <Toaster />
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/locations" element={<Locations />} />
+        <Route
+          path="/locations"
+          element={!isLoggedIn ? <Navigate to={"/"} /> : <Locations />}
+        />
         <Route path="/auth">
-          <Route path="login" element={<Login />} />
-          <Route path="signup" element={<Register />} />
+          <Route
+            path="login"
+            element={isLoggedIn ? <Navigate to={"/"} /> : <Login />}
+          />
+          <Route
+            path="signup"
+            element={isLoggedIn ? <Navigate to={"/"} /> : <Register />}
+          />
         </Route>
-        <Route path="/location/:title" element={<Location />} />
+        <Route
+          path="/location/:id"
+          element={isLoggedIn ? <Navigate to={"/"} /> : <Location />}
+        />
       </Routes>
     </>
   );
