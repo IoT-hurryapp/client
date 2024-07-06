@@ -11,9 +11,9 @@ const LocationList = ({ title }: { title: string }) => {
   return (
     <Card className="w-full flex items-center justify-between">
       <CardHeader className="sr-only">
-        <CardTitle></CardTitle>
+        <CardTitle>Card title</CardTitle>
       </CardHeader>
-      <CardContent className="flex items-center justify-center bg-red-50">
+      <CardContent className="flex items-center justify-center">
         <p>{title}</p>
         <span>Icon</span>
       </CardContent>

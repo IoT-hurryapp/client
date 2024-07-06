@@ -1,8 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import { Button } from "../shadcn-components/ui/button";
 import { Separator } from "../shadcn-components/ui/separator";
 import LocationList from "../components/LocationList";
+import AddLocationDialog from "../components/AddLocationDialog";
 const Locations = () => {
+  const [newLocationTitle, setNewLocationTitle] = useState("");
+  const [devicesList, setDevicesList] = useState<Array<string>>([]);
   const dummy = [
     "location one",
     "location one",
@@ -16,7 +19,7 @@ const Locations = () => {
         <h1 className="text-xl font-bold mb-4">
           Browse and add your locations !
         </h1>
-        <Button>Add new location</Button>
+        <AddLocationDialog />
         <Separator className="mt-8" />
         <ul>
           {dummy.map((title: string) => (
