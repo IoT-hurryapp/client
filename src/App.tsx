@@ -4,9 +4,10 @@ import Header from "./components/Header";
 import Home from "./pages/Home";
 import useLocalStorage from "./hooks/useLocalStorage";
 import Login from "./pages/Login";
-import Register from "./pages/Signup";
+import Register from "./pages/Register";
 import { Toaster } from "./shadcn-components/ui/toaster";
 import Locations from "./pages/Locations";
+import LocationDevice from "./pages/LocationDevice";
 import Location from "./pages/Location";
 function App() {
   const { setItem, getItem, delItem } = useLocalStorage();
@@ -28,11 +29,10 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/locations" element={<Locations />} />
-        <Route path="/auth">
           <Route path="login" element={<Login />} />
-          <Route path="signup" element={<Register />} />
-        </Route>
-        <Route path="/location/:title" element={<Location />} />
+          <Route path="register" element={<Register />} />
+        <Route path="/locations/:id" element={<Location />} />
+        <Route path="/locations/:id/:connectedDevicesId" element={<LocationDevice />} />
       </Routes>
     </>
   );

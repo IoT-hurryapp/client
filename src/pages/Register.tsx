@@ -1,6 +1,6 @@
-import { useSearchParams, useNavigate } from "react-router-dom";
 import { Input } from "../shadcn-components/ui/input";
 import { Button } from "../shadcn-components/ui/button";
+import { Label } from "../shadcn-components/ui/label";
 import {
 	Card,
 	CardContent,
@@ -9,43 +9,44 @@ import {
 } from "../shadcn-components/ui/card";
 import { useState } from "react";
 import { toast } from "../shadcn-components/ui/use-toast";
-import { useLoginMutation } from "../services/queries/auth";
+import { useRegisterMutation } from "../services/queries/auth";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
-const Login = () => {
-	const [email, setEmail] = useState<string>("");
-	const [password, setPassword] = useState<string>("");
-	const loginMutation = useLoginMutation();
-	const onSubmit = (e: any) => {
-		e.preventDefault();
+const SignUp = () => {
+	const [username, setUsername] = useState("");
+	const [password, setPassword] = useState("");
+	const [email, setEmail] = useState("");
+	const navigate = useNavigate();
+	const registerMutation = useRegisterMutation();
+	const onSubmit = () => {
 		const emailRegexp = new RegExp(
 			/^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
 		);
-
-		if (!emailRegexp.test(email)) {
+		if (!email) {
 			return toast({
 				description: "Email is Required!",
 				title: "Error",
 				variant: "destructive",
 			});
 		}
-		if (!password || password.length < 8) {
+		if (!emailRegexp.test(email)) {
 			return toast({
-				description: "Password is Required!",
+				description: "Please enter a valid email!",
 				title: "Error",
 				variant: "destructive",
 			});
 		}
-
 		let data = JSON.stringify({
 			email,
 			password,
+			username,
 		});
 
 		let config = {
 			method: "post",
 			maxBodyLength: Infinity,
-			url: "http://localhost:5050/auth/login",
+			url: "http://localhost:5050/auth/register",
 			headers: {
 				"Content-Type": "application/json",
 			},
@@ -56,13 +57,13 @@ const Login = () => {
 			.request(config)
 			.then((response) => {
 				toast({
-					description: "Login successfully!",
+					description: "Register successfully!",
 					title: "Success",
 					variant: "default",
 				});
-        setTimeout(() => {
-          location.href = "/locations"
-        }, 2000)
+				setTimeout(() => {
+					location.href = "/login";
+				}, 2000);
 			})
 			.catch((error) => {
 				return toast({
@@ -71,36 +72,42 @@ const Login = () => {
 					variant: "default",
 				});
 			});
-
-		// loginMutation.mutate({ email, password });
 	};
 	return (
 		<div className="flex justify-center items-center h-full w-full absolute top-0 l-0">
 			<div className="lg:w-[45%] md:w-[75%] sm:w-[90%]">
 				<Card className="">
 					<CardHeader className="flex-col items-center">
-						<CardTitle>Type your Email and Password</CardTitle>
+						<CardTitle>Type your Data</CardTitle>
 					</CardHeader>
-					<CardContent className="space-y-4">
-						<form className="flex flex-col gap-3" onSubmit={onSubmit} action="">
+					<CardContent>
+						<div className="flex flex-col gap-3">
 							<Input
+								id="username"
+								autoFocus={true}
+								onChange={(e) => setUsername(e.target.value)}
+								placeholder="enter your username"
+							/>
+							<Input
+								id="email"
 								autoFocus={true}
 								onChange={(e) => setEmail(e.target.value)}
 								placeholder="enter your email"
 							/>
 							<Input
+								id="password"
 								autoFocus={true}
 								onChange={(e) => setPassword(e.target.value)}
 								placeholder="enter your password"
 							/>
 							<Button
 								variant="default"
-								onClick={async () => {}}
+								onClick={onSubmit}
 								className="w-full mt-5"
 							>
-								Login
+								Complete
 							</Button>
-						</form>
+						</div>
 					</CardContent>
 				</Card>
 			</div>
@@ -108,4 +115,4 @@ const Login = () => {
 	);
 };
 
-export default Login;
+export default SignUp;
