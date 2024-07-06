@@ -1,4 +1,25 @@
+import { useRef, useState, useEffect } from "react";
+import { Link } from "react-router-dom";
+import SimpleStatistics from "../components/SimpleStatistics";
+import socket from "socket.io-client";
+import { io, Socket } from "socket.io-client";
 export default function Home() {
+  const socketRef = useRef<Socket | null>(null);
+  const [isConnected, setIsConnected] = useState(false);
+  useEffect(() => {
+    socketRef.current = io("http://192.168.45.159:2020", {
+      autoConnect: true,
+    });
+    socketRef.current.on("connect", () => setIsConnected(true));
+    socketRef.current.on("disconnect", () => setIsConnected(false));
+    socketRef.current.on("data", (data) => {
+      console.log(data);
+    });
+    return () => {
+      socketRef.current?.off("connect", () => setIsConnected(true));
+      socketRef.current?.off("disconnect", () => setIsConnected(false));
+    };
+  }, []);
   return (
     <div className="bg-white">
       <div className="relative isolate px-6 pt-14 lg:px-8">
@@ -14,7 +35,7 @@ export default function Home() {
             className="relative left-[calc(50%-11rem)] aspect-[1155/678] w-[36.125rem] -translate-x-1/2 rotate-[30deg] bg-gradient-to-tr from-[#ff80b5] to-[#9089fc] opacity-30 sm:left-[calc(50%-30rem)] sm:w-[72.1875rem]"
           />
         </div>
-        <div className="mx-auto max-w-2xl py-32 sm:py-48 lg:py-56 h-[50vh] mb-4">
+        <div className="mx-auto max-w-2xl py-32 sm:py-48 lg:py-56 mb-4">
           <div className="hidden sm:mb-8 sm:flex sm:justify-center">
             {/* <div className="relative rounded-full px-3 py-1 text-sm leading-6 text-gray-600 ring-1 ring-gray-900/10 hover:ring-gray-900/20">
               Announcing our next generation IoT Systems.{" "}
@@ -31,18 +52,18 @@ export default function Home() {
               environment for you and your loved ones
             </p>
             <div className="mt-10 flex items-center justify-center gap-x-6">
-              <a
-                href="#"
+              <Link
+                to="/auth/login"
                 className="rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
               >
-                Get started
-              </a>
-              <a
-                href="#"
+                Get started for free
+              </Link>
+              <Link
+                to="/about"
                 className="text-sm font-semibold leading-6 text-gray-900"
               >
                 Learn more <span aria-hidden="true">→</span>
-              </a>
+              </Link>
             </div>
           </div>
         </div>
@@ -59,6 +80,7 @@ export default function Home() {
           />
         </div>
       </div>
+      <SimpleStatistics />
     </div>
   );
 }

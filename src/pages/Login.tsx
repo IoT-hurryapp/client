@@ -1,4 +1,4 @@
-import { useParams, useSearchParams, useNavigate } from "react-router-dom";
+import { useSearchParams, useNavigate } from "react-router-dom";
 import { Input } from "../shadcn-components/ui/input";
 import { Button } from "../shadcn-components/ui/button";
 import {
@@ -9,18 +9,12 @@ import {
 } from "../shadcn-components/ui/card";
 import { useState } from "react";
 import { toast } from "../shadcn-components/ui/use-toast";
+import { useLoginMutation } from "../services/queries/auth";
 
 const Login = () => {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
-  const [searchParams] = useSearchParams();
-  const token = searchParams.get("token");
-  const navigate = useNavigate();
-  console.log(token);
-
-  if (!token) {
-    navigate("/auth/sign-up");
-  }
+  const loginMutation = useLoginMutation();
   const onSubmit = () => {
     const emailRegexp = new RegExp(
       /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
@@ -32,7 +26,6 @@ const Login = () => {
         variant: "destructive",
       });
     }
-
     if (!password || password.length < 8) {
       return toast({
         description: "Password is Required!",
@@ -40,10 +33,7 @@ const Login = () => {
         variant: "destructive",
       });
     }
-    console.log({
-      email,
-      password,
-    });
+    loginMutation.mutate({ email, password });
   };
   return (
     <div className="flex justify-center items-center h-full w-full absolute top-0 l-0">
