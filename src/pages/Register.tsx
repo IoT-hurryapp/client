@@ -36,24 +36,25 @@ const SignUp = () => {
         variant: "destructive",
       });
     }
-    registerMutation.mutate({ email, password, username });
-    if (registerMutation.isSuccess) {
-      setTimeout(() => {
-        navigate("/dashboard");
-      }, 500);
-      return toast({
-        description: "the code has been sent to your email check it out!",
-        title: "Success",
-        variant: "default",
-      });
-    } else {
-      return toast({
+    registerMutation.mutate({ email, username, password });
+    if (registerMutation.isError) {
+      toast({
         description: registerMutation.error?.response.data.message,
-        title: "Success",
+        title: "Error",
         variant: "default",
       });
     }
   };
+  if (registerMutation.isSuccess) {
+    toast({
+      description: "Register successfully!",
+      title: "Success",
+      variant: "default",
+    });
+    setTimeout(() => {
+      location.href = "/login";
+    }, 600);
+  }
   return (
     <div className="flex justify-center items-center h-full w-full absolute top-0 l-0">
       <div className="lg:w-[45%] md:w-[75%] sm:w-[90%]">
@@ -62,12 +63,11 @@ const SignUp = () => {
             <CardTitle>Type your Data</CardTitle>
           </CardHeader>
           <CardContent>
-            <form className="flex flex-col gap-3">
-              <Label></Label>
+            <div className="flex flex-col gap-3">
               <Input
                 id="username"
                 autoFocus={true}
-                onChange={(e) => setEmail(e.target.value)}
+                onChange={(e) => setUsername(e.target.value)}
                 placeholder="enter your username"
               />
               <Input
@@ -79,7 +79,7 @@ const SignUp = () => {
               <Input
                 id="password"
                 autoFocus={true}
-                onChange={(e) => setEmail(e.target.value)}
+                onChange={(e) => setPassword(e.target.value)}
                 placeholder="enter your password"
               />
               <Button
@@ -89,7 +89,7 @@ const SignUp = () => {
               >
                 Complete
               </Button>
-            </form>
+            </div>
           </CardContent>
         </Card>
       </div>

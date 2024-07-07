@@ -9,8 +9,36 @@ import {
   CardHeader,
   CardTitle,
 } from "../shadcn-components/ui/card";
+import { useEffect, useRef, useState } from "react";
+import { io, Socket } from "socket.io-client";
 import { Rocket } from "lucide-react";
+interface IDeviceData {
+  connectedDevicesId: string;
+  createdAt: Date;
+  deviceId: null;
+  dust_concentration: number;
+  humidity: number;
+  id: string;
+  mq135_statys: "GOOD" | "MODERATE" | "DANGEROUS";
+  mq135_value: string;
+  temperature_c: string;
+  temperature_f: string;
+}
 export default function Component() {
+  const [realTimeData, setRealTimeData] = useState<IDeviceData>();
+  const socketRef = useRef<Socket | null>(null);
+  useEffect(() => {
+    socketRef.current = io("http://localhost:2020");
+    socketRef.current.on("connect", () => console.log("socket connected"));
+    socketRef.current.on("disconnect", () => console.log("disconnected"));
+    socketRef.current.on(`data-${"1"}`, (data: IDeviceData) => {
+      setRealTimeData(data);
+    });
+    return () => {
+      socketRef.current?.off("connect", () => console.log("connected"));
+      socketRef.current?.off("disconnect", () => console.log("disconnected"));
+    };
+  }, []);
   return (
     <div className="w-full max-w-4xl mx-auto py-12 md:py-16 lg:py-20 px-4 md:px-6">
       <div className="space-y-8">
@@ -27,7 +55,9 @@ export default function Component() {
           <Card className="px-4">
             <CardContent className="flex flex-col items-center justify-center p-6">
               {/* <ThermometerIcon className="w-8 h-8 text-primary" /> */}
-              <div className="text-4xl font-bold mt-2">72°C</div>
+              <div className="text-4xl font-bold mt-2">
+                {realTimeData?.temperature_c}°C
+              </div>
               <p className="text-muted-foreground text-sm mt-1">
                 Current Temperature
               </p>
@@ -36,21 +66,27 @@ export default function Component() {
           <Card className="px-4">
             <CardContent className="flex flex-col items-center justify-center p-6">
               {/* <CloudFogIcon className="w-8 h-8 text-primary" /> */}
-              <div className="text-4xl font-bold mt-2">65%</div>
+              <div className="text-4xl font-bold mt-2">
+                {realTimeData?.humidity}%
+              </div>
               <p className="text-muted-foreground text-sm mt-1">Humidity</p>
             </CardContent>
           </Card>
           <Card className="px-4">
             <CardContent className="flex flex-col items-center justify-center p-6">
               {/* <CloudFogIcon className="w-8 h-8 text-primary" /> */}
-              <div className="text-4xl font-bold mt-2">65%</div>
+              <div className="text-4xl font-bold mt-2">
+                {realTimeData?.dust_concentration}%
+              </div>
               <p className="text-muted-foreground text-sm mt-1">Pollution</p>
             </CardContent>
           </Card>
           <Card className="px-4">
             <CardContent className="flex flex-col items-center justify-center p-6">
               {/* <CloudFogIcon className="w-8 h-8 text-primary" /> */}
-              <div className="text-4xl font-bold mt-2">65%</div>
+              <div className="text-4xl font-bold mt-2">
+                {realTimeData?.mq135_value}%
+              </div>
               <p className="text-muted-foreground text-sm mt-1">
                 Air quality index
               </p>
@@ -58,13 +94,13 @@ export default function Component() {
           </Card>
         </div>
         <div>
-          <Alert className="border-red-400">
+          <Alert className="">
             <Rocket className="h-4 w-4" />
             <AlertTitle>Heads up!</AlertTitle>
-            <AlertDescription>be aware of your surroundings</AlertDescription>
+            <AlertDescription>{realTimeData?.mq135_statys}</AlertDescription>
           </Alert>
         </div>
-        <div>
+        {/* <div>
           <h2 className="text-2xl font-bold mb-4">Additional Details</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <Card>
@@ -113,7 +149,7 @@ export default function Component() {
               </CardContent>
             </Card>
           </div>
-        </div>
+        </div> */}
       </div>
     </div>
   );

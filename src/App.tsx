@@ -4,12 +4,13 @@ import Header from "./components/Header";
 import Home from "./pages/Home";
 import useLocalStorage from "./hooks/useLocalStorage";
 import Login from "./pages/Login";
-import Register from "./pages/Signup";
+import Register from "./pages/Register";
 import { Toaster } from "./shadcn-components/ui/toaster";
 import Locations from "./pages/Locations";
+import LocationDevice from "./pages/LocationDevice";
 import Location from "./pages/Location";
 import { getUserQuery } from "./services/queries/user";
-import { Loader } from "lucide-react";
+import Loader from "./components/Loader";
 function App() {
   const { setItem, getItem, delItem } = useLocalStorage();
   const user = getUserQuery();
@@ -28,12 +29,13 @@ function App() {
     return <Loader />;
   }
   const isLoggedIn = !!user.data;
+
   return (
     <>
       <Header isLoggedIn={isLoggedIn} />
       <Toaster />
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route path="/" element={isLoggedIn ? <Locations /> : <Home />} />
         <Route
           path="/locations"
           element={!isLoggedIn ? <Navigate to={"/"} /> : <Locations />}
@@ -50,7 +52,7 @@ function App() {
         </Route>
         <Route
           path="/location/:id"
-          element={isLoggedIn ? <Navigate to={"/"} /> : <Location />}
+          element={!isLoggedIn ? <Navigate to={"/"} /> : <Location />}
         />
       </Routes>
     </>

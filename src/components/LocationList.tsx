@@ -6,8 +6,8 @@ import {
   CardContent,
   CardFooter,
 } from "../shadcn-components/ui/card";
-import { Button } from "../shadcn-components/ui/button";
-const LocationList = ({ title }: { title: string }) => {
+import { Link } from "react-router-dom";
+const LocationList = ({ name, id }: { id: string; name: string }) => {
   return (
     <Card className="w-full">
       <CardHeader className="sr-only">
@@ -15,14 +15,15 @@ const LocationList = ({ title }: { title: string }) => {
       </CardHeader>
       <CardContent className="w-full flex items-center justify-between p-3 px-8">
         <div className="flex items-center justify-center h-fit p-0 pt-0">
-          <p>{title}</p>
-          <span>Icon</span>
+          <Link className="hover:underline" to={`/location/${id}`}>
+            <span>{name}</span>
+          </Link>
         </div>
-        <div>
+        {/* <div>
           <Button className="h-fit" variant={"destructive"}>
             Delete
           </Button>
-        </div>
+        </div> */}
       </CardContent>
     </Card>
   );
