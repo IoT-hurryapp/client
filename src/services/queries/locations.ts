@@ -1,6 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { createLocation, getLocations, getLocation, getDevices, attachDevice, getDeviceData } from "../api/locations";
 import { DEVICES_KEY, LOCATION_KEY, DEVICES_DATA_KEY } from "../keys";
+import { ILocation } from "../api/interfaces";
 interface IGetLocationData {
     id: string;
     name: string;
@@ -8,7 +9,7 @@ interface IGetLocationData {
     devices: [
         {
             id: string;
-            connectedDevicesIdn: number
+            connectedDevicesId: number
             locationId: string;
         }
     ]
@@ -36,13 +37,8 @@ interface ICreateLocationSuccess {
 };
 //mutation types -> success,error,body
 export const getLocationsQuery = () => {
-    return useQuery<Array<{
-        id: string;
-        name: string;
-        userId: string,
-        devices: []
-    }>
-    >({
+    return useQuery<ILocation[]>
+    ({
         queryKey: [LOCATION_KEY],
         queryFn: async () => await getLocations(),
     })

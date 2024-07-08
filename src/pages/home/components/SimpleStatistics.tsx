@@ -1,37 +1,20 @@
 import {
-  Alert,
-  AlertDescription,
-  AlertTitle,
-} from "../../../components/ui/alert";
-import {
   Card,
   CardContent,
-  CardHeader,
-  CardTitle,
 } from "../../../components/ui/card";
 import { useEffect, useRef, useState } from "react";
 import { io, Socket } from "socket.io-client";
-import { Rocket } from "lucide-react";
-interface IDeviceData {
-  connectedDevicesId: string;
-  createdAt: Date;
-  deviceId: null;
-  dust_concentration: number;
-  humidity: number;
-  id: string;
-  mq135_statys: "GOOD" | "MODERATE" | "DANGEROUS";
-  mq135_value: string;
-  temperature_c: string;
-  temperature_f: string;
-}
+import { IData } from "../../../services/api/interfaces";
+
 export default function Component() {
-  const [realTimeData, setRealTimeData] = useState<IDeviceData>();
+  const [realTimeData, setRealTimeData] = useState<IData>();
   const socketRef = useRef<Socket | null>(null);
   useEffect(() => {
     socketRef.current = io(import.meta.env.VITE_SOCKET_URL);
     socketRef.current.on("connect", () => console.log("socket connected"));
     socketRef.current.on("disconnect", () => console.log("disconnected"));
-    socketRef.current.on(`data-${"1"}`, (data: IDeviceData) => {
+    socketRef.current.on(`data-1`, (data: IData) => {
+      console.log(data);
       setRealTimeData(data);
     });
     return () => {
@@ -40,7 +23,7 @@ export default function Component() {
     };
   }, []);
   return (
-    <div className="w-full max-w-4xl mx-auto py-12 md:py-16 lg:py-20 px-4 md:px-6">
+    <div className="w-full max-w-4xl mx-auto py-12 md:py-16 lg:py-20 px-4 md:px-6 z-[100]">
       <div className="space-y-8">
         <div className="text-center">
           <h1 className="text-3xl md:text-4xl font-bold">
@@ -52,13 +35,13 @@ export default function Component() {
           </p>
         </div>
         <div className="grid grid-cols-4 justify-center gap-10">
-          <Card className="px-4">
-            <CardContent className="flex flex-col items-center justify-center p-6">
+          <Card className="">
+            <CardContent className="flex flex-col items-center justify-center p-6 min-w-fit">
               {/* <ThermometerIcon className="w-8 h-8 text-primary" /> */}
               <div className="text-4xl font-bold mt-2">
-                {realTimeData?.temperature_c || "..."}°C
+                {realTimeData?.temperatureC || "0"}°C
               </div>
-              <p className="text-muted-foreground text-sm mt-1">
+              <p className="text-muted-foreground text-sm mt-1 min-w-fit text-center flex">
                 Current Temperature
               </p>
             </CardContent>
@@ -67,41 +50,41 @@ export default function Component() {
             <CardContent className="flex flex-col items-center justify-center p-6">
               {/* <CloudFogIcon className="w-8 h-8 text-primary" /> */}
               <div className="text-4xl font-bold mt-2">
-                {realTimeData?.humidity || "..."}%
+                {realTimeData?.humidity || "0"}%
               </div>
-              <p className="text-muted-foreground text-sm mt-1">Humidity</p>
+              <p className="text-muted-foreground text-sm mt-1 min-w-fit text-center">Humidity</p>
             </CardContent>
           </Card>
           <Card className="px-4">
             <CardContent className="flex flex-col items-center justify-center p-6">
               {/* <CloudFogIcon className="w-8 h-8 text-primary" /> */}
               <div className="text-4xl font-bold mt-2">
-                {realTimeData?.dust_concentration || "0"}%
+                {realTimeData?.dustPercentage || "0"}%
               </div>
-              <p className="text-muted-foreground text-sm mt-1">Pollution</p>
+              <p className="text-muted-foreground text-sm mt-1 min-w-fit text-center">Dust percentage</p>
             </CardContent>
           </Card>
           <Card className="px-4">
             <CardContent className="flex flex-col items-center justify-center p-6">
               {/* <CloudFogIcon className="w-8 h-8 text-primary" /> */}
               <div className="text-4xl font-bold mt-2">
-                {realTimeData?.mq135_value || "..."}%
+                {realTimeData?.AQI || "0"}%
               </div>
-              <p className="text-muted-foreground text-sm mt-1">
+              <p className="text-muted-foreground text-sm mt-1 min-w-fit text-center">
                 Air quality index
               </p>
             </CardContent>
           </Card>
         </div>
-        <div>
+        {/* <div>
           <Alert className="">
             <Rocket className="h-4 w-4" />
             <AlertTitle>Heads up!</AlertTitle>
             <AlertDescription>
-              {realTimeData?.mq135_statys || "..."}
+              {realTimeData?.mq135_statys || "0"}
             </AlertDescription>
           </Alert>
-        </div>
+        </div> */}
         {/* <div>
           <h2 className="text-2xl font-bold mb-4">Additional Details</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">

@@ -8,17 +8,10 @@ import {
   TableHeader,
   TableRow,
 } from "../../../components/ui/table";
+import { IData } from "../../../services/api/interfaces";
 
-export interface IData {
-  temperature_c: number;
-  temperature_f: number;
-  mq135_value: number;
-  mq135_statys: string;
-  dust_concentration: number;
-  createdAt: string;
-  connectedDevicesId: string;
-}
-export default function TableDemo({ data }: { data: Array<IData> }) {
+
+export default function TableDemo({ data }: { data: IData[] }) {
   return (
     <Table className="min-w-full">
       <TableCaption>A list of your recent logs.</TableCaption>
@@ -34,13 +27,13 @@ export default function TableDemo({ data }: { data: Array<IData> }) {
       <TableBody>
         {data.map((c) => (
           <TableRow key={c.connectedDevicesId}>
-            <TableCell className="font-medium">{c.createdAt}</TableCell>
+            <TableCell className="font-medium">{c.createdAt.toString()}</TableCell>
             <TableCell>
-              {c.mq135_value} {c.mq135_statys}
+              {c.AQI} {c.AQIStatus}
             </TableCell>
-            <TableCell>{c.temperature_c} C</TableCell>
-            <TableCell>{c.temperature_f} F</TableCell>
-            <TableCell>{c.dust_concentration} %</TableCell>
+            <TableCell>{c.temperatureC || 0} C</TableCell>
+            <TableCell>{c.temperatureF || 0} F</TableCell>
+            <TableCell>{c.dustPercentage || 0} %</TableCell>
           </TableRow>
         ))}
       </TableBody>
