@@ -7,7 +7,7 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "../shadcn-components/ui/table";
+} from "../../../components/ui/table";
 
 export interface IData {
   temperature_c: number;
@@ -44,12 +44,12 @@ export default function TableDemo({ data }: { data: Array<IData> }) {
           </TableRow>
         ))}
       </TableBody>
-      <TableFooter>
+      {/* <TableFooter>
         <TableRow>
           <TableCell colSpan={3}>Total</TableCell>
           <TableCell className="text-right">$2,500.00</TableCell>
         </TableRow>
-      </TableFooter>
+      </TableFooter> */}
     </Table>
   );
 }

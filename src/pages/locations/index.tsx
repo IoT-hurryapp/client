@@ -1,16 +1,14 @@
-import React, { useState } from "react";
-import { Separator } from "../shadcn-components/ui/separator";
-import LocationList from "../components/LocationList";
-import AddLocationDialog from "../components/AddLocationDialog";
-// <<<<<<< HEAD
+import { useState } from "react";
+import { Separator } from "../../components/ui/separator";
+import LocationList from "./components/LocationList";
+import AddLocationDialog from "./components/AddLocationDialog";
 import {
-  getDevicesQuery,
   getLocationsQuery,
   useAttachDeviceMutation,
   useCreateLocationMutation,
-} from "../services/queries/locations";
+} from "../../services/queries/locations";
 import { Loader } from "lucide-react";
-import { toast } from "../shadcn-components/ui/use-toast";
+import { toast } from "../../components/ui/use-toast";
 const Locations = () => {
   const [newLocationName, setNewLocationName] = useState("");
   const [newLocationDevice, setNewLocationDevice] = useState("");

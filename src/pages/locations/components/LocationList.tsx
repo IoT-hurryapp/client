@@ -1,11 +1,10 @@
-import React from "react";
 import {
   Card,
   CardTitle,
   CardHeader,
   CardContent,
   CardFooter,
-} from "../shadcn-components/ui/card";
+} from "../../../components/ui/card";
 import { Link } from "react-router-dom";
 const LocationList = ({ name, id }: { id: string; name: string }) => {
   return (

@@ -5,7 +5,7 @@ import {
   SheetHeader,
   SheetTitle,
   SheetTrigger,
-} from "../shadcn-components/ui/sheet";
+} from "./ui/sheet";
 import { Link } from "react-router-dom";
 import { X, Menu, Leaf } from "lucide-react";
 const Header = ({ isLoggedIn }: { isLoggedIn: boolean }) => {
@@ -16,7 +16,7 @@ const Header = ({ isLoggedIn }: { isLoggedIn: boolean }) => {
         className="flex items-center justify-between p-6 lg:px-8"
       >
         <div className="flex lg:flex-1">
-          <Link to="/" className="-m-1.5 p-1.5">
+          <Link to="/" className={`-m-1.5 p-1.5`}>
             <span className="sr-only">Logo</span>
             <Leaf />
           </Link>
@@ -45,7 +45,7 @@ const Header = ({ isLoggedIn }: { isLoggedIn: boolean }) => {
               <div className="mt-6 flow-root">
                 <div className="-my-6 divide-y divide-gray-500/10">
                   <div className="space-y-2 py-6"></div>
-                  <div className="py-6">
+                  <div className={`py-6 ${isLoggedIn && "hidden"}`}>
                     <Link
                       to="/auth/login"
                       className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
@@ -62,7 +62,9 @@ const Header = ({ isLoggedIn }: { isLoggedIn: boolean }) => {
         <div className="hidden lg:flex lg:flex-1 lg:justify-end">
           <Link
             to={"/auth/login"}
-            className="text-sm font-semibold leading-6 text-gray-900"
+            className={`${
+              isLoggedIn && "hidden"
+            } text-sm font-semibold leading-6 text-gray-900`}
           >
             Log in <span aria-hidden="true">&rarr;</span>
           </Link>

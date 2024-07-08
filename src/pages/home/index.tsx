@@ -1,30 +1,6 @@
-import { useRef, useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import SimpleStatistics from "../components/SimpleStatistics";
-// import socket from "socket.io-client";
-import io, { Socket } from "socket.io-client";
+import SimpleStatistics from "./components/SimpleStatistics";
 export default function Home() {
-  const socketRef = useRef<Socket | null>(null);
-  const [isConnected, setIsConnected] = useState(false);
-  useEffect(() => {
-    socketRef.current = io("http://192.168.45.159:2020", {
-      autoConnect: true,
-    });
-    socketRef.current.on("connect", () => setIsConnected(true));
-    console.log(isConnected);
-
-    socketRef.current.on("disconnect", () => setIsConnected(false));
-    socketRef.current.on(
-      "data-089477f2-5249-4e58-b105-03ee8178b7c8",
-      (data) => {
-        console.log(data);
-      }
-    );
-    return () => {
-      socketRef.current?.off("connect", () => setIsConnected(true));
-      socketRef.current?.off("disconnect", () => setIsConnected(false));
-    };
-  }, []);
   return (
     <div className="bg-white">
       <div className="relative isolate px-6 pt-14 lg:px-8">
@@ -37,14 +13,14 @@ export default function Home() {
               clipPath:
                 "polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)",
             }}
-            className="relative left-[calc(50%-11rem)] aspect-[1155/678] w-[36.125rem] -translate-x-1/2 rotate-[30deg] bg-gradient-to-tr from-[#ff80b5] to-[#9089fc] opacity-30 sm:left-[calc(50%-30rem)] sm:w-[72.1875rem]"
+            className="relative left-[calc(50%-11rem)] aspect-[1155/678] w-[36.125rem] -translate-x-1/2 rotate-[30deg] bg-gradient-to-tr from-emerald-200 to-blue-300 opacity-30 sm:left-[calc(50%-30rem)] sm:w-[72.1875rem]"
           />
         </div>
         <div className="mx-auto max-w-2xl py-32 sm:py-48 lg:py-56 mb-4">
           <div className="hidden sm:mb-8 sm:flex sm:justify-center">
-            {/* <div className="relative rounded-full px-3 py-1 text-sm leading-6 text-gray-600 ring-1 ring-gray-900/10 hover:ring-gray-900/20">
-              Announcing our next generation IoT Systems.{" "}
-            </div> */}
+            <div className="relative rounded-full px-3 py-1 text-sm leading-6 text-gray-600 ring-1 ring-gray-900/10 hover:ring-gray-900/20">
+              Announcing our IoT System for Pollution.{" "}
+            </div>
           </div>
           <div className="w-fit text-center">
             <h1 className="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl">
@@ -63,12 +39,12 @@ export default function Home() {
               >
                 Get started for free
               </Link>
-              <Link
+              {/* <Link
                 to="/about"
                 className="text-sm font-semibold leading-6 text-gray-900"
               >
                 Learn more <span aria-hidden="true">→</span>
-              </Link>
+              </Link> */}
             </div>
           </div>
         </div>
@@ -81,7 +57,7 @@ export default function Home() {
               clipPath:
                 "polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)",
             }}
-            className="relative left-[calc(50%+3rem)] aspect-[1155/678] w-[36.125rem] -translate-x-1/2 bg-gradient-to-tr from-[#ff80b5] to-[#9089fc] opacity-30 sm:left-[calc(50%+36rem)] sm:w-[72.1875rem]"
+            className="relative left-[calc(50%+3rem)] aspect-[1155/678] w-[36.125rem] -translate-x-1/2 bg-gradient-to-tr from-emerald-200 to-blue-300 opacity-30 sm:left-[calc(50%+36rem)] sm:w-[72.1875rem]"
           />
         </div>
       </div>

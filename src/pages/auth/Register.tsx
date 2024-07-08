@@ -1,15 +1,15 @@
-import { Input } from "../shadcn-components/ui/input";
-import { Button } from "../shadcn-components/ui/button";
-import { Label } from "../shadcn-components/ui/label";
+import { Input } from "../../components/ui/input";
+import { Button } from "../../components/ui/button";
+import { Label } from "../../components/ui/label";
 import {
   Card,
   CardContent,
   CardHeader,
   CardTitle,
-} from "../shadcn-components/ui/card";
+} from "../../components/ui/card";
 import { useState } from "react";
-import { toast } from "../shadcn-components/ui/use-toast";
-import { useRegisterMutation } from "../services/queries/auth";
+import { toast } from "../../components/ui/use-toast";
+import { useRegisterMutation } from "../../services/queries/auth";
 import { useNavigate } from "react-router-dom";
 
 const SignUp = () => {
@@ -52,7 +52,7 @@ const SignUp = () => {
       variant: "default",
     });
     setTimeout(() => {
-      location.href = "/login";
+      navigate("/login");
     }, 600);
   }
   return (
@@ -87,7 +87,7 @@ const SignUp = () => {
                 onClick={onSubmit}
                 className="w-full mt-5"
               >
-                Complete
+                Signup
               </Button>
             </div>
           </CardContent>

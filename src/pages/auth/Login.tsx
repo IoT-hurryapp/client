@@ -1,19 +1,19 @@
-import { useSearchParams, useNavigate } from "react-router-dom";
-import { Input } from "../shadcn-components/ui/input";
-import { Button } from "../shadcn-components/ui/button";
+import { Input } from "../../components/ui/input";
+import { Button } from "../../components/ui/button";
 import {
   Card,
   CardContent,
   CardHeader,
   CardTitle,
-} from "../shadcn-components/ui/card";
+} from "../../components/ui/card";
 import { useState } from "react";
-import { toast } from "../shadcn-components/ui/use-toast";
-import { useLoginMutation } from "../services/queries/auth";
-import axios from "axios";
+import { toast } from "../../components/ui/use-toast";
+import { useLoginMutation } from "../../services/queries/auth";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
   const [email, setEmail] = useState<string>("");
+  const navigate = useNavigate();
   const [password, setPassword] = useState<string>("");
   const loginMutation = useLoginMutation();
   const onSubmit = (e: any) => {
@@ -36,43 +36,17 @@ const Login = () => {
         variant: "destructive",
       });
     }
-
-    let data = JSON.stringify({
-      email,
-      password,
-    });
-
-    let config = {
-      method: "post",
-      maxBodyLength: Infinity,
-      url: "http://localhost:5050/auth/login",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      data: data,
-    };
-
-    axios
-      .request(config)
-      .then((response) => {
-        toast({
-          description: "Login successfully!",
-          title: "Success",
-          variant: "default",
-        });
-        setTimeout(() => {
-          location.href = "/locations";
-        }, 2000);
-      })
-      .catch((error) => {
-        return toast({
-          description: error?.response.data.message,
-          title: "Error",
-          variant: "default",
-        });
+    loginMutation.mutate({ email, password });
+    if (loginMutation.isSuccess) {
+      toast({
+        description: "Login successfully!",
+        title: "Success",
+        variant: "default",
       });
-
-    // loginMutation.mutate({ email, password });
+      setTimeout(() => {
+        navigate("/locations");
+      }, 1200);
+    }
   };
   return (
     <div className="flex justify-center items-center h-full w-full absolute top-0 l-0">

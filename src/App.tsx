@@ -1,30 +1,17 @@
-import { Suspense, lazy, useEffect, useState } from "react";
+import { Suspense, lazy } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
-import Header from "./components/Header";
-import Home from "./pages/Home";
-import useLocalStorage from "./hooks/useLocalStorage";
-import Login from "./pages/Login";
-import Register from "./pages/Register";
-import { Toaster } from "./shadcn-components/ui/toaster";
-import Locations from "./pages/Locations";
-import LocationDevice from "./pages/LocationDevice";
-import Location from "./pages/Location";
 import { getUserQuery } from "./services/queries/user";
+import { Toaster } from "./components/ui/toaster";
 import Loader from "./components/Loader";
+import Header from "./components/Header";
+import Home from "./pages/home";
+import Login from "./pages/auth/Login";
+import Register from "./pages/auth/Register";
+import Locations from "./pages/location";
+import Location from "./pages/location";
+import Footer from "./components/Footer";
 function App() {
-  const { setItem, getItem, delItem } = useLocalStorage();
   const user = getUserQuery();
-  useEffect(() => {
-    const theme = getItem("theme");
-    if (
-      theme === "dark" &&
-      window.matchMedia("(prefers-color-scheme: dark)").matches
-    ) {
-      document.documentElement.classList.add("dark");
-    } else {
-      document.documentElement.classList.remove("dark");
-    }
-  }, []);
   if (user.isLoading) {
     return <Loader />;
   }

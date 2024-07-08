@@ -1,4 +1,4 @@
-import { Button } from "../shadcn-components/ui/button";
+import { Button } from "../../../components/ui/button";
 import {
   Dialog,
   DialogContent,
@@ -8,10 +8,10 @@ import {
   DialogTitle,
   DialogTrigger,
   DialogClose,
-} from "../shadcn-components/ui/dialog";
-import { Input } from "../shadcn-components/ui/input";
-import { Label } from "../shadcn-components/ui/label";
-import { getDevicesQuery } from "../services/queries/locations";
+} from "../../../components/ui/dialog";
+import { Input } from "../../../components/ui/input";
+import { Label } from "../../../components/ui/label";
+import { getDevicesQuery } from "../../../services/queries/locations";
 import {
   Select,
   SelectContent,
@@ -20,15 +20,15 @@ import {
   SelectLabel,
   SelectTrigger,
   SelectValue,
-} from "../shadcn-components/ui/select";
+} from "../../../components/ui/select";
 import { Loader } from "lucide-react";
-export function SelectDevice({
+const SelectDevice = ({
   list,
   setNewLocationDevice,
 }: {
   list: Array<{ id: string }>;
   setNewLocationDevice: React.Dispatch<React.SetStateAction<string>>;
-}) {
+}) => {
   return (
     <Select onValueChange={(value) => setNewLocationDevice(value)}>
       <SelectTrigger className="w-[180px]">
@@ -46,7 +46,7 @@ export function SelectDevice({
       </SelectContent>
     </Select>
   );
-}
+};
 const AddLocationDialog = ({
   newLocationName,
   setNewLocationName,
@@ -62,8 +62,6 @@ const AddLocationDialog = ({
   if (getDevices.isLoading) {
     return <Loader />;
   }
-  console.log(getDevices.data);
-
   return (
     <Dialog>
       <DialogTrigger asChild>

@@ -1,22 +1,18 @@
-import { useRef, useState, useEffect, useMemo } from "react";
+import { useRef, useState, useEffect } from "react";
 import {
   Card,
   CardHeader,
   CardTitle,
   CardContent,
-} from "../shadcn-components/ui/card";
-import {
-  Alert,
-  AlertDescription,
-  AlertTitle,
-} from "../shadcn-components/ui/alert";
+} from "../../components/ui/card";
+import { Alert, AlertDescription, AlertTitle } from "../../components/ui/alert";
 
 // <<<<<<< HEAD
 import { useParams } from "react-router-dom";
 import {
   getDeviceDataQuery,
   getLocationQuery,
-} from "../services/queries/locations";
+} from "../../services/queries/locations";
 import { io, Socket } from "socket.io-client";
 import {
   Select,
@@ -26,10 +22,10 @@ import {
   SelectLabel,
   SelectTrigger,
   SelectValue,
-} from "../shadcn-components/ui/select";
-import Loader from "../components/Loader";
+} from "../../components/ui/select";
+import Loader from "../../components/Loader";
 // import {  } from "../services/api/locations";
-import DataLogs from "../components/DataLogs";
+import DataLogs from "./components/DataLogs";
 import { Rocket } from "lucide-react";
 interface IDeviceData {
   connectedDevicesId: string;
@@ -53,7 +49,7 @@ const Location = () => {
   const [deviceId, selectDeviceId] = useState("1");
   const analysisData = getDeviceDataQuery(locationId, deviceId);
   useEffect(() => {
-    socketRef.current = io("http://localhost:2020");
+    socketRef.current = io(import.meta.env.VITE_SOCKET_URL);
     socketRef.current.on("connect", () => console.log("socket connected"));
     socketRef.current.on("disconnect", () => console.log("disconnected"));
     socketRef.current.on(`data-${deviceId}`, (data: IDeviceData) => {
@@ -64,10 +60,7 @@ const Location = () => {
       socketRef.current?.off("disconnect", () => console.log("disconnected"));
     };
   }, []);
-  if (location.isLoading) {
-    return <Loader />;
-  }
-  if (analysisData.isLoading) {
+  if (location.isLoading || analysisData.isLoading) {
     return <Loader />;
   }
   return (
@@ -157,7 +150,7 @@ const Location = () => {
         <div className="w-full">
           <Card className="w-full">
             <CardHeader>
-              <CardTitle>Pollution Trends</CardTitle>
+              <CardTitle>Pollution Logs</CardTitle>
             </CardHeader>
             <CardContent>
               <DataLogs data={analysisData.data?.slice(0, 50) || []} />

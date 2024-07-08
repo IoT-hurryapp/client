@@ -2,13 +2,13 @@ import {
   Alert,
   AlertDescription,
   AlertTitle,
-} from "../shadcn-components/ui/alert";
+} from "../../../components/ui/alert";
 import {
   Card,
   CardContent,
   CardHeader,
   CardTitle,
-} from "../shadcn-components/ui/card";
+} from "../../../components/ui/card";
 import { useEffect, useRef, useState } from "react";
 import { io, Socket } from "socket.io-client";
 import { Rocket } from "lucide-react";
@@ -28,7 +28,7 @@ export default function Component() {
   const [realTimeData, setRealTimeData] = useState<IDeviceData>();
   const socketRef = useRef<Socket | null>(null);
   useEffect(() => {
-    socketRef.current = io("http://localhost:2020");
+    socketRef.current = io(import.meta.env.VITE_SOCKET_URL);
     socketRef.current.on("connect", () => console.log("socket connected"));
     socketRef.current.on("disconnect", () => console.log("disconnected"));
     socketRef.current.on(`data-${"1"}`, (data: IDeviceData) => {
@@ -56,7 +56,7 @@ export default function Component() {
             <CardContent className="flex flex-col items-center justify-center p-6">
               {/* <ThermometerIcon className="w-8 h-8 text-primary" /> */}
               <div className="text-4xl font-bold mt-2">
-                {realTimeData?.temperature_c}°C
+                {realTimeData?.temperature_c || "..."}°C
               </div>
               <p className="text-muted-foreground text-sm mt-1">
                 Current Temperature
@@ -67,7 +67,7 @@ export default function Component() {
             <CardContent className="flex flex-col items-center justify-center p-6">
               {/* <CloudFogIcon className="w-8 h-8 text-primary" /> */}
               <div className="text-4xl font-bold mt-2">
-                {realTimeData?.humidity}%
+                {realTimeData?.humidity || "..."}%
               </div>
               <p className="text-muted-foreground text-sm mt-1">Humidity</p>
             </CardContent>
@@ -76,7 +76,7 @@ export default function Component() {
             <CardContent className="flex flex-col items-center justify-center p-6">
               {/* <CloudFogIcon className="w-8 h-8 text-primary" /> */}
               <div className="text-4xl font-bold mt-2">
-                {realTimeData?.dust_concentration}%
+                {realTimeData?.dust_concentration || "0"}%
               </div>
               <p className="text-muted-foreground text-sm mt-1">Pollution</p>
             </CardContent>
@@ -85,7 +85,7 @@ export default function Component() {
             <CardContent className="flex flex-col items-center justify-center p-6">
               {/* <CloudFogIcon className="w-8 h-8 text-primary" /> */}
               <div className="text-4xl font-bold mt-2">
-                {realTimeData?.mq135_value}%
+                {realTimeData?.mq135_value || "..."}%
               </div>
               <p className="text-muted-foreground text-sm mt-1">
                 Air quality index
@@ -97,7 +97,9 @@ export default function Component() {
           <Alert className="">
             <Rocket className="h-4 w-4" />
             <AlertTitle>Heads up!</AlertTitle>
-            <AlertDescription>{realTimeData?.mq135_statys}</AlertDescription>
+            <AlertDescription>
+              {realTimeData?.mq135_statys || "..."}
+            </AlertDescription>
           </Alert>
         </div>
         {/* <div>
@@ -154,14 +156,3 @@ export default function Component() {
     </div>
   );
 }
-
-// function CloudFogIcon(props : any) {
-//   return (
-//     <svg
-//       {...props}
-//       xmlns="http://www.w3.org/2000/svg"
-//       width="24"
-//       height="24"
-//       viewBox="0 0 24 24"
-//       fill="none"
-//       s
