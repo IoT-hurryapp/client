@@ -60,7 +60,10 @@ interface NeonGradientCardProps {
 	 * @description
 	 * The colors of the neon gradient
 	 * */
-	neonColors?: NeonColorsProps;
+	neonColors?: {
+		dark: NeonColorsProps,
+		light: NeonColorsProps
+	};
 
 	[key: string]: any;
 }
@@ -70,10 +73,6 @@ const NeonGradientCard: React.FC<NeonGradientCardProps> = ({
 	children,
 	borderSize = 2,
 	borderRadius = 20,
-	neonColors = {
-		firstColor: "#42002c",
-		secondColor: "#006761",
-	},
 	...props
 }) => {
 	const containerRef = useRef<HTMLDivElement>(null);
@@ -109,12 +108,11 @@ const NeonGradientCard: React.FC<NeonGradientCardProps> = ({
 				{
 					"--border-size": `${borderSize}px`,
 					"--border-radius": `${borderRadius}px`,
-					"--neon-first-color": neonColors.firstColor,
-					"--neon-second-color": neonColors.secondColor,
+	
 					"--card-width": `${dimensions.width}px`,
 					"--card-height": `${dimensions.height}px`,
 					"--card-content-radius": `${borderRadius - borderSize}px`,
-					"--pseudo-element-background-image": `linear-gradient(0deg, ${neonColors.firstColor}, ${neonColors.secondColor})`,
+					"--pseudo-element-background-image": `linear-gradient(0deg, --neon-first-color, --neon-second-color)`,
 					"--pseudo-element-width": `${
 						dimensions.width + borderSize * 2
 					}px`,
@@ -124,10 +122,7 @@ const NeonGradientCard: React.FC<NeonGradientCardProps> = ({
 					"--after-blur": `${dimensions.width / 3}px`,
 				} as CSSProperties
 			}
-			className={cn(
-				"relative z-10 h-full w-full",
-				className
-			)}
+			className={cn("relative z-10 h-full w-full", className)}
 			{...props}
 		>
 			<div
