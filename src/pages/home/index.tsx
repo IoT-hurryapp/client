@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import SimpleStatistics from "./components/SimpleStatistics";
 import { NeonGradientCard } from "../../components/magic-ui/neon-gradient-card";
+import { Protected } from "../../components/Protected";
 export default function Home() {
   return (
     <div className="bg-background">
@@ -34,12 +35,24 @@ export default function Home() {
               environment for you and your loved ones
             </p>
             <div className="mt-10 flex items-center justify-center gap-x-6">
-              <Link
+              <Protected error={<Link
                 to="/register"
                 className="rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
               >
                 Get started for free
+              </Link>} fallback={<Link
+                to="/register"
+                className="rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+              >
+                Get started for free
+              </Link>}>
+              <Link
+                to="/locations"
+                className="rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+              >
+                Get started for free
               </Link>
+              </Protected>
               {/* <Link
                 to="/about"
                 className="text-sm font-semibold leading-6 text-gray-900"
