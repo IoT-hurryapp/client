@@ -8,5 +8,15 @@ export interface ILocation {
     id: string;
     name: string;
     userId: string;
-    devices: IDevice[],
+    devices: {
+        id: string;
+        connectedDeviceId: string;
+        locationId: string;
+    }[];
+    notifications: {
+        id: string;
+        message: string;
+        dataId: string;
+        locationId: string;
+    }[];
 }

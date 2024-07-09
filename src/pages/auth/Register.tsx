@@ -53,7 +53,7 @@ const SignUp = () => {
       variant: "default",
     });
     setTimeout(() => {
-      navigate("/login");
+      navigate("/locations");
     }, 600);
   }
   return (
@@ -103,7 +103,7 @@ const SignUp = () => {
           </div>
           <div className="mt-4 text-center text-sm">
             Already have an account?{" "}
-            <Link to="/register" className="underline">
+            <Link to="/login" className="underline">
               Sign in
             </Link>
           </div>

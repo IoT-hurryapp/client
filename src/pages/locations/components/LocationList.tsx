@@ -69,6 +69,13 @@ const LocationsList = ({
           </Link>
         </li>
       ))}
+      {locations.length < 1 && (
+        <li>
+          <span className="text-sm font-medium opacity-70">
+            There is no locations avilable
+          </span>
+        </li>
+      )}
     </ul>
   );
 };

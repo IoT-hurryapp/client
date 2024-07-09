@@ -7,16 +7,13 @@ import {
   SelectTrigger,
   SelectValue,
 } from "../../../components/ui/select";
+import { IDevice } from "../../../interfaces/global";
 
 export function SelectDevices({
   devicesList,
   selectDeviceId,
 }: {
-  devicesList: Array<{
-    id: string;
-    connectedDevicesId: number;
-    locationId: string;
-  }>;
+  devicesList: Array<IDevice>;
   selectDeviceId: React.Dispatch<React.SetStateAction<string>>;
 }) {
   return (
@@ -28,10 +25,7 @@ export function SelectDevices({
         <SelectGroup>
           <SelectLabel>Devices</SelectLabel>
           {devicesList?.map((device) => (
-            <SelectItem
-              key={device.connectedDevicesId}
-              value={device.connectedDevicesId.toString()}
-            >
+            <SelectItem key={device.id} value={device.id}>
               #{device.connectedDevicesId}
             </SelectItem>
           ))}
