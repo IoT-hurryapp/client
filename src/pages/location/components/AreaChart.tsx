@@ -38,7 +38,8 @@ const chartConfig = {
 	},
 } satisfies ChartConfig;
 
-export function AreaChart() {
+export function AreaChart({ data, config }: any) {
+	console.log(config, data);
 	return (
 		<Card className="my-4">
 			<CardHeader>
@@ -49,12 +50,12 @@ export function AreaChart() {
 			</CardHeader>
 			<CardContent>
 				<ChartContainer
-					config={chartConfig}
+					config={config}
 					className=" aspect-video h-52 w-full"
 				>
 					<ShadCnAreaChart
 						accessibilityLayer
-						data={chartData}
+						data={data}
 						margin={{
 							left: 12,
 							right: 12,
@@ -74,7 +75,7 @@ export function AreaChart() {
 						/>
 						<defs>
 							<linearGradient
-								id="fillDesktop"
+								id="fillAQI"
 								x1="0"
 								y1="0"
 								x2="0"
@@ -82,48 +83,23 @@ export function AreaChart() {
 							>
 								<stop
 									offset="5%"
-									stopColor="var(--color-desktop)"
+									stopColor="var(--color-AQI)"
 									stopOpacity={0.8}
 								/>
 								<stop
 									offset="95%"
-									stopColor="var(--color-desktop)"
-									stopOpacity={0.1}
-								/>
-							</linearGradient>
-							<linearGradient
-								id="fillMobile"
-								x1="0"
-								y1="0"
-								x2="0"
-								y2="1"
-							>
-								<stop
-									offset="5%"
-									stopColor="var(--color-mobile)"
-									stopOpacity={0.8}
-								/>
-								<stop
-									offset="95%"
-									stopColor="var(--color-mobile)"
+									stopColor="var(--color-AQI)"
 									stopOpacity={0.1}
 								/>
 							</linearGradient>
 						</defs>
+
 						<Area
-							dataKey="mobile"
+							dataKey="AQI"
 							type="natural"
-							fill="url(#fillMobile)"
+							fill="url(#fillAQI)"
 							fillOpacity={0.4}
-							stroke="var(--color-mobile)"
-							stackId="a"
-						/>
-						<Area
-							dataKey="desktop"
-							type="natural"
-							fill="url(#fillDesktop)"
-							fillOpacity={0.4}
-							stroke="var(--color-desktop)"
+							stroke="var(--color-AQI)"
 							stackId="a"
 						/>
 					</ShadCnAreaChart>
