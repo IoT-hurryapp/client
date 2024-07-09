@@ -3009,4 +3009,5 @@
 
 body {
 	font-family: Inter, Cairo, sans-serif;
+	overflow-x: hidden;
 }

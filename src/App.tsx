@@ -13,43 +13,40 @@ import Location from "./pages/location";
 import Footer from "./components/Footer";
 
 function App() {
-	const user = getUserQuery();
-	if (user.isLoading) {
-		return <Loader />;
-	}
-	const isLoggedIn = !!user.data;
+  const user = getUserQuery();
+  if (user.isLoading) {
+    return <Loader />;
+  }
+  const isLoggedIn = !!user.data;
 
-	return (
-		<ThemeProvider defaultTheme="dark">
-			<Header />
-			<Toaster />
-			<Routes>
-				<Route path="/" element={<Home />} />
-				<Route
-					path="/locations/:id"
-					element={!isLoggedIn ? <Navigate to={"/"} /> : <Location />}
-				/>
-				<Route
-					path="/locations"
-					element={
-						!isLoggedIn ? <Navigate to={"/"} /> : <Locations />
-					}
-				/>
-				<Route path="/auth">
-					<Route
-						path="login"
-						element={isLoggedIn ? <Navigate to={"/"} /> : <Login />}
-					/>
-					<Route
-						path="signup"
-						element={
-							isLoggedIn ? <Navigate to={"/"} /> : <Register />
-						}
-					/>
-				</Route>
-			</Routes>
-		</ThemeProvider>
-	);
+  return (
+    <ThemeProvider defaultTheme="light">
+      <Header />
+      <Toaster />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route
+          path="/locations/:id"
+          element={!isLoggedIn ? <Navigate to={"/"} /> : <Location />}
+        />
+        <Route
+          path="/locations"
+          element={!isLoggedIn ? <Navigate to={"/"} /> : <Locations />}
+        />
+        <Route path="/">
+          <Route
+            path="login"
+            element={isLoggedIn ? <Navigate to={"/"} /> : <Login />}
+          />
+          <Route
+            path="register"
+            element={isLoggedIn ? <Navigate to={"/"} /> : <Register />}
+          />
+        </Route>
+      </Routes>
+      <Footer />
+    </ThemeProvider>
+  );
 }
 
 export default App;

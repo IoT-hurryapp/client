@@ -1,7 +1,7 @@
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { keepPreviousData, useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { createLocation, getLocations, getLocation, getDevices, attachDevice, getDeviceData } from "../api/locations";
-import { DEVICES_KEY, LOCATION_KEY, DEVICES_DATA_KEY } from "../keys";
-import { ILocation } from "../api/interfaces";
+import { DEVICES_KEY, LOCATION_KEY, DEVICES_DATA_KEY, LOCATIONS_KEY } from "../keys";
+import { ILocation } from "../../interfaces/global";
 interface IGetLocationData {
     id: string;
     name: string;
@@ -38,10 +38,10 @@ interface ICreateLocationSuccess {
 //mutation types -> success,error,body
 export const getLocationsQuery = () => {
     return useQuery<ILocation[]>
-    ({
-        queryKey: [LOCATION_KEY],
-        queryFn: async () => await getLocations(),
-    })
+        ({
+            queryKey: [LOCATIONS_KEY],
+            queryFn: async () => await getLocations(),
+        })
 }
 export const getLocationQuery = (locationId: string) => {
     return useQuery<{}, IGetLocationError, IGetLocationData>({
@@ -55,8 +55,8 @@ export const useCreateLocationMutation = () => {
         name: string,
     }>({
         mutationFn: ({ name }) => createLocation(name),
-        onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: [LOCATION_KEY] });
+        onSuccess: (data) => {
+            queryClient.invalidateQueries({ queryKey: [LOCATIONS_KEY, { locationId: data.id }] });
         },
     })
 };
@@ -66,18 +66,22 @@ export const getDevicesQuery = () => {
         queryFn: async () => await getDevices()
     })
 }
-export const getDeviceDataQuery = (locationId: string, deviceId: string) => {
+export const getDeviceDataQuery = ({ locationId, deviceId, page }: { locationId: string, deviceId: string, page: number }) => {
     return useQuery({
-        queryKey: [DEVICES_DATA_KEY],
-        queryFn: async () => await getDeviceData(locationId, deviceId)
+        queryKey: [DEVICES_DATA_KEY, { page }],
+        queryFn: async () => await getDeviceData({ locationId, deviceId, page }),
+        placeholderData: keepPreviousData
     })
-}
+};
 export const useAttachDeviceMutation = () => {
     const queryClient = useQueryClient();
     return useMutation<{ success: true }, { success: false, message: string }, { deviceId: string, locationId: string }>({
         mutationFn: async ({ deviceId, locationId }) => await attachDevice(locationId, deviceId),
-        onSuccess: (_, variables) => {
-            queryClient.invalidateQueries({ queryKey: [LOCATION_KEY, { locationId: variables.locationId }] })
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: [LOCATIONS_KEY] });
+        },
+        onError: () => {
+            queryClient.invalidateQueries({ queryKey: [LOCATIONS_KEY] });
         }
     });
 }

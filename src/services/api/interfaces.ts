@@ -9,9 +9,4 @@ export interface IData {
 	createdAt: Date;
 	connectedDevicesId: string;
 	deviceId: string | null;
-}
-export interface ILocation {
-	id: string;
-	name: string;
-	userId: string;
-}
+};

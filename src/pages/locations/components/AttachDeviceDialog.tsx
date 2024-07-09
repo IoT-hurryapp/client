@@ -9,7 +9,6 @@ import {
   DialogTrigger,
   DialogClose,
 } from "../../../components/ui/dialog";
-import { Input } from "../../../components/ui/input";
 import { Label } from "../../../components/ui/label";
 import { getDevicesQuery } from "../../../services/queries/locations";
 import {
@@ -25,18 +24,14 @@ import { Loader } from "lucide-react";
 import { useState } from "react";
 import QrReader from "./QrReader";
 const AddLocationDialog = ({
-  newLocationName,
   deviceIdToAttach,
-  setNewLocationName,
-  handleCreateLocation,
+  handleAttachDevice,
   setDeviceIdToAttach,
   onOpenChange,
   open,
 }: {
-  newLocationName: string;
-  setNewLocationName: React.Dispatch<React.SetStateAction<string>>;
   setDeviceIdToAttach: React.Dispatch<React.SetStateAction<string>>;
-  handleCreateLocation: () => void;
+  handleAttachDevice: () => void;
   deviceIdToAttach: string;
   onOpenChange: React.Dispatch<React.SetStateAction<boolean>>;
   open: boolean;
@@ -47,30 +42,18 @@ const AddLocationDialog = ({
   }
 
   return (
-    <Dialog onOpenChange={onOpenChange} open={open}>
-      <DialogTrigger asChild>
-        <Button variant="default">Add Locations</Button>
+    <Dialog onOpenChange={onOpenChange} open={open} defaultOpen={open}>
+      <DialogTrigger asChild className="sr-only">
+        <Button variant="default">Add Device</Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle>Add location</DialogTitle>
+          <DialogTitle>Add device</DialogTitle>
           <DialogDescription>
-            select your location name and the devices avilable in it
+            Add your device into this location
           </DialogDescription>
         </DialogHeader>
         <div className="grid gap-4 py-4">
-          <div className="grid items-center gap-4">
-            <Label htmlFor="title" className="">
-              Title
-            </Label>
-            <Input
-              id="title"
-              placeholder="enter a location name"
-              value={newLocationName}
-              onChange={(e) => setNewLocationName(e.target.value)}
-              className="col-span-3"
-            />
-          </div>
           <div className="grid grid-cols-2 items-center gap-4 relative">
             <div>
               <Label htmlFor="devices" className="">
@@ -98,7 +81,7 @@ const AddLocationDialog = ({
         <DialogFooter>
           <DialogClose asChild>
             <Button
-              onClick={handleCreateLocation}
+              onClick={handleAttachDevice}
               className="mr-auto"
               type="submit"
             >
@@ -125,7 +108,7 @@ const QrDialog = ({
       </DialogTrigger>
       <DialogContent className="min-w-fit bg-none sm:max-w-[425px] min-h-[50vh]">
         <DialogHeader>
-          <DialogTitle className="sr-only">Add location</DialogTitle>
+          <DialogTitle className="sr-only">Add device</DialogTitle>
           <DialogDescription className="sr-only">
             select your device name
           </DialogDescription>
@@ -141,8 +124,8 @@ const QrDialog = ({
 };
 const SelectDevice = ({
   list,
-  deviceIdToAttach,
   setDeviceIdToAttach,
+  deviceIdToAttach,
 }: {
   deviceIdToAttach: string;
   list: Array<{ id: string }>;

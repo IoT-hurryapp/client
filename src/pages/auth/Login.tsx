@@ -5,23 +5,24 @@ import {
   CardContent,
   CardHeader,
   CardTitle,
+  CardDescription,
 } from "../../components/ui/card";
+import { Label } from "../../components/ui/label";
 import { useState } from "react";
 import { toast } from "../../components/ui/use-toast";
 import { useLoginMutation } from "../../services/queries/auth";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 const Login = () => {
   const [email, setEmail] = useState<string>("");
   const navigate = useNavigate();
   const [password, setPassword] = useState<string>("");
   const loginMutation = useLoginMutation();
-  const onSubmit = (e: any) => {
+  const handleSubmit = (e: any) => {
     e.preventDefault();
     const emailRegexp = new RegExp(
       /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
     );
-
     if (!emailRegexp.test(email)) {
       return toast({
         description: "Email is Required!",
@@ -49,36 +50,52 @@ const Login = () => {
     }
   };
   return (
-    <div className="flex justify-center items-center h-full w-full absolute top-0 l-0">
-      <div className="lg:w-[45%] md:w-[75%] sm:w-[90%]">
-        <Card className="">
-          <CardHeader className="flex-col items-center">
-            <CardTitle>Type your Email and Password</CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            <form className="flex flex-col gap-3" onSubmit={onSubmit} action="">
+    <form
+      onSubmit={handleSubmit}
+      className="container h-[100vh] flex justify-center items-center"
+    >
+      <Card className="md:min-w-[45vw] lg:min-w-[35vw] max-w-sm">
+        <CardHeader>
+          <CardTitle className="text-2xl">Login</CardTitle>
+          <CardDescription>
+            Enter your email below to login to your account
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <div className="grid gap-4">
+            <div className="grid gap-2">
+              <Label htmlFor="email">Email</Label>
               <Input
-                autoFocus={true}
                 onChange={(e) => setEmail(e.target.value)}
-                placeholder="enter your email"
-              />
-              <Input
+                id="email"
+                type="email"
+                placeholder="m@example.com"
+                required
                 autoFocus={true}
-                onChange={(e) => setPassword(e.target.value)}
-                placeholder="enter your password"
               />
-              <Button
-                variant="default"
-                onClick={async () => {}}
-                className="w-full mt-5"
-              >
-                Login
-              </Button>
-            </form>
-          </CardContent>
-        </Card>
-      </div>
-    </div>
+            </div>
+            <div className="grid gap-2">
+              <div className="flex items-center">
+                <Label htmlFor="password">Password</Label>
+              </div>
+              <Input
+                onChange={(e) => setPassword(e.target.value)}
+                id="password"
+                type="password"
+                required
+              />
+            </div>
+            <Button className="w-full">Login</Button>
+          </div>
+          <div className="mt-4 text-center text-sm">
+            Don&apos;t have an account?{" "}
+            <Link to="/register" className="underline">
+              Sign up
+            </Link>
+          </div>
+        </CardContent>
+      </Card>
+    </form>
   );
 };
 
