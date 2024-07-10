@@ -70,7 +70,8 @@ export const getDeviceDataQuery = ({ locationId, deviceId, page }: { locationId:
     return useQuery({
         queryKey: [DEVICES_DATA_KEY, { page }],
         queryFn: async () => await getDeviceData({ locationId, deviceId, page }),
-        placeholderData: keepPreviousData
+        placeholderData: keepPreviousData,
+        enabled: !!deviceId
     })
 };
 export const useAttachDeviceMutation = () => {

@@ -1,6 +1,11 @@
 import axios from "../axiosInstance";
 import { ILocation } from "../../interfaces/global";
-import { IData } from "./interfaces"
+import { IData } from "./interfaces";
+export interface IGetDeviceData {
+    page: number;
+    pages: number;
+    data: Array<IData>;
+}
 export const getLocation = async (id: string) => {
     return (
         await axios.get<ILocation>(`${import.meta.env.VITE_API_URL}/locations/${id}`)
@@ -24,6 +29,6 @@ export const attachDevice = async (locationId: string, deviceId: string) => {
 
 export const getDeviceData = async ({ locationId, deviceId, page }: { locationId: string, deviceId: string, page: number }) => {
     return (
-        await axios.get<IData[]>(`/locations/${locationId}/${deviceId}?page=${page}`)
+        await axios.get<IGetDeviceData>(`/locations/${locationId}/${deviceId}?page=${page}`)
     ).data;
 };

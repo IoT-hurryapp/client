@@ -43,7 +43,6 @@ import { AreaChart } from "./components/AreaChart";
 import { IData } from "../../services/api/interfaces";
 import { SelectDevices } from "./components/SelectDevices";
 import { RadialChart } from "./components/RadialChart";
-// import Notifications from "./components/Notifications";
 import jsCookie from "js-cookie";
 const Location = () => {
   const params = useParams();
@@ -53,41 +52,44 @@ const Location = () => {
   const [page, setPage] = useState(1);
   const [tempUnit, setTempUnit] = useState<"°C" | "°F">("°C");
   const [realTimeData, setRealTimeData] = useState<IData>();
-  const [deviceId, selectDeviceId] = useState<string>(
-    location.data?.devices[0].id || ""
-  );
-  const analysisData = getDeviceDataQuery({ locationId, deviceId, page });
+  const defaultDeviceId = location.data?.devices[0].id;
+  const [selectedDevice, setSelectedDevice] = useState(defaultDeviceId || "");
+  const analysisData = getDeviceDataQuery({
+    locationId,
+    deviceId: defaultDeviceId || "",
+    page,
+  });
   useEffect(() => {
-    const token = "" || jsCookie.get("access_token");
-    console.log(token);
-
-    socketRef.current = io(
-      `${import.meta.env.VITE_SOCKET_URL}/devices/${deviceId}`,
-      {
-        auth: {
-          token,
-        },
-        autoConnect: true,
-      }
-    );
-
-    socketRef.current.on("connect", () => console.log("socket connected"));
-    socketRef.current.on("disconnect", () => console.log("disconnected"));
-    socketRef.current.on(`data`, (data: IData) => {
-      console.log("data");
-
-      setRealTimeData(data);
-    });
-    console.log("socket.current", socketRef.current);
+    if (defaultDeviceId) {
+      const token = jsCookie.get("access_token");
+      socketRef.current = io(
+        `${import.meta.env.VITE_SOCKET_URL}/devices/${
+          selectedDevice || defaultDeviceId
+        }`,
+        {
+          auth: {
+            token,
+          },
+          autoConnect: true,
+        }
+      );
+      socketRef.current.on("connect", () =>
+        console.log("socket connected yay")
+      );
+      socketRef.current.on("disconnect", () => console.log("disconnected"));
+      socketRef.current.on("data", (data: IData) => {
+        setRealTimeData(data);
+      });
+      console.log(socketRef.current);
+    }
     return () => {
       socketRef.current?.off("connect", () => console.log("connected"));
       socketRef.current?.off("disconnect", () => console.log("disconnected"));
     };
-  }, []);
+  }, [defaultDeviceId]);
   if (location.isLoading || analysisData.isLoading) {
     return <Loader />;
   }
-  console.log("rt", realTimeData);
   return (
     <div className="container mx-auto px-4 md:px-6 py-8 pt-[10rem]">
       <div>
@@ -96,7 +98,7 @@ const Location = () => {
             Real time statistics on the GO !
           </h1>
           <SelectDevices
-            selectDeviceId={selectDeviceId}
+            selectDeviceId={setSelectedDevice}
             devicesList={location.data?.devices as any}
           />
         </div>
@@ -228,21 +230,24 @@ const Location = () => {
               </Select>
             </CardHeader>
             <CardContent>
-              <DataLogs data={[]} />
-              <div className="lg:w-[50%] flex justify-between mx-auto">
+              <DataLogs data={analysisData.data?.data || []} />
+              <div className="lg:w-[70%] flex justify-between items-center mx-auto mt-4">
                 <Button
                   onClick={() => setPage((prev) => prev - 1)}
                   className="px-8"
-                  variant={"secondary"}
-                  // disabled={analysisData.isPre}
+                  variant={"outline"}
+                  disabled={page === 1}
                 >
                   Prev
                 </Button>
+                <span className="text-sm font-medium opacity-50">
+                  Current page {page}
+                </span>
                 <Button
                   onClick={() => setPage((prev) => prev + 1)}
                   className="px-8"
-                  variant={"secondary"}
-                  disabled={(analysisData.data?.length || 0) < 10}
+                  variant={"outline"}
+                  disabled={page === analysisData.data?.pages}
                 >
                   Next
                 </Button>

@@ -1,10 +1,8 @@
-import { Button } from "../../../components/ui/button";
 import {
   Table,
   TableBody,
   TableCaption,
   TableCell,
-  TableFooter,
   TableHead,
   TableHeader,
   TableRow,
@@ -20,7 +18,6 @@ export default function TableDemo({ data }: { data: IData[] }) {
           <TableHead className="w-[100px]">Date</TableHead>
           <TableHead>Air quality</TableHead>
           <TableHead>Temperature in C</TableHead>
-          {/* <TableHead>Temperature in F </TableHead> */}
           <TableHead>Dust Concentration</TableHead>
         </TableRow>
       </TableHeader>
@@ -34,7 +31,6 @@ export default function TableDemo({ data }: { data: IData[] }) {
               {c.AQI} {c.AQIStatus}
             </TableCell>
             <TableCell>{c.temperatureC || 0} C</TableCell>
-            {/* <TableCell>{c.temperatureF || 0} F</TableCell> */}
             <TableCell>{c.dustPercentage || 0} %</TableCell>
           </TableRow>
         ))}

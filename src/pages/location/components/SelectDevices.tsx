@@ -26,7 +26,7 @@ export function SelectDevices({
           <SelectLabel>Devices</SelectLabel>
           {devicesList?.map((device) => (
             <SelectItem key={device.id} value={device.id}>
-              #{device.connectedDevicesId}
+              #{device.id}
             </SelectItem>
           ))}
         </SelectGroup>
