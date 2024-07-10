@@ -60,7 +60,7 @@ const Location = () => {
     if (defaultDeviceId) {
       const token = jsCookie.get("access_token");
       socketRef.current = io(
-        `${import.meta.env.VITE_SOCKET_URL}/devices/${
+        `${import.meta.env.VITE_PRIVATE_SOCKET_URL}/${
           selectedDevice || defaultDeviceId
         }`,
         {

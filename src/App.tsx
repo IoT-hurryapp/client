@@ -22,31 +22,30 @@ function App() {
     <ThemeProvider defaultTheme="light">
       <Header username={user.data?.username || ""} />
       <Toaster />
-      <Routes>
-        <Route
-          path="/"
-          element={!isLoggedIn ? <Home /> : <Navigate to={"/locations"} />}
-        />
-        <Route
-          path="/locations"
-          element={!isLoggedIn ? <Navigate to={"/"} /> : <Locations />}
-        />
-        <Route path="/locations/public" element={<PublicLocations />} />
-        <Route
-          path="/locations/:id"
-          element={!isLoggedIn ? <Navigate to={"/"} /> : <Location />}
-        />
-        <Route path="/">
+      <Suspense fallback={<Loader />}>
+        <Routes>
+          <Route path="/" element={<Home />} />
           <Route
-            path="login"
-            element={isLoggedIn ? <Navigate to={"/"} /> : <Login />}
+            path="/locations"
+            element={!isLoggedIn ? <Navigate to={"/"} /> : <Locations />}
           />
+          <Route path="/locations/public" element={<PublicLocations />} />
           <Route
-            path="register"
-            element={isLoggedIn ? <Navigate to={"/"} /> : <Register />}
+            path="/locations/:id"
+            element={!isLoggedIn ? <Navigate to={"/"} /> : <Location />}
           />
-        </Route>
-      </Routes>
+          <Route path="/">
+            <Route
+              path="login"
+              element={isLoggedIn ? <Navigate to={"/"} /> : <Login />}
+            />
+            <Route
+              path="register"
+              element={isLoggedIn ? <Navigate to={"/"} /> : <Register />}
+            />
+          </Route>
+        </Routes>
+      </Suspense>
       <Footer />
     </ThemeProvider>
   );
