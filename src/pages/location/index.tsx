@@ -44,6 +44,19 @@ import { IData } from "../../services/api/interfaces";
 import { SelectDevices } from "./components/SelectDevices";
 import { RadialChart } from "./components/RadialChart";
 import jsCookie from "js-cookie";
+import csvHeaders from "../../constants/csvHeaders";
+import { File } from "lucide-react";
+import ExportCSV from "./components/ExportCSV";
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogDescription,
+  DialogTitle,
+  DialogTrigger,
+} from "../../components/ui/dialog";
+import { DialogFooter, DialogHeader } from "../../components/ui/dialog";
+
 const Location = () => {
   const params = useParams();
   const locationId = params.id || "";
@@ -54,6 +67,8 @@ const Location = () => {
   const [realTimeData, setRealTimeData] = useState<IData>();
   const defaultDeviceId = location.data?.devices[0].id;
   const [selectedDevice, setSelectedDevice] = useState(defaultDeviceId || "");
+  const [isDownloadReady, setIsDownloadReady] = useState(false);
+  const [csvData, setCsvData] = useState<Array<{}>>([{}]);
   const analysisData = getDeviceDataQuery({
     locationId,
     deviceId: defaultDeviceId || "",
@@ -90,6 +105,20 @@ const Location = () => {
   if (location.isLoading || analysisData.isLoading) {
     return <Loader />;
   }
+  const handleDownloadCSV = () => {
+    let newData: Array<{}> = [];
+    analysisData.data?.data.forEach((entry: any) => {
+      let filteredEntry: any = {};
+      csvHeaders.forEach((header: { label: string; key: string }) => {
+        if (!entry[header.key] && entry[header.key] !== 0) return;
+        filteredEntry[header.key] = entry[header.key];
+      });
+      newData.push(filteredEntry);
+    });
+    setCsvData(newData);
+    setIsDownloadReady(true);
+  };
+
   return (
     <div className="container mx-auto px-4 md:px-6 py-8 pt-[10rem]">
       <div>
@@ -217,17 +246,19 @@ const Location = () => {
           <Card className="w-full">
             <CardHeader className="w-full flex flex-row items-center justify-between">
               <CardTitle>Pollution Logs</CardTitle>
-              <Select>
-                <SelectTrigger className="w-[180px]">
-                  <SelectValue placeholder="Download" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectGroup>
-                    <SelectLabel>Formats</SelectLabel>
-                    <SelectItem value="pdf">Pdf</SelectItem>
-                  </SelectGroup>
-                </SelectContent>
-              </Select>
+              <div>
+                <Button
+                  onClick={handleDownloadCSV}
+                  size="sm"
+                  variant="outline"
+                  className="h-8 gap-1"
+                >
+                  <File className="h-3.5 w-3.5" />
+                  <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
+                    Export
+                  </span>
+                </Button>
+              </div>
             </CardHeader>
             <CardContent>
               <DataLogs data={analysisData.data?.data || []} />
@@ -254,6 +285,32 @@ const Location = () => {
               </div>
             </CardContent>
           </Card>
+          <Dialog onOpenChange={setIsDownloadReady} open={isDownloadReady}>
+            <DialogTrigger asChild>
+              <Button className="sr-only" variant="default">
+                Download
+              </Button>
+            </DialogTrigger>
+            <DialogContent className="sm:max-w-[425px]">
+              <DialogHeader>
+                <DialogTitle>Your link is ready</DialogTitle>
+                <DialogDescription>
+                  go ahead and download it !
+                </DialogDescription>
+              </DialogHeader>
+              <div className="grid gap-4 py-4"></div>
+              <DialogFooter>
+                <DialogClose asChild>
+                  <ExportCSV
+                    isDownloadReady={isDownloadReady}
+                    setIsDownloadReady={setIsDownloadReady}
+                    csvData={csvData}
+                    filename={`page-${page}-${new Date()}`}
+                  />
+                </DialogClose>
+              </DialogFooter>
+            </DialogContent>
+          </Dialog>
         </div>
       </div>
     </div>
