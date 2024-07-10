@@ -17,10 +17,10 @@ import { DataReadingKey } from "../../../interfaces/global";
 import dataReadingColor from "../../../helper/getReadingColor";
 const chartConfig = {
   visitors: {
-    label: "Visitors",
+    label: "Data reading",
   },
-  safari: {
-    label: "Safari",
+  chrome: {
+    label: "Chrome",
     color: "hsl(var(--chart-2))",
   },
 } satisfies ChartConfig;
@@ -49,7 +49,7 @@ export function RadialChart({
           <RadialBarChart
             data={chartData}
             startAngle={0}
-            endAngle={250}
+            endAngle={value}
             innerRadius={80}
             outerRadius={110}
           >

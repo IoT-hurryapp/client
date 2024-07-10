@@ -120,22 +120,22 @@ const Location = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 my-4">
               <RadialChart
                 value={realTimeData?.AQI || 0}
-                readType={"Air quality index"}
+                readType={"AQI Percentage"}
                 readKey="AQI"
               />
               <RadialChart
                 value={realTimeData?.dustPercentage || 0}
-                readType={"Dust Levels"}
+                readType={"Pollution Percentage"}
                 readKey="dustPercentage"
               />
               <RadialChart
                 value={realTimeData?.temperatureC || 0}
-                readType={"Temperature"}
+                readType={"Temperature °C"}
                 readKey="temperatureC"
               />
               <RadialChart
                 value={realTimeData?.humidity || 0}
-                readType={"Humidity Levels"}
+                readType={"Humidity Percentage"}
                 readKey="humidity"
               />
             </div>
@@ -153,7 +153,7 @@ const Location = () => {
               config={{
                 [chartKey]: {
                   label: chartKey,
-                  color: "hsl(var(--chart-2))",
+                  color: "hsl(var(--chart-1))",
                 },
               }}
             />

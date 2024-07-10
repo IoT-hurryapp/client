@@ -184,7 +184,31 @@ const Notifications = () => {
                 >
                   Warning air quality is
                 </NotificationItem>
+                {/* <NotificationItem
+                  date="Oct 11 at 06:57 p.m."
+                  color="red"
+                  status="DANGER"
+                  title="Baghdad/Iraq"
+                >
+                  Warning air quality is
+                </NotificationItem> */}
+                {/* <NotificationItem
+                  date="Oct 11 at 06:57 p.m."
+                  color="red"
+                  status="DANGER"
+                  title="Baghdad/Iraq"
+                >
+                  Warning air quality is
+                </NotificationItem>
                 <NotificationItem
+                  date="Oct 11 at 06:57 p.m."
+                  color="red"
+                  status="DANGER"
+                  title="Baghdad/Iraq"
+                >
+                  Warning air quality is
+                </NotificationItem> */}
+                {/* <NotificationItem
                   date="Oct 11 at 06:57 p.m."
                   color="red"
                   status="DANGER"
@@ -239,31 +263,7 @@ const Notifications = () => {
                   title="Baghdad/Iraq"
                 >
                   Warning air quality is
-                </NotificationItem>
-                <NotificationItem
-                  date="Oct 11 at 06:57 p.m."
-                  color="red"
-                  status="DANGER"
-                  title="Baghdad/Iraq"
-                >
-                  Warning air quality is
-                </NotificationItem>
-                <NotificationItem
-                  date="Oct 11 at 06:57 p.m."
-                  color="red"
-                  status="DANGER"
-                  title="Baghdad/Iraq"
-                >
-                  Warning air quality is
-                </NotificationItem>
-                <NotificationItem
-                  date="Oct 11 at 06:57 p.m."
-                  color="red"
-                  status="DANGER"
-                  title="Baghdad/Iraq"
-                >
-                  Warning air quality is
-                </NotificationItem>
+                </NotificationItem> */}
               </ul>
             </NavigationMenuLink>
           </NavigationMenuContent>
