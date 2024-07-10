@@ -9,7 +9,9 @@ export default function Component() {
   const socketRef = useRef<Socket | null>(null);
   useEffect(() => {
     socketRef.current = io(
-      `${import.meta.env.VITE_SOCKET_URL}/${import.meta.env.PUBLIC_DEVICE}`,
+      `${import.meta.env.VITE_PUBLIC_SOCKET_URL}/${
+        import.meta.env.PUBLIC_DEVICE
+      }`,
       {
         autoConnect: true,
       }

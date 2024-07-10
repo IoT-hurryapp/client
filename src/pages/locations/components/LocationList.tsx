@@ -13,7 +13,7 @@ const LocationsList = ({
 }: ILocationsListProps) => {
   return (
     <ul role="list" className="divide-y divide-gray-100 dark:divide-gray-800">
-      {locations.map((location) => (
+      {(locations || []).map((location) => (
         <li
           key={location.id}
           className="flex justify-between gap-x-6 py-5 hover:bg-gray-100 hover:dark:bg-gray-800 px-5 rounded cursor-pointer transition-colors"
