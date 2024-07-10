@@ -1,4 +1,4 @@
-import { Suspense, lazy } from "react";
+import { Suspense, lazy, useEffect } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 import { getUserQuery } from "./services/queries/user";
 import { Toaster } from "./components/ui/toaster";
@@ -20,7 +20,7 @@ function App() {
 	const isLoggedIn = !!user.data;
 	return (
 		<ThemeProvider defaultTheme="light">
-			<Header username={user.data?.username || ""} />
+			<Header username={user.data?.username || ""} notifications={user.data?.notifications || []} />
 			<Toaster />
 			<Suspense fallback={<Loader />}>
 				<Routes>
