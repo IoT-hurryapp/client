@@ -69,8 +69,6 @@ const Locations = () => {
       setNewLocationName("");
       setDeviceIdToAttach("");
     } catch (err) {
-      console.log(err);
-      console.log(attachDeviceMutation.error);
       toast({
         title: attachDeviceMutation.isError
           ? "Please check your device id"
@@ -79,12 +77,6 @@ const Locations = () => {
       });
     }
   };
-
-  /**
-   * 1. name
-   * 2. notifications
-   * 3. devices connected
-   */
 
   return (
     <section className="pt-[10rem] container min-h-[100vh]">

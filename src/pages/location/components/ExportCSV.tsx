@@ -15,17 +15,15 @@ const ExportCSV = ({
 }: IExportCSVProps) => {
   return (
     isDownloadReady && (
-      <Button>
-        <CSVLink
-          onClick={() => setIsDownloadReady(false)}
-          headers={csvHeaders}
-          data={csvData}
-          filename={filename}
-          target="_blank"
-        >
-          Download me
-        </CSVLink>
-      </Button>
+      <CSVLink
+        onClick={() => setIsDownloadReady(false)}
+        headers={csvHeaders}
+        data={csvData}
+        filename={filename}
+        target="_blank"
+      >
+        <Button className="w-full">Download me</Button>
+      </CSVLink>
     )
   );
 };

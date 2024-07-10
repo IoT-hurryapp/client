@@ -24,7 +24,7 @@ export default function DataLogs({ data }: { data: IData[] }) {
       </TableHeader>
       <TableBody>
         {data.map((c) => (
-          <TableRow key={c.connectedDevicesId}>
+          <TableRow key={c.id}>
             <TableCell className="font-medium">
               {c.createdAt.toString()}
             </TableCell>

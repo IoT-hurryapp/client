@@ -1,4 +1,3 @@
-
 export interface IDevice {
     id: string;
     connectedDevicesId: string;
@@ -19,4 +18,11 @@ export interface ILocation {
         dataId: string;
         locationId: string;
     }[];
+}
+export type DataReadingKey = "AQI" | "dustPercentage" | "temperatureC" | "humidity";
+export interface IUser {
+    id: string;
+    locations: Array<ILocation>;
+    token: null
+    username: string;
 }

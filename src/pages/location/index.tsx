@@ -6,12 +6,6 @@ import {
   CardContent,
 } from "../../components/ui/card";
 // import { Alert, AlertDescription, AlertTitle } from "../../components/ui/alert";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "../../components/ui/dropdown-menu";
 import { useParams } from "react-router-dom";
 import {
   getDeviceDataQuery,
@@ -44,18 +38,17 @@ import {
   DialogTrigger,
 } from "../../components/ui/dialog";
 import { DialogHeader } from "../../components/ui/dialog";
-type ChartKey = "AQI" | "dustPercentage" | "temperatureC" | "humidity";
+import { DataReadingKey } from "../../interfaces/global";
 const Location = () => {
   const params = useParams();
   const locationId = params.id || "";
   const location = getLocationQuery(locationId);
   const socketRef = useRef<Socket | null>(null);
   const [page, setPage] = useState(1);
-  const [tempUnit, setTempUnit] = useState<"°C" | "°F">("°C");
   const [realTimeData, setRealTimeData] = useState<IData>();
   const defaultDeviceId = location.data?.devices[0].id;
   const [selectedDevice, setSelectedDevice] = useState(defaultDeviceId || "");
-  const [chartKey, setChartKey] = useState<ChartKey>("AQI");
+  const [chartKey, setChartKey] = useState<DataReadingKey>("AQI");
   const [csvData, setCsvData] = useState<Array<{}>>([]);
   const [isDownloadReady, setIsDownloadReady] = useState(false);
   const analysisData = getDeviceDataQuery({
@@ -84,7 +77,6 @@ const Location = () => {
       socketRef.current.on("data", (data: IData) => {
         setRealTimeData(data);
       });
-      console.log(socketRef.current);
     }
     return () => {
       socketRef.current?.off("connect", () => console.log("connected"));
@@ -107,7 +99,6 @@ const Location = () => {
     setCsvData(newData);
     setIsDownloadReady(true);
   };
-
   return (
     <div className="container mx-auto px-4 md:px-6 py-8 pt-[10rem]">
       <div>
@@ -124,25 +115,28 @@ const Location = () => {
           <TabsList className="grid grid-cols-2 w-[300px]">
             <TabsTrigger value="radial">Radial</TabsTrigger>
             <TabsTrigger value="analysis">Analysis</TabsTrigger>
-            {/* <TabsTrigger value="notifications">Notifications</TabsTrigger> */}
           </TabsList>
           <TabsContent value="radial" className="w-full">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 my-4">
               <RadialChart
-                value={realTimeData?.dustPercentage || 0}
-                readType={"Pollution Levels"}
-              />
-              <RadialChart
                 value={realTimeData?.AQI || 0}
                 readType={"Air quality index"}
+                readKey="AQI"
+              />
+              <RadialChart
+                value={realTimeData?.dustPercentage || 0}
+                readType={"Dust Levels"}
+                readKey="dustPercentage"
               />
               <RadialChart
                 value={realTimeData?.temperatureC || 0}
-                readType={"Temperature c"}
+                readType={"Temperature"}
+                readKey="temperatureC"
               />
               <RadialChart
                 value={realTimeData?.humidity || 0}
                 readType={"Humidity Levels"}
+                readKey="humidity"
               />
             </div>
           </TabsContent>
@@ -165,87 +159,8 @@ const Location = () => {
             />
           </TabsContent>
         </Tabs>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          <Card>
-            <CardHeader>
-              <CardTitle>Pollution Levels</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="text-4xl font-bold">
-                <span className="text-primary">
-                  {realTimeData?.dustPercentage || 0}
-                </span>
-                <span className="text-muted-foreground text-lg">/100</span>
-              </div>
-              <p className="text-muted-foreground">Current pollution index</p>
-            </CardContent>
-          </Card>
-          <Card>
-            <CardHeader>
-              <CardTitle>Air Quality Index</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="text-4xl font-bold">
-                <span className="text-primary">{realTimeData?.AQI || 0}</span>
-                <span className="text-muted-foreground text-lg">/100</span>
-              </div>
-              <p className="text-muted-foreground">Current air quality index</p>
-            </CardContent>
-          </Card>
-          <Card>
-            <CardHeader>
-              <CardTitle className="flex justify-between flex-row">
-                Temperature
-                <DropdownMenu>
-                  <DropdownMenuTrigger>
-                    <Button variant={"secondary"} className="max-h-9 ml-auto">
-                      {tempUnit}
-                    </Button>
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent>
-                    <DropdownMenuItem onClick={() => setTempUnit("°C")}>
-                      °C
-                    </DropdownMenuItem>
-                    <DropdownMenuItem onClick={() => setTempUnit("°F")}>
-                      °F
-                    </DropdownMenuItem>
-                  </DropdownMenuContent>
-                </DropdownMenu>
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="text-4xl font-bold">
-                <span className="text-primary">
-                  {(tempUnit === "°C"
-                    ? realTimeData?.temperatureC
-                    : realTimeData?.temperatureF) || 0}
-                </span>
-                <span className="text-muted-foreground text-lg">
-                  {tempUnit === "°C" ? "°C" : "°F"}
-                </span>
-              </div>
-              <p className="text-muted-foreground">Current Temperature</p>
-            </CardContent>
-          </Card>
-          <Card>
-            <CardHeader>
-              <CardTitle>Humidity</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="text-4xl font-bold">
-                <span className="text-primary">
-                  {realTimeData?.humidity || 0}
-                </span>
-                <span className="text-muted-foreground text-lg">%</span>
-              </div>
-              <p className="text-muted-foreground">Current Humidity rate</p>
-            </CardContent>
-          </Card>
-        </div>
       </div>
-      <div className="w-full  mt-8">
-        <h2 className="text-xl font-bold mb-4">Detailed Visualizations</h2>
+      <div className="w-full mt-8">
         <div className="w-full">
           <Dialog onOpenChange={setIsDownloadReady} open={isDownloadReady}>
             <DialogTrigger asChild>
@@ -272,7 +187,7 @@ const Location = () => {
           </Dialog>
           <Card className="w-full">
             <CardHeader className="w-full flex flex-row items-center justify-between">
-              <CardTitle>Pollution Logs</CardTitle>
+              <CardTitle>History</CardTitle>
               <Button
                 onClick={dataToCSV}
                 size="sm"
@@ -290,7 +205,7 @@ const Location = () => {
               <div className="lg:w-[70%] flex justify-between items-center mx-auto mt-4">
                 <Button
                   onClick={() => setPage((prev) => prev - 1)}
-                  className="px-8"
+                  className="sm:text-[.75rem] md:text-sm md:px-8"
                   variant={"outline"}
                   disabled={page === 1}
                 >
@@ -301,7 +216,7 @@ const Location = () => {
                 </span>
                 <Button
                   onClick={() => setPage((prev) => prev + 1)}
-                  className="px-8"
+                  className="sm:text-[.75rem] md:text-sm md:px-8"
                   variant={"outline"}
                   disabled={page === analysisData.data?.pages}
                 >

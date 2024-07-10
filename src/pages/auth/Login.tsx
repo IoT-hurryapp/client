@@ -18,7 +18,7 @@ const Login = () => {
   const navigate = useNavigate();
   const [password, setPassword] = useState<string>("");
   const loginMutation = useLoginMutation();
-  const handleSubmit = (e: any) => {
+  const handleSubmit = async (e: any) => {
     e.preventDefault();
     const emailRegexp = new RegExp(
       /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
@@ -37,16 +37,24 @@ const Login = () => {
         variant: "destructive",
       });
     }
-    loginMutation.mutate({ email, password });
-    if (loginMutation.isSuccess) {
+    try {
+      const res = await loginMutation.mutateAsync({ email, password });
+      if (res.success) {
+        toast({
+          description: "Login successfully!",
+          title: "Success",
+          variant: "default",
+        });
+        setTimeout(() => {
+          navigate("/locations");
+        }, 1200);
+      }
+    } catch (err: any) {
       toast({
-        description: "Login successfully!",
-        title: "Success",
+        description: "Check your email and password",
+        title: "Error",
         variant: "default",
       });
-      setTimeout(() => {
-        navigate("/locations");
-      }, 1200);
     }
   };
   return (

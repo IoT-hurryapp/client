@@ -1,7 +1,8 @@
 import { useQueryClient, useMutation } from "@tanstack/react-query"
-import { login, register } from "../api/auth";
+import { login, register, logout } from "../api/auth";
 import { IRegisterData, ILoginData } from "../types/auth";
 import { PROFILE_KEY } from "../keys";
+import jsCookie from "js-cookie"
 interface ILoginErrorBody {
     response: {
         data: {
@@ -23,7 +24,16 @@ export const useLoginMutation = () => {
     return useMutation<{ success: boolean, username: string; }, ILoginErrorBody, ILoginData>({
         mutationFn: (data) => login(data),
         onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: [PROFILE_KEY] });
+            queryClient.invalidateQueries({ queryKey: [PROFILE_KEY], refetchType: "all" });
+        },
+    })
+};
+export const useLogoutMutation = () => {
+    const queryClient = useQueryClient();
+    return useMutation<{ success: boolean, message: string }, { success: false, message: string }, {}>({
+        mutationFn: () => logout(),
+        onSuccess: () => {
+            queryClient.resetQueries()
         },
     })
 };

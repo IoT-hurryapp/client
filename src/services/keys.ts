@@ -4,3 +4,4 @@ export const LOCATION_KEY = "LOCATION";
 export const LOCATIONS_KEY = "LOCATIONS"
 export const DEVICES_KEY = "DEVICES";
 export const DEVICES_DATA_KEY = "DEVICES-DATA";
+export const PUBLIC_LOCATIONS_KEY = "PUBLIC_LOCATIONS"

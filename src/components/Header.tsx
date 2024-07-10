@@ -6,10 +6,8 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "./ui/sheet";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { X, Menu, Leaf, Bell } from "lucide-react";
-import { Protected } from "./Protected";
-import { useAppState } from "../utils/mobx/state";
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -18,7 +16,6 @@ import {
   NavigationMenuList,
   NavigationMenuTrigger,
 } from "../components/ui/navigation-menu";
-
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -27,18 +24,36 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "./ui/dropdown-menu";
-import { observer } from "mobx-react-lite";
 import { Button } from "./ui/button";
 import { ModeToggle } from "./mode-toggle";
-import { Separator } from "@radix-ui/react-dropdown-menu";
 import { cn } from "../lib/utils";
 import React from "react";
-const Header = observer(() => {
-  const app = useAppState();
-  //logout mutation
+import { useLogoutMutation } from "../services/queries/auth";
+import { toast } from "./ui/use-toast";
+const Header = ({ username }: { username: string }) => {
+  const logoutMutation = useLogoutMutation();
+  const navigate = useNavigate();
+  const handleLogout = async () => {
+    try {
+      const res = await logoutMutation.mutateAsync({});
+      if (res.success) {
+        toast({
+          title: "Success !",
+          description: "Logged out successfully!",
+        });
+        setTimeout(() => {
+          navigate("/");
+        }, 1000);
+      }
+    } catch (err) {
+      console.log(err);
+      toast({
+        title: "Error !",
+        description: "Error while Logging out!",
+      });
+    }
+  };
   return (
-    // <NavigationMenuDemo />
-
     <header className="absolute inset-x-0 top-0 z-50">
       <nav
         aria-label="Global"
@@ -74,183 +89,199 @@ const Header = observer(() => {
               <div className="mt-6 flow-root">
                 <div className="-my-6 divide-gray-500/10">
                   <div className="space-y-2 py-6"></div>
-                  <Protected
-                    fallback={<>Loading</>}
-                    error={
-                      <div className={`py-6`}>
-                        <Link
-                          to="/login"
-                          className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
-                        >
-                          Log in
-                        </Link>
+                  {username ? (
+                    <div className="flex flex-col gap-3">
+                      <div className="flex w-full justify-between pb-2 border-b">
+                        <p className="text-xl">My Account</p>
+                        <Notifications />
                       </div>
-                    }
-                  >
-                    <div className="flex flex-col ga-3">
-                      <p className="text-xl pb-2 border-b">My Account</p>
                       <ul className="flex flex-col gap-2 mt-2">
                         <li className="hover:text-blue-500 hover:underline">
                           <Link to={"/locations"}>Locations</Link>
                         </li>
 
                         <li className="hover:text-blue-500 hover:underline">
-                          <Link to={"/locations"}>Public locations</Link>
+                          <Link to={"/locations/public"}>Public locations</Link>
                         </li>
                         <li>
-                          <Button variant={"destructive"}>logout</Button>
+                          <Button
+                            onClick={handleLogout}
+                            variant={"destructive"}
+                          >
+                            logout
+                          </Button>
                         </li>
                       </ul>
                     </div>
-                  </Protected>
+                  ) : (
+                    <div className={`py-6`}>
+                      <Link
+                        to="/login"
+                        className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
+                      >
+                        Log in
+                      </Link>
+                    </div>
+                  )}
                 </div>
               </div>
             </SheetContent>
           </Sheet>
         </div>
         <div className="hidden lg:flex lg:gap-x-12"></div>
-        <div className="hidden lg:flex lg:flex-1 lg:justify-end gap-2">
-          <Protected
-            error={
-              <Link to={"/login"}>
-                <Button variant={"link"}>Login</Button>
-              </Link>
-            }
-          >
-            <Dropdown username={app.auth.user?.username || ""} />
-          </Protected>
-          <NavigationMenu>
-            <NavigationMenuList>
-              <NavigationMenuItem>
-                <NavigationMenuTrigger>
-                  <Button variant="outline" size="icon" className="h-8 w-8">
-                    <Bell className="h-4 w-4" />
-                    <span className="sr-only">Toggle notifications</span>
-                  </Button>
-                </NavigationMenuTrigger>
-                <NavigationMenuContent>
-                  <NavigationMenuLink>
-                    <ul className="grid gap-3 p-6 md:w-[400px] lg:w-[700px] lg:grid-cols-[.75fr_1fr]">
-                      <NotificationItem
-                        date="Oct 11 at 06:57 p.m."
-                        color="red"
-                        status="DANGER"
-                        title="Baghdad/Iraq"
-                      >
-                        Warning air quality is
-                      </NotificationItem>
-                      <NotificationItem
-                        date="Oct 11 at 06:57 p.m."
-                        color="red"
-                        status="DANGER"
-                        title="Baghdad/Iraq"
-                      >
-                        Warning air quality is
-                      </NotificationItem>
-                      <NotificationItem
-                        date="Oct 11 at 06:57 p.m."
-                        color="red"
-                        status="DANGER"
-                        title="Baghdad/Iraq"
-                      >
-                        Warning air quality is
-                      </NotificationItem>
-                      <NotificationItem
-                        date="Oct 11 at 06:57 p.m."
-                        color="red"
-                        status="DANGER"
-                        title="Baghdad/Iraq"
-                      >
-                        Warning air quality is
-                      </NotificationItem>
-                      <NotificationItem
-                        date="Oct 11 at 06:57 p.m."
-                        color="red"
-                        status="DANGER"
-                        title="Baghdad/Iraq"
-                      >
-                        Warning air quality is
-                      </NotificationItem>
-                      <NotificationItem
-                        date="Oct 11 at 06:57 p.m."
-                        color="red"
-                        status="DANGER"
-                        title="Baghdad/Iraq"
-                      >
-                        Warning air quality is
-                      </NotificationItem>
-                      <NotificationItem
-                        date="Oct 11 at 06:57 p.m."
-                        color="red"
-                        status="DANGER"
-                        title="Baghdad/Iraq"
-                      >
-                        Warning air quality is
-                      </NotificationItem>
-                      <NotificationItem
-                        date="Oct 11 at 06:57 p.m."
-                        color="red"
-                        status="DANGER"
-                        title="Baghdad/Iraq"
-                      >
-                        Warning air quality is
-                      </NotificationItem>
-                      <NotificationItem
-                        date="Oct 11 at 06:57 p.m."
-                        color="red"
-                        status="DANGER"
-                        title="Baghdad/Iraq"
-                      >
-                        Warning air quality is
-                      </NotificationItem>
-                      <NotificationItem
-                        date="Oct 11 at 06:57 p.m."
-                        color="red"
-                        status="DANGER"
-                        title="Baghdad/Iraq"
-                      >
-                        Warning air quality is
-                      </NotificationItem>
-                      <NotificationItem
-                        date="Oct 11 at 06:57 p.m."
-                        color="red"
-                        status="DANGER"
-                        title="Baghdad/Iraq"
-                      >
-                        Warning air quality is
-                      </NotificationItem>
-                      <NotificationItem
-                        date="Oct 11 at 06:57 p.m."
-                        color="red"
-                        status="DANGER"
-                        title="Baghdad/Iraq"
-                      >
-                        Warning air quality is
-                      </NotificationItem>
-                      <NotificationItem
-                        date="Oct 11 at 06:57 p.m."
-                        color="red"
-                        status="DANGER"
-                        title="Baghdad/Iraq"
-                      >
-                        Warning air quality is
-                      </NotificationItem>
-                    </ul>
-                  </NavigationMenuLink>
-                </NavigationMenuContent>
-              </NavigationMenuItem>
-            </NavigationMenuList>
-          </NavigationMenu>
+        <div className="hidden lg:flex lg:flex-1 lg:justify-end gap-4 items-center">
+          {username ? (
+            <>
+              <Dropdown handleLogout={handleLogout} username={username} />
+              <Notifications />
+            </>
+          ) : (
+            <Link to={"/login"}>
+              <Button variant={"link"}>Login</Button>
+            </Link>
+          )}
           <ModeToggle />
         </div>
       </nav>
     </header>
   );
-});
-const Dropdown = ({ username }: { username: string }) => {
+};
+const Notifications = () => {
+  return (
+    <NavigationMenu>
+      <NavigationMenuList>
+        <NavigationMenuItem>
+          <NavigationMenuTrigger>
+            <Button variant="outline" size="icon" className="h-8 w-8">
+              <Bell className="h-4 w-4" />
+              <span className="sr-only">Toggle notifications</span>
+            </Button>
+          </NavigationMenuTrigger>
+          <NavigationMenuContent>
+            <NavigationMenuLink>
+              <ul className="grid gap-3 p-6 sm:w-[90vw] md:w-[400px] lg:w-[700px] lg:grid-cols-[.75fr_1fr]">
+                <NotificationItem
+                  date="Oct 11 at 06:57 p.m."
+                  color="red"
+                  status="DANGER"
+                  title="Baghdad/Iraq"
+                >
+                  Warning air quality is
+                </NotificationItem>
+                <NotificationItem
+                  date="Oct 11 at 06:57 p.m."
+                  color="red"
+                  status="DANGER"
+                  title="Baghdad/Iraq"
+                >
+                  Warning air quality is
+                </NotificationItem>
+                <NotificationItem
+                  date="Oct 11 at 06:57 p.m."
+                  color="red"
+                  status="DANGER"
+                  title="Baghdad/Iraq"
+                >
+                  Warning air quality is
+                </NotificationItem>
+                <NotificationItem
+                  date="Oct 11 at 06:57 p.m."
+                  color="red"
+                  status="DANGER"
+                  title="Baghdad/Iraq"
+                >
+                  Warning air quality is
+                </NotificationItem>
+                <NotificationItem
+                  date="Oct 11 at 06:57 p.m."
+                  color="red"
+                  status="DANGER"
+                  title="Baghdad/Iraq"
+                >
+                  Warning air quality is
+                </NotificationItem>
+                <NotificationItem
+                  date="Oct 11 at 06:57 p.m."
+                  color="red"
+                  status="DANGER"
+                  title="Baghdad/Iraq"
+                >
+                  Warning air quality is
+                </NotificationItem>
+                <NotificationItem
+                  date="Oct 11 at 06:57 p.m."
+                  color="red"
+                  status="DANGER"
+                  title="Baghdad/Iraq"
+                >
+                  Warning air quality is
+                </NotificationItem>
+                <NotificationItem
+                  date="Oct 11 at 06:57 p.m."
+                  color="red"
+                  status="DANGER"
+                  title="Baghdad/Iraq"
+                >
+                  Warning air quality is
+                </NotificationItem>
+                <NotificationItem
+                  date="Oct 11 at 06:57 p.m."
+                  color="red"
+                  status="DANGER"
+                  title="Baghdad/Iraq"
+                >
+                  Warning air quality is
+                </NotificationItem>
+                <NotificationItem
+                  date="Oct 11 at 06:57 p.m."
+                  color="red"
+                  status="DANGER"
+                  title="Baghdad/Iraq"
+                >
+                  Warning air quality is
+                </NotificationItem>
+                <NotificationItem
+                  date="Oct 11 at 06:57 p.m."
+                  color="red"
+                  status="DANGER"
+                  title="Baghdad/Iraq"
+                >
+                  Warning air quality is
+                </NotificationItem>
+                <NotificationItem
+                  date="Oct 11 at 06:57 p.m."
+                  color="red"
+                  status="DANGER"
+                  title="Baghdad/Iraq"
+                >
+                  Warning air quality is
+                </NotificationItem>
+                <NotificationItem
+                  date="Oct 11 at 06:57 p.m."
+                  color="red"
+                  status="DANGER"
+                  title="Baghdad/Iraq"
+                >
+                  Warning air quality is
+                </NotificationItem>
+              </ul>
+            </NavigationMenuLink>
+          </NavigationMenuContent>
+        </NavigationMenuItem>
+      </NavigationMenuList>
+    </NavigationMenu>
+  );
+};
+const Dropdown = ({
+  username,
+  handleLogout,
+}: {
+  username: string;
+  handleLogout: () => void;
+}) => {
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger>{username || "H?"}</DropdownMenuTrigger>
+      <DropdownMenuTrigger>{username || "Login"}</DropdownMenuTrigger>
       <DropdownMenuContent>
         <DropdownMenuLabel>My Account</DropdownMenuLabel>
         <DropdownMenuSeparator />
@@ -258,15 +289,18 @@ const Dropdown = ({ username }: { username: string }) => {
           <Link to={"/locations"}>Locations</Link>
         </DropdownMenuItem>
         <DropdownMenuItem>
-          <Link to={"/locations"}>Public locations</Link>
+          <Link to={"/locations/public"}>Public locations</Link>
         </DropdownMenuItem>
         <DropdownMenuSeparator />
-        <DropdownMenuItem>Logout</DropdownMenuItem>
+        <DropdownMenuItem>
+          <Button onClick={handleLogout} variant={"destructive"}>
+            Logout
+          </Button>
+        </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
   );
 };
-export default Header;
 
 export function NotificationItem({
   status,
@@ -294,7 +328,6 @@ export function NotificationItem({
     </ListItem>
   );
 }
-
 export const ListItem = React.forwardRef<
   React.ElementRef<"a">,
   React.ComponentPropsWithoutRef<"a">
@@ -320,3 +353,4 @@ export const ListItem = React.forwardRef<
   );
 });
 ListItem.displayName = "ListItem";
+export default Header;

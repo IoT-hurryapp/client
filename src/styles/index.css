@@ -3005,6 +3005,9 @@
 	body {
 		@apply bg-background text-foreground;
 	}
+	input {
+		@apply outline-none
+	}
 }
 
 body {

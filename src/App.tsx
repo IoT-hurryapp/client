@@ -11,27 +11,30 @@ import Register from "./pages/auth/Register";
 import Locations from "./pages/locations";
 import Location from "./pages/location";
 import Footer from "./components/Footer";
-
+import PublicLocations from "./pages/locations/public";
 function App() {
   const user = getUserQuery();
   if (user.isLoading) {
     return <Loader />;
   }
   const isLoggedIn = !!user.data;
-
   return (
     <ThemeProvider defaultTheme="light">
-      <Header />
+      <Header username={user.data?.username || ""} />
       <Toaster />
       <Routes>
-        <Route path="/" element={<Home />} />
         <Route
-          path="/locations/:id"
-          element={!isLoggedIn ? <Navigate to={"/"} /> : <Location />}
+          path="/"
+          element={!isLoggedIn ? <Home /> : <Navigate to={"/locations"} />}
         />
         <Route
           path="/locations"
           element={!isLoggedIn ? <Navigate to={"/"} /> : <Locations />}
+        />
+        <Route path="/locations/public" element={<PublicLocations />} />
+        <Route
+          path="/locations/:id"
+          element={!isLoggedIn ? <Navigate to={"/"} /> : <Location />}
         />
         <Route path="/">
           <Route

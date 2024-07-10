@@ -3,8 +3,8 @@ import { ILocation } from "../../../interfaces/global";
 import { Button } from "../../../components/ui/button";
 interface ILocationsListProps {
   locations: ILocation[];
-  setOpenAttachDeviceDialog: React.Dispatch<React.SetStateAction<boolean>>;
-  setLocationIdToAttachDeviceOn: React.Dispatch<React.SetStateAction<string>>;
+  setOpenAttachDeviceDialog?: React.Dispatch<React.SetStateAction<boolean>>;
+  setLocationIdToAttachDeviceOn?: React.Dispatch<React.SetStateAction<string>>;
 }
 const LocationsList = ({
   locations,
@@ -27,7 +27,7 @@ const LocationsList = ({
                   </p>
                 </div>
                 <p className="mt-1 truncate text-xs leading-5 text-gray-500 dark:text-gray-400">
-                  10 notifications
+                  <span>{location.notifications.length}</span> notifications
                 </p>
               </Link>
               <div>
@@ -35,9 +35,11 @@ const LocationsList = ({
                   <Button
                     className="text-[.7rem]"
                     variant={"outline"}
-                    onClick={(e) => {
-                      setLocationIdToAttachDeviceOn(location.id);
-                      setOpenAttachDeviceDialog(true);
+                    onClick={() => {
+                      setLocationIdToAttachDeviceOn &&
+                        setLocationIdToAttachDeviceOn(location.id);
+                      setOpenAttachDeviceDialog &&
+                        setOpenAttachDeviceDialog(true);
                     }}
                   >
                     Add device
@@ -71,7 +73,7 @@ const LocationsList = ({
       ))}
       {locations.length < 1 && (
         <li>
-          <span className="text-sm font-medium opacity-70">
+          <span className="text-sm font-semibold opacity-70">
             There is no locations avilable
           </span>
         </li>

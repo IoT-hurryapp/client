@@ -12,13 +12,9 @@ import {
   CardHeader,
   CardTitle,
   CardContent,
-  CardDescription,
-  CardFooter,
 } from "../../../components/ui/card";
-// import { Alert, AlertDescription, AlertTitle } from "../../components/ui/alert";
-// import {  } from "../services/api/locations";
-import { TrendingUp } from "lucide-react";
-
+import { DataReadingKey } from "../../../interfaces/global";
+import dataReadingColor from "../../../helper/getReadingColor";
 const chartConfig = {
   visitors: {
     label: "Visitors",
@@ -31,11 +27,15 @@ const chartConfig = {
 export function RadialChart({
   value,
   readType,
+  readKey,
 }: {
   value: number;
   readType: string;
+  readKey: DataReadingKey;
 }) {
-  const chartData = [{ browser: "safari", value, fill: "var(--color-safari)" }];
+  const chartData = [
+    { browser: "chrome", value, fill: dataReadingColor(value, readKey) },
+  ];
   return (
     <Card className="flex flex-col">
       <CardHeader className="items-center pb-0">

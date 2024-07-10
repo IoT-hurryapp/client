@@ -19,7 +19,7 @@ const SignUp = () => {
   const [email, setEmail] = useState("");
   const navigate = useNavigate();
   const registerMutation = useRegisterMutation();
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     const emailRegexp = new RegExp(
       /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
     );
@@ -37,25 +37,31 @@ const SignUp = () => {
         variant: "destructive",
       });
     }
-    registerMutation.mutate({ email, username, password });
-    if (registerMutation.isError) {
+    try {
+      const res = await registerMutation.mutateAsync({
+        email,
+        username,
+        password,
+      });
+
+      if (res.success) {
+        toast({
+          description: "Register successfully!",
+          title: "Success",
+          variant: "default",
+        });
+        setTimeout(() => {
+          navigate("/locations");
+        }, 600);
+      }
+    } catch (err) {
       toast({
-        description: registerMutation.error?.response.data.message,
-        title: "Error",
+        description: "Register successfully!",
+        title: "Success",
         variant: "default",
       });
     }
   };
-  if (registerMutation.isSuccess) {
-    toast({
-      description: "Register successfully!",
-      title: "Success",
-      variant: "default",
-    });
-    setTimeout(() => {
-      navigate("/locations");
-    }, 600);
-  }
   return (
     <div className="container h-[100vh] flex items-center justify-center">
       <Card className="md:min-w-[45vw] lg:min-w-[35vw] max-w-sm">

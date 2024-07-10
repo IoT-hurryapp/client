@@ -6,6 +6,9 @@ export const login = async ({ email, password }: ILoginData) => {
         password,
     }, { withCredentials: true })).data;
 };
+export const logout = async () => {
+    return (await axios.post("/auth/logout", {}, { withCredentials: true })).data;
+}
 export const register = async ({ username, email, password }: IRegisterData) => {
     return (await axios.post("/auth/register", {
         username,

@@ -49,7 +49,9 @@ const AddLocationDialog = ({
   return (
     <Dialog onOpenChange={onOpenChange} open={open}>
       <DialogTrigger asChild>
-        <Button variant="default">Add Locations</Button>
+        <Button className="bg-[#16a34a] hover:bg-[#168e42]" variant="default">
+          Add Locations
+        </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
@@ -99,7 +101,7 @@ const AddLocationDialog = ({
           <DialogClose asChild>
             <Button
               onClick={handleCreateLocation}
-              className="mr-auto"
+              className="w-full bg-[#16a34a] hover:bg-[#168e42]"
               type="submit"
             >
               Add
@@ -148,11 +150,9 @@ const SelectDevice = ({
   list: Array<{ id: string }>;
   setDeviceIdToAttach: React.Dispatch<React.SetStateAction<string>>;
 }) => {
-  console.log(deviceIdToAttach);
-
   return (
     <Select
-      defaultValue={deviceIdToAttach}
+      // defaultValue={deviceIdToAttach}
       onValueChange={(value) => setDeviceIdToAttach(value)}
     >
       <SelectTrigger className="w-[180px]">
