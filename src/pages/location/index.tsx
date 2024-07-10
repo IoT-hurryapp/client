@@ -4,8 +4,6 @@ import {
   CardHeader,
   CardTitle,
   CardContent,
-  CardDescription,
-  CardFooter,
 } from "../../components/ui/card";
 // import { Alert, AlertDescription, AlertTitle } from "../../components/ui/alert";
 import {
@@ -20,15 +18,6 @@ import {
   getLocationQuery,
 } from "../../services/queries/locations";
 import { io, Socket } from "socket.io-client";
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectLabel,
-  SelectTrigger,
-  SelectValue,
-} from "../../components/ui/select";
 import Loader from "../../components/Loader";
 import DataLogs from "./components/DataLogs";
 import {
@@ -39,7 +28,7 @@ import {
 } from "../../components/ui/tabs";
 
 import { Button } from "../../components/ui/button";
-import { AreaChart } from "./components/AreaChart";
+import AreaChart from "./components/AreaChart";
 import { IData } from "../../services/api/interfaces";
 import { SelectDevices } from "./components/SelectDevices";
 import { RadialChart } from "./components/RadialChart";
@@ -49,14 +38,13 @@ import { File } from "lucide-react";
 import ExportCSV from "./components/ExportCSV";
 import {
   Dialog,
-  DialogClose,
   DialogContent,
   DialogDescription,
   DialogTitle,
   DialogTrigger,
 } from "../../components/ui/dialog";
-import { DialogFooter, DialogHeader } from "../../components/ui/dialog";
-
+import { DialogHeader } from "../../components/ui/dialog";
+type ChartKey = "AQI" | "dustPercentage" | "temperatureC" | "humidity";
 const Location = () => {
   const params = useParams();
   const locationId = params.id || "";
@@ -67,8 +55,9 @@ const Location = () => {
   const [realTimeData, setRealTimeData] = useState<IData>();
   const defaultDeviceId = location.data?.devices[0].id;
   const [selectedDevice, setSelectedDevice] = useState(defaultDeviceId || "");
+  const [chartKey, setChartKey] = useState<ChartKey>("AQI");
+  const [csvData, setCsvData] = useState<Array<{}>>([]);
   const [isDownloadReady, setIsDownloadReady] = useState(false);
-  const [csvData, setCsvData] = useState<Array<{}>>([{}]);
   const analysisData = getDeviceDataQuery({
     locationId,
     deviceId: defaultDeviceId || "",
@@ -105,7 +94,7 @@ const Location = () => {
   if (location.isLoading || analysisData.isLoading) {
     return <Loader />;
   }
-  const handleDownloadCSV = () => {
+  const dataToCSV = () => {
     let newData: Array<{}> = [];
     analysisData.data?.data.forEach((entry: any) => {
       let filteredEntry: any = {};
@@ -158,7 +147,22 @@ const Location = () => {
             </div>
           </TabsContent>
           <TabsContent value="analysis">
-            <AreaChart />
+            <AreaChart
+              chartKey={chartKey}
+              setChartKey={setChartKey}
+              data={(analysisData.data?.data || []).map((entry) => ({
+                month: new Date(entry.createdAt).toLocaleString("default", {
+                  month: "long",
+                }),
+                [chartKey]: entry[chartKey],
+              }))}
+              config={{
+                [chartKey]: {
+                  label: chartKey,
+                  color: "hsl(var(--chart-2))",
+                },
+              }}
+            />
           </TabsContent>
         </Tabs>
 
@@ -243,22 +247,43 @@ const Location = () => {
       <div className="w-full  mt-8">
         <h2 className="text-xl font-bold mb-4">Detailed Visualizations</h2>
         <div className="w-full">
+          <Dialog onOpenChange={setIsDownloadReady} open={isDownloadReady}>
+            <DialogTrigger asChild>
+              <Button className="sr-only" variant="default">
+                Add Locations
+              </Button>
+            </DialogTrigger>
+            <DialogContent className="sm:max-w-[425px]">
+              <DialogHeader>
+                <DialogTitle>Download</DialogTitle>
+                <DialogDescription>
+                  Your download file is ready !
+                </DialogDescription>
+              </DialogHeader>
+              <div className="grid gap-4 py-4">
+                <ExportCSV
+                  csvData={csvData}
+                  setIsDownloadReady={setIsDownloadReady}
+                  isDownloadReady={isDownloadReady}
+                  filename={`page-${page}-${new Date()}`}
+                />
+              </div>
+            </DialogContent>
+          </Dialog>
           <Card className="w-full">
             <CardHeader className="w-full flex flex-row items-center justify-between">
               <CardTitle>Pollution Logs</CardTitle>
-              <div>
-                <Button
-                  onClick={handleDownloadCSV}
-                  size="sm"
-                  variant="outline"
-                  className="h-8 gap-1"
-                >
-                  <File className="h-3.5 w-3.5" />
-                  <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
-                    Export
-                  </span>
-                </Button>
-              </div>
+              <Button
+                onClick={dataToCSV}
+                size="sm"
+                variant="outline"
+                className="h-8 gap-1"
+              >
+                <File className="h-3.5 w-3.5" />
+                <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
+                  Export CSV
+                </span>
+              </Button>
             </CardHeader>
             <CardContent>
               <DataLogs data={analysisData.data?.data || []} />
@@ -272,7 +297,7 @@ const Location = () => {
                   Prev
                 </Button>
                 <span className="text-sm font-medium opacity-50">
-                  Current page {page}
+                  Current page {page}/{analysisData.data?.pages}
                 </span>
                 <Button
                   onClick={() => setPage((prev) => prev + 1)}
@@ -285,32 +310,6 @@ const Location = () => {
               </div>
             </CardContent>
           </Card>
-          <Dialog onOpenChange={setIsDownloadReady} open={isDownloadReady}>
-            <DialogTrigger asChild>
-              <Button className="sr-only" variant="default">
-                Download
-              </Button>
-            </DialogTrigger>
-            <DialogContent className="sm:max-w-[425px]">
-              <DialogHeader>
-                <DialogTitle>Your link is ready</DialogTitle>
-                <DialogDescription>
-                  go ahead and download it !
-                </DialogDescription>
-              </DialogHeader>
-              <div className="grid gap-4 py-4"></div>
-              <DialogFooter>
-                <DialogClose asChild>
-                  <ExportCSV
-                    isDownloadReady={isDownloadReady}
-                    setIsDownloadReady={setIsDownloadReady}
-                    csvData={csvData}
-                    filename={`page-${page}-${new Date()}`}
-                  />
-                </DialogClose>
-              </DialogFooter>
-            </DialogContent>
-          </Dialog>
         </div>
       </div>
     </div>
