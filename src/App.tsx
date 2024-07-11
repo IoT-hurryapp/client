@@ -18,7 +18,6 @@ function App() {
     return <Loader />;
   }
   const isLoggedIn = !!user.data;
-  console.log(user.data);
 
   return (
     <ThemeProvider defaultTheme="light">
@@ -27,18 +26,28 @@ function App() {
         notifications={user.data?.notifications || []}
       />
       <Toaster />
-      <Suspense fallback={<Loader />}>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/locations" element={<Locations />} />
-          <Route path="/locations/public" element={<PublicLocations />} />
-          <Route path="/locations/:id" element={<Location />} />
-          <Route path="/">
-            <Route path="login" element={<Login />} />
-            <Route path="register" element={<Register />} />
-          </Route>
-        </Routes>
-      </Suspense>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route
+          path="/locations"
+          element={isLoggedIn ? <Locations /> : <Navigate to="/login" />}
+        />
+        <Route path="/locations/public" element={<PublicLocations />} />
+        <Route
+          path="/locations/:id"
+          element={isLoggedIn ? <Location /> : <Navigate to="/login" />}
+        />
+        <Route path="/">
+          <Route
+            path="login"
+            element={!isLoggedIn ? <Login /> : <Navigate to="/locations" />}
+          />
+          <Route
+            path="register"
+            element={!isLoggedIn ? <Register /> : <Navigate to="/locations" />}
+          />
+        </Route>
+      </Routes>
       <Footer />
     </ThemeProvider>
   );

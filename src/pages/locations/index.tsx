@@ -1,6 +1,5 @@
-import { useState } from "react";
+import { lazy, useState } from "react";
 import { Separator } from "../../components/ui/separator";
-import AddLocationDialog from "./components/AddLocationDialog";
 import {
   getLocationsQuery,
   useAttachDeviceMutation,
@@ -9,17 +8,21 @@ import {
 import { Loader } from "lucide-react";
 import { toast } from "../../components/ui/use-toast";
 import LocationsList from "./components/LocationList";
-import AttachDeviceDialog from "./components/AttachDeviceDialog";
+const AddLocationDialog = lazy(() => import("./components/AddLocationDialog"));
+const AttachDeviceDialog = lazy(
+  () => import("./components/AttachDeviceDialog")
+);
+import LoadWhenNeeded from "../../components/LoadWhenNeeded";
 const Locations = () => {
-  const [newLocationName, setNewLocationName] = useState("");
-  const [deviceIdToAttach, setDeviceIdToAttach] = useState("");
-  const createLocationMutation = useCreateLocationMutation();
   const getLocations = getLocationsQuery();
   const attachDeviceMutation = useAttachDeviceMutation();
-  const [openAddLocationDialog, setOpenAddLocationDialog] = useState(false);
-  const [openAttachDeviceDialog, setOpenAttachDeviceDialog] = useState(false);
+  const createLocationMutation = useCreateLocationMutation();
+  const [newLocationName, setNewLocationName] = useState("");
+  const [deviceIdToAttach, setDeviceIdToAttach] = useState("");
   const [locationIdToAttachDeviceOn, setLocationIdToAttachDeviceOn] =
     useState("");
+  const [openAddLocationDialog, setOpenAddLocationDialog] = useState(false);
+  const [openAttachDeviceDialog, setOpenAttachDeviceDialog] = useState(false);
   if (getLocations.isLoading) {
     return <Loader />;
   }
@@ -84,25 +87,38 @@ const Locations = () => {
         <h1 className="text-xl font-bold mb-4">
           Browse and add your locations !
         </h1>
-        <AddLocationDialog
-          onOpenChange={setOpenAddLocationDialog}
-          open={openAddLocationDialog}
-          handleCreateLocation={handleCreateLocation}
-          newLocationName={newLocationName}
-          deviceIdToAttach={deviceIdToAttach}
-          setNewLocationName={setNewLocationName}
-          setDeviceIdToAttach={setDeviceIdToAttach}
+        <LoadWhenNeeded
+          setIsVisible={setOpenAddLocationDialog}
+          isVisible={openAddLocationDialog}
+          buttonText="Add locations"
+          buttonClasses="bg-[#16a34a] hover:bg-[#168e42]"
+          children={
+            <AddLocationDialog
+              onOpenChange={setOpenAddLocationDialog}
+              open={openAddLocationDialog}
+              handleCreateLocation={handleCreateLocation}
+              newLocationName={newLocationName}
+              deviceIdToAttach={deviceIdToAttach}
+              setNewLocationName={setNewLocationName}
+              setDeviceIdToAttach={setDeviceIdToAttach}
+            />
+          }
         />
-        {openAttachDeviceDialog && (
-          <AttachDeviceDialog
-            onOpenChange={setOpenAttachDeviceDialog}
-            open={openAttachDeviceDialog}
-            handleAttachDevice={handleAttachDevice}
-            deviceIdToAttach={deviceIdToAttach}
-            setDeviceIdToAttach={setDeviceIdToAttach}
-          />
-        )}
-
+        <LoadWhenNeeded
+          setIsVisible={setOpenAttachDeviceDialog}
+          isVisible={openAttachDeviceDialog}
+          buttonText="Attach devices"
+          buttonClasses="bg-[#16a34a] hover:bg-[#168e42] hidden"
+          children={
+            <AttachDeviceDialog
+              onOpenChange={setOpenAttachDeviceDialog}
+              open={openAttachDeviceDialog}
+              handleAttachDevice={handleAttachDevice}
+              deviceIdToAttach={deviceIdToAttach}
+              setDeviceIdToAttach={setDeviceIdToAttach}
+            />
+          }
+        />
         <Separator className="mt-8" />
         <div className="space-y-4 mt-3">
           <LocationsList

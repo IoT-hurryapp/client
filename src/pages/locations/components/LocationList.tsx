@@ -21,7 +21,7 @@ const LocationsList = ({
           <div className="flex min-w-0 gap-x-4">
             <div className="min-w-0 flex  items-center gap-5">
               <Link key={location.id} to={`/locations/${location.id}`}>
-                <div className="flex items gap-3 justify-center">
+                <div className="flex items-center gap-3">
                   <p className="text-sm font-semibold leading-6 text-gray-900 dark:text-gray-200">
                     {location.name}
                   </p>

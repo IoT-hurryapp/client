@@ -145,7 +145,7 @@ const SelectSensor = ({
             Air quality index
           </SelectItem>
           <SelectItem key={"dustPercentage"} value={"dustPercentage"}>
-            Dust levels
+            Pollution Percentage
           </SelectItem>
           <SelectItem key={"temperatureC"} value={"temperatureC"}>
             Temperature

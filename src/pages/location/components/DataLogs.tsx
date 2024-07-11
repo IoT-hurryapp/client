@@ -19,7 +19,7 @@ export default function DataLogs({ data }: { data: IData[] }) {
           <TableHead>Air quality</TableHead>
           <TableHead>Temperature in C</TableHead>
           <TableHead>Humidity Percentage</TableHead>
-          <TableHead>Dust Concentration</TableHead>
+          <TableHead>Pollution Percentage</TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>

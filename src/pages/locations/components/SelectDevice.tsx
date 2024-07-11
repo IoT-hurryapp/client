@@ -9,19 +9,17 @@ import {
 } from "../../../components/ui/select";
 const SelectDevice = ({
   list,
-  setNewLocationDevice,
-  newLocationDevice,
+  deviceIdToAttach,
+  setDeviceIdToAttach,
 }: {
-  newLocationDevice: string;
+  deviceIdToAttach: string;
   list: Array<{ id: string }>;
-  setNewLocationDevice: React.Dispatch<React.SetStateAction<string>>;
+  setDeviceIdToAttach: React.Dispatch<React.SetStateAction<string>>;
 }) => {
-  console.log(newLocationDevice);
-
   return (
     <Select
-      defaultValue={newLocationDevice}
-      onValueChange={(value) => setNewLocationDevice(value)}
+      // defaultValue={deviceIdToAttach}
+      onValueChange={(value) => setDeviceIdToAttach(value)}
     >
       <SelectTrigger className="w-[180px]">
         <SelectValue placeholder="Select a device" />
