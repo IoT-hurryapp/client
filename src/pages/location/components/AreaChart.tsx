@@ -77,7 +77,13 @@ const AreaChart = ({ data, config, chartKey, setChartKey }: any) => {
             />
             <ChartTooltip cursor={false} content={<ChartTooltipContent />} />
             <defs>
-              <linearGradient id={"fill"+chartKey} x1="0" y1="0" x2="0" y2="1">
+              <linearGradient
+                id={"fill" + chartKey}
+                x1="0"
+                y1="0"
+                x2="0"
+                y2="1"
+              >
                 <stop
                   offset="5%"
                   stopColor={`var(--color-${chartKey})`}
@@ -104,14 +110,14 @@ const AreaChart = ({ data, config, chartKey, setChartKey }: any) => {
       </CardContent>
       <CardFooter>
         <div className="flex w-full items-start gap-2 text-sm">
-          <div className="grid gap-2">
+          {/* <div className="grid gap-2">
             <div className="flex items-center gap-2 font-medium leading-none">
               Trending up by 5.2% this month <TrendingUp className="h-4 w-4" />
             </div>
             <div className="flex items-center gap-2 leading-none text-muted-foreground">
               January - June 2024
             </div>
-          </div>
+          </div> */}
         </div>
       </CardFooter>
     </Card>
@@ -139,7 +145,7 @@ const SelectSensor = ({
             Air quality index
           </SelectItem>
           <SelectItem key={"dustPercentage"} value={"dustPercentage"}>
-            Pollution Levels
+            Dust levels
           </SelectItem>
           <SelectItem key={"temperatureC"} value={"temperatureC"}>
             Temperature
