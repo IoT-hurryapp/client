@@ -13,33 +13,35 @@ import Location from "./pages/location";
 import Footer from "./components/Footer";
 import PublicLocations from "./pages/locations/public";
 function App() {
-	const user = getUserQuery();
-	if (user.isLoading) {
-		return <Loader />;
-	}
-	const isLoggedIn = !!user.data;
-	return (
-		<ThemeProvider defaultTheme="light">
-			<Header username={user.data?.username || ""} notifications={user.data?.notifications || []} />
-			<Toaster />
-			<Suspense fallback={<Loader />}>
-				<Routes>
-					<Route path="/" element={<Home />} />
-					<Route path="/locations" element={<Locations />} />
-					<Route
-						path="/locations/public"
-						element={<PublicLocations />}
-					/>
-					<Route path="/locations/:id" element={<Location />} />
-					<Route path="/">
-						<Route path="login" element={<Login />} />
-						<Route path="register" element={<Register />} />
-					</Route>
-				</Routes>
-			</Suspense>
-			<Footer />
-		</ThemeProvider>
-	);
+  const user = getUserQuery();
+  if (user.isLoading) {
+    return <Loader />;
+  }
+  const isLoggedIn = !!user.data;
+  console.log(user.data);
+
+  return (
+    <ThemeProvider defaultTheme="light">
+      <Header
+        username={user.data?.username || ""}
+        notifications={user.data?.notifications || []}
+      />
+      <Toaster />
+      <Suspense fallback={<Loader />}>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/locations" element={<Locations />} />
+          <Route path="/locations/public" element={<PublicLocations />} />
+          <Route path="/locations/:id" element={<Location />} />
+          <Route path="/">
+            <Route path="login" element={<Login />} />
+            <Route path="register" element={<Register />} />
+          </Route>
+        </Routes>
+      </Suspense>
+      <Footer />
+    </ThemeProvider>
+  );
 }
 
 export default App;

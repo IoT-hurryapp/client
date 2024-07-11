@@ -2,7 +2,6 @@ import { useQueryClient, useMutation } from "@tanstack/react-query"
 import { login, register, logout } from "../api/auth";
 import { IRegisterData, ILoginData } from "../types/auth";
 import { PROFILE_KEY } from "../keys";
-import jsCookie from "js-cookie"
 interface ILoginErrorBody {
     response: {
         data: {
