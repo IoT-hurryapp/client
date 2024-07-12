@@ -26,7 +26,7 @@ export const getDevices = async () => {
     return (await axios.get<Array<{ id: string }>>(`/locations/devices`, { withCredentials: true })).data;
 };
 export const attachDevice = async (locationId: string, deviceId: string) => {
-    return (await axios.post(`/locations/${locationId}/${deviceId}`, { withCredentials: true })).data;
+    return (await axios.post(`/locations/${locationId}/${deviceId}`, {}, { withCredentials: true })).data;
 };
 export const getDeviceData = async ({ locationId, deviceId, page }: { locationId: string, deviceId: string, page: number }) => {
     return (
