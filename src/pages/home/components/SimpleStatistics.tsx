@@ -77,7 +77,7 @@ export default function Component() {
             <CardContent className="flex flex-col items-center justify-center p-6">
               {/* <CloudFogIcon className="w-8 h-8 text-primary" /> */}
               <div className="sm:text-3xl md:text-4xl font-bold mt-2">
-                <NumberTicker value={realTimeData?.AQI || 1} />%
+                <NumberTicker value={realTimeData?.AQI || 1} />
               </div>
               <p className="text-muted-foreground text-sm mt-2 min-w-fit text-center text-nowrap">
                 Air quality index
