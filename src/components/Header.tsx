@@ -258,10 +258,14 @@ const Dropdown = ({
         <DropdownMenuLabel>حسابي</DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuItem>
-          <Link to={"/locations"}>المواقع</Link>
+          <Link to={"/locations"} className="text-right">
+            المواقع
+          </Link>
         </DropdownMenuItem>
         <DropdownMenuItem>
-          <Link to={"/locations/public"}>المواقع العامة</Link>
+          <Link to={"/locations/public"} className="text-right">
+            المواقع العامة
+          </Link>
         </DropdownMenuItem>
         <DropdownMenuSeparator />
         <DropdownMenuItem>

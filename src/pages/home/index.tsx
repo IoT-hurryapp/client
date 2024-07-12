@@ -25,8 +25,8 @@ export default function Home() {
             </div>
           </div>
           <div className="w-fit text-center">
-            <h1 className="text-4xl font-bold tracking-tight text-gray-900 dark:text-gray-200 sm:text-6xl">
-              حارس الهواء الخاص بك
+            <h1 className="text-4xl leading-[2.8rem] font-bold tracking-tight text-gray-900 dark:text-gray-200 sm:text-6x ">
+              عند التلوث تكون التكنولوجيا حليفا للتغير الافضل
             </h1>
             <p className="mt-6 text-lg  text-gray-600 dark:text-gray-400 leading-6">
               ابقى مطلعا وتنفس براحة بال مع منصتنا, انشىء حسابك واضف الموقع
