@@ -8,14 +8,14 @@ export interface IGetDeviceData {
 }
 export const getLocation = async (id: string) => {
     return (
-        await axios.get<ILocation>(`${import.meta.env.VITE_API_URL}/locations/${id}`)
+        await axios.get<ILocation>(`${import.meta.env.VITE_API_URL}/locations/${id}`, { withCredentials: true })
     ).data;
 };
 export const getLocations = async () => {
-    return (await axios.get<ILocation[]>(`/locations`)).data;
+    return (await axios.get<ILocation[]>(`/locations`, { withCredentials: true })).data;
 };
 export const getPublicLocations = async () => {
-    return (await axios.get<Array<{ id: number, name: string }>>(`/public/devices`)).data;
+    return (await axios.get<Array<{ id: number, name: string }>>(`/public/devices`, { withCredentials: true })).data;
 };
 export const createLocation = async (name: string) => {
     return (
@@ -23,13 +23,13 @@ export const createLocation = async (name: string) => {
     ).data;
 };
 export const getDevices = async () => {
-    return (await axios.get<Array<{ id: string }>>(`/locations/devices`)).data;
+    return (await axios.get<Array<{ id: string }>>(`/locations/devices`, { withCredentials: true })).data;
 };
 export const attachDevice = async (locationId: string, deviceId: string) => {
-    return (await axios.post(`/locations/${locationId}/${deviceId}`)).data;
+    return (await axios.post(`/locations/${locationId}/${deviceId}`, { withCredentials: true })).data;
 };
 export const getDeviceData = async ({ locationId, deviceId, page }: { locationId: string, deviceId: string, page: number }) => {
     return (
-        await axios.get<IGetDeviceData>(`/locations/${locationId}/${deviceId}?page=${page}`)
+        await axios.get<IGetDeviceData>(`/locations/${locationId}/${deviceId}?page=${page}`, { withCredentials: true })
     ).data;
 };

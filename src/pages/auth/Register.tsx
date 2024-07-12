@@ -43,7 +43,6 @@ const SignUp = () => {
         username,
         password,
       });
-
       if (res.success) {
         toast({
           description: "Register successfully!",
@@ -52,11 +51,11 @@ const SignUp = () => {
         });
         setTimeout(() => {
           navigate("/locations");
-        }, 600);
+        }, 1200);
       }
     } catch (err) {
       toast({
-        description: "Register successfully!",
+        description: "Error while registering!",
         title: "Success",
         variant: "default",
       });
