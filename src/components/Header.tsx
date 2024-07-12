@@ -218,7 +218,7 @@ const Notifications = ({
             <NavigationMenuLink>
               <ul className="grid gap-3 p-6 sm:w-[90vw] md:w-[400px] lg:w-[700px] lg:grid-cols-[.75fr_1fr]">
                 {notifications.length > 0 ? (
-                  notifications.map((notification) => (
+                  notifications.slice(0, 3).map((notification) => (
                     <NotificationItem
                       key={notification.id}
                       date={notification.createdAt}

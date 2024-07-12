@@ -165,7 +165,7 @@ const Location = () => {
                   readKey="temperatureC"
                 />
                 <div className="flex items justify-center gap-2 p-3 m-0">
-                  <p className="bg-sky-400 p-1 rounded-sm text-sm font-bold text-white">
+                  <p className="bg-sky-500 p-1 rounded-sm text-sm font-bold text-white">
                     0
                   </p>
                   <p className="bg-emerald-500 p-1 rounded-sm text-sm font-bold text-white">
@@ -274,7 +274,7 @@ const Location = () => {
                   السابق
                 </Button>
                 <span className="text-sm font-medium opacity-50">
-                  الصفحة الحالية {page}/{analysisData.data?.pages}
+                  الصفحة الحالية {analysisData.data?.pages}/{page}
                 </span>
                 <Button
                   onClick={() => setPage((prev) => prev + 1)}

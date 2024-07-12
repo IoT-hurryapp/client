@@ -10,7 +10,7 @@ const readingColor = (readValue: number, readType: DataReadingKey): string => {
         if (readValue > 200 && readValue <= 500) return HAZARD_COLOR;
     };
     if (readType === "temperatureC") {
-        if (readValue < 0) return "blue";
+        if (readValue < 0) return SKY_COLOR;
         if (readValue >= 0 && readValue <= 16) return SKY_COLOR;
         if (readValue >= 17 && readValue <= 32) return YELLOW_COLOR;
         if (readValue >= 40) return RED_COLOR;
@@ -21,7 +21,12 @@ const readingColor = (readValue: number, readType: DataReadingKey): string => {
         if (readValue >= 50 && readValue < 75) return RED_COLOR;
         if (readValue >= 75 && readValue < 100) return DARK_RED_COLOR
     };
-    if (readType === "dustPercentage") return "#bc6c25"
+    if (readType === "dustPercentage") {
+        if (readValue >= 0 && readValue <= 25) return GREEN_COLOR
+        if (readValue >= 26 && readValue <= 50) return YELLOW_COLOR
+        if (readValue >= 51 && readValue <= 75) return RED_COLOR
+        if (readValue >= 76 && readValue <= 100) return DARK_RED_COLOR
+    }
     return "";
 };
 const readingStatus = (readValue: number, readType: DataReadingKey) => {
@@ -44,7 +49,12 @@ const readingStatus = (readValue: number, readType: DataReadingKey) => {
         if (readValue >= 50 && readValue < 75) return "وسط";
         if (readValue >= 75 && readValue < 100) return "خطر"
     };
-    if (readType === "dustPercentage") return "#bc6c25"
+    if (readType === "dustPercentage") {
+        if (readValue >= 0 && readValue <= 25) return "ممتاز"
+        if (readValue >= 26 && readValue <= 50) return "وسط"
+        if (readValue >= 51 && readValue <= 75) return "خطر"
+        if (readValue >= 76 && readValue <= 100) return "خطورة عالية"
+    }
     return "";
 }
 export { readingColor, readingStatus };

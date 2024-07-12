@@ -15,6 +15,7 @@ import {
 } from "../../../components/ui/card";
 import { DataReadingKey } from "../../../interfaces/global";
 import { readingColor, readingStatus } from "../../../helper/reading";
+import { useState } from "react";
 const chartConfig = {
   visitors: {
     label: "Data reading",
@@ -95,10 +96,8 @@ export function RadialChart({
           </RadialBarChart>
         </ChartContainer>
         <p
-          className={`w-fit mx-auto mb-4 text-center font-bold rounded-sm opacity-70 p-2 bg-[${readingColor(
-            value,
-            readKey
-          )}]`}
+          style={{ color: readingColor(value, readKey) }}
+          className="w-fit mx-auto mb-4 text-center text-lg font-bold rounded-sm p-2"
         >
           {readingStatus(value, readKey)}
         </p>
