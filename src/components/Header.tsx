@@ -50,8 +50,8 @@ const Header = ({
       const res = await logoutMutation.mutateAsync({});
       if (res.success) {
         toast({
-          title: "Success !",
-          description: "Logged out successfully!",
+          title: "نجاح !",
+          description: "تم تسجيل الخروج بنجاح!",
         });
         setTimeout(() => {
           navigate("/");
@@ -62,8 +62,8 @@ const Header = ({
       console.log(err);
       setIsLogoutLoading(false);
       toast({
-        title: "Error !",
-        description: "Error while Logging out!",
+        title: "خطا !",
+        description: "تم تسجيل الخروج بنجاح!",
       });
     }
   };

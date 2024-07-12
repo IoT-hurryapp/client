@@ -27,15 +27,15 @@ const Login = () => {
     );
     if (!emailRegexp.test(email)) {
       return toast({
-        description: "Email is Required!",
-        title: "Error",
+        description: "الايميل مطلوب !",
+        title: "خطا",
         variant: "destructive",
       });
     }
     if (!password || password.length < 8) {
       return toast({
-        description: "Password is Required!",
-        title: "Error",
+        description: "الباسوورد مطلوب !",
+        title: "خطا",
         variant: "destructive",
       });
     }
@@ -45,7 +45,7 @@ const Login = () => {
       if (res.success) {
         toast({
           title: "نجاح",
-          description: "Login successfully!",
+          description: "تم تسجيل الدخول بنجاح!",
           variant: "default",
         });
         setTimeout(() => {
