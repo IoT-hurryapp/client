@@ -21,18 +21,17 @@ export default function Home() {
         <div className="mx-auto max-w-2xl py-32 sm:py-48 lg:py-56 lg:pb-20 mb-4">
           <div className="hidden sm:mb-8 sm:flex sm:justify-center">
             <div className="relative rounded-full px-3 py-1 text-sm leading-6 text-gray-600 dark:text-gray-400 ring-1 ring-gray-900/10 hover:ring-gray-900/20">
-              Announcing our IoT System for Pollution.
+              نعلن عن منصتنا التي تستخدم انترنيت الاشياء من اجل بيئة سليمة.
             </div>
           </div>
           <div className="w-fit text-center">
             <h1 className="text-4xl font-bold tracking-tight text-gray-900 dark:text-gray-200 sm:text-6xl">
-              Your Personal Air Quality Guardian
+              حارس الهواء الخاص بك
             </h1>
             <p className="mt-6 text-lg  text-gray-600 dark:text-gray-400 leading-6">
-              Stay informed and breathe easy with real-time air quality
-              insights. Create your account, add your location, and get
-              personalized alerts on pollution levels, ensuring a healthier
-              environment for you and your loved ones
+              ابقى مطلعا وتنفس براحة بال مع منصتنا, انشىء حسابك واضف الموقع
+              المطلوب و بعدها سوف تحصل على قراءات و تنبيهات تضمن لك بيئة صحية لك
+              ولاحبابك
             </p>
             <div className="mt-10 flex items-center justify-center gap-x-6">
               <CallToAction />
@@ -41,10 +40,10 @@ export default function Home() {
         </div>
         <div className="flex items-center flex-col mt-[11rem]">
           <h1 className="text-3xl md:text-4xl font-bold">
-            How to use our platform?
+            كيف تستخدم المنصة ؟
           </h1>
           <p className="text-muted-foreground mt-2 max-w-md mx-auto">
-            Packed with powerful features to protect your life.
+            مزودة بميزات قوية من اجل ضمان بيئة سليمة.
           </p>
         </div>
         <div className="container flex justify-center w-full scale-125 my-24">

@@ -45,8 +45,8 @@ const SignUp = () => {
       });
       if (res.success) {
         toast({
-          description: "Register successfully!",
-          title: "Success",
+          title: "نجاح",
+          description: "تم انشاء الحساب بنجاح !",
           variant: "default",
         });
         setTimeout(() => {
@@ -55,8 +55,8 @@ const SignUp = () => {
       }
     } catch (err) {
       toast({
-        description: "Error while registering!",
-        title: "Success",
+        title: "خطا",
+        description: "حصل خطا اثناء انشاء الحساب",
         variant: "default",
       });
     }
@@ -65,26 +65,24 @@ const SignUp = () => {
     <div className="container h-[100vh] flex items-center justify-center">
       <Card className="md:min-w-[45vw] lg:min-w-[35vw] max-w-sm">
         <CardHeader>
-          <CardTitle className="text-xl">Sign Up</CardTitle>
-          <CardDescription>
-            Enter your information to create an account
-          </CardDescription>
+          <CardTitle className="text-xl">انشئ حسابك</CardTitle>
+          <CardDescription>ادخل ملعوماتك من اجل انشاء الحساب</CardDescription>
         </CardHeader>
         <CardContent>
           <div className="grid gap-4">
             <div className="grid gap-4">
               <div className="grid gap-2">
-                <Label htmlFor="full-name">Full name</Label>
+                <Label htmlFor="full-name">الاسم الكامل</Label>
                 <Input
                   onChange={(e) => setUsername(e.target.value)}
                   id="full-name"
-                  placeholder="Enter your full name"
+                  placeholder="ادخل اسمك الكامل"
                   required
                 />
               </div>
             </div>
             <div className="grid gap-2">
-              <Label htmlFor="email">Email</Label>
+              <Label htmlFor="email">الايميل</Label>
               <Input
                 onChange={(e) => setEmail(e.target.value)}
                 id="email"
@@ -94,22 +92,22 @@ const SignUp = () => {
               />
             </div>
             <div className="grid gap-2">
-              <Label htmlFor="password">Password</Label>
+              <Label htmlFor="password">كلمة المرور</Label>
               <Input
                 onChange={(e) => setPassword(e.target.value)}
                 id="password"
                 type="password"
-                placeholder="At leasted 8 characters password"
+                placeholder="ادخل كلمة مرور"
               />
             </div>
             <Button onClick={handleSubmit} className="w-full mt-3">
-              Create an account
+              انشئ حسابك
             </Button>
           </div>
           <div className="mt-4 text-center text-sm">
-            Already have an account?{" "}
+            تمتلك حسابا ?{" "}
             <Link to="/login" className="underline">
-              Sign in
+              سجل الان
             </Link>
           </div>
         </CardContent>

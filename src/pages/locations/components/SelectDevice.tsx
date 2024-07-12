@@ -22,11 +22,11 @@ const SelectDevice = ({
       onValueChange={(value) => setDeviceIdToAttach(value)}
     >
       <SelectTrigger className="w-[180px]">
-        <SelectValue placeholder="Select a device" />
+        <SelectValue placeholder="اختر جهازا" />
       </SelectTrigger>
       <SelectContent>
         <SelectGroup>
-          <SelectLabel>Devices</SelectLabel>
+          <SelectLabel>الاجهزة</SelectLabel>
           {list.map((device) => (
             <SelectItem key={device.id} value={device.id}>
               # {device.id}

@@ -41,8 +41,8 @@ const Login = () => {
       const res = await loginMutation.mutateAsync({ email, password });
       if (res.success) {
         toast({
+          title: "نجاح",
           description: "Login successfully!",
-          title: "Success",
           variant: "default",
         });
         setTimeout(() => {
@@ -51,8 +51,8 @@ const Login = () => {
       }
     } catch (err: any) {
       toast({
-        description: "Check your email and password",
-        title: "Error",
+        title: "خطا",
+        description: "الرجاء تفقد الايميل و الباسوورد",
         variant: "default",
       });
     }
@@ -64,15 +64,15 @@ const Login = () => {
     >
       <Card className="md:min-w-[45vw] lg:min-w-[35vw] max-w-sm">
         <CardHeader>
-          <CardTitle className="text-2xl">Login</CardTitle>
+          <CardTitle className="text-2xl">قم بتسجيل الدخول</CardTitle>
           <CardDescription>
-            Enter your email below to login to your account
+            قم بادخال الايميل و كلمة المرور و استمتع بالمنصة
           </CardDescription>
         </CardHeader>
         <CardContent>
           <div className="grid gap-4">
             <div className="grid gap-2">
-              <Label htmlFor="email">Email</Label>
+              <Label htmlFor="email">الايميل</Label>
               <Input
                 onChange={(e) => setEmail(e.target.value)}
                 id="email"
@@ -84,7 +84,7 @@ const Login = () => {
             </div>
             <div className="grid gap-2">
               <div className="flex items-center">
-                <Label htmlFor="password">Password</Label>
+                <Label htmlFor="password">كلمة المرور</Label>
               </div>
               <Input
                 onChange={(e) => setPassword(e.target.value)}
@@ -93,12 +93,12 @@ const Login = () => {
                 required
               />
             </div>
-            <Button className="w-full">Login</Button>
+            <Button className="w-full">سجل الدخول</Button>
           </div>
           <div className="mt-4 text-center text-sm">
-            Don&apos;t have an account?{" "}
+            لا تمتلك حسابا ؟ قم بانشاء واحد{" "}
             <Link to="/register" className="underline">
-              Sign up
+              انشء حسابك
             </Link>
           </div>
         </CardContent>

@@ -29,7 +29,7 @@ const Locations = () => {
   if (getLocations.isError) {
     const error = getLocations.error.message;
     toast({
-      title: "Erorr while getting locations",
+      title: "حدثت مشكلة اثناء اضافة الموقع !",
       description: error,
     });
   }
@@ -74,9 +74,9 @@ const Locations = () => {
     } catch (err) {
       toast({
         title: attachDeviceMutation.isError
-          ? "Please check your device id"
-          : "Erorr while adding a location",
-        description: "Try again",
+          ? "الرجاء التاكد من معرف جهازك"
+          : "حدث خطا اثناء اضافة الجهاز",
+        description: "حاول مرة اخرى",
       });
     }
   };
@@ -84,13 +84,11 @@ const Locations = () => {
   return (
     <section className="pt-[10rem] container min-h-[100vh]">
       <div className="w-[95%]">
-        <h1 className="text-xl font-bold mb-4">
-          Browse and add your locations !
-        </h1>
+        <h1 className="text-xl font-bold mb-4">تصفح واضف مواقع خاصة بك</h1>
         <LoadWhenNeeded
           setIsVisible={setOpenAddLocationDialog}
           isVisible={openAddLocationDialog}
-          buttonText="Add locations"
+          buttonText="اضف موقع"
           buttonClasses="bg-[#16a34a] hover:bg-[#168e42]"
           children={
             <AddLocationDialog
@@ -107,7 +105,7 @@ const Locations = () => {
         <LoadWhenNeeded
           setIsVisible={setOpenAttachDeviceDialog}
           isVisible={openAttachDeviceDialog}
-          buttonText="Attach devices"
+          buttonText="اضف جهاز"
           buttonClasses="bg-[#16a34a] hover:bg-[#168e42] hidden"
           children={
             <AttachDeviceDialog

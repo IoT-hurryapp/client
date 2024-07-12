@@ -35,19 +35,17 @@ const AddLocationDialog = ({
   return (
     <Dialog onOpenChange={onOpenChange} open={open} defaultOpen={open}>
       <DialogTrigger asChild className="sr-only">
-        <Button variant="default">Add Device</Button>
+        <Button variant="default">اضف جهازا</Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
-        <DialogHeader>
-          <DialogTitle>Add device</DialogTitle>
-          <DialogDescription>
-            Add your device into this location
-          </DialogDescription>
+        <DialogHeader className="ml-auto">
+          <DialogTitle className="ml-auto">اضف جهازا</DialogTitle>
+          <DialogDescription>اضف جهازك الى هذا الموقع</DialogDescription>
         </DialogHeader>
         <div className="grid gap-4 py-4">
           <div className="grid grid-cols-2 items-center gap-4 relative">
             <div>
-              <Label htmlFor="devices">Devices List</Label>
+              <Label htmlFor="devices">الاجهزة</Label>
               <SelectDevice
                 deviceIdToAttach={deviceIdToAttach}
                 list={getDevices.data || []}
@@ -55,7 +53,7 @@ const AddLocationDialog = ({
               />
             </div>
             <div>
-              <Label>or use the Qr code</Label>
+              <Label>او استخدم qr code</Label>
               <br />
 
               <QrDialog
@@ -69,10 +67,10 @@ const AddLocationDialog = ({
           <DialogClose asChild>
             <Button
               onClick={handleAttachDevice}
-              className="mr-auto"
+              className="w-full bg-[#16a34a] hover:bg-[#168e42]"
               type="submit"
             >
-              Add
+              اضف
             </Button>
           </DialogClose>
         </DialogFooter>

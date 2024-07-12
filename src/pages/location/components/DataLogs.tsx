@@ -12,14 +12,14 @@ import { IData } from "../../../services/api/interfaces";
 export default function DataLogs({ data }: { data: IData[] }) {
   return (
     <Table className="min-w-full">
-      <TableCaption>A list of your recent logs.</TableCaption>
+      <TableCaption>قائمة باخر القراءات الخاصة بك</TableCaption>
       <TableHeader>
         <TableRow>
-          <TableHead className="w-[100px]">Date</TableHead>
-          <TableHead>Air quality</TableHead>
-          <TableHead>Temperature in C</TableHead>
-          <TableHead>Humidity Percentage</TableHead>
-          <TableHead>Pollution Percentage</TableHead>
+          <TableHead className="w-[110px] text-right">التاريخ</TableHead>
+          <TableHead className="text-right">جودة الهواء</TableHead>
+          <TableHead className="text-right">الحرارة سليزي</TableHead>
+          <TableHead className="text-right">نسبة الرطوبة</TableHead>
+          <TableHead className="text-right">نسبة التوث</TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>

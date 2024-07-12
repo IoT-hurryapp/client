@@ -26,9 +26,9 @@ const LocationsList = ({
                     {location.name}
                   </p>
                 </div>
-                {/* <p className="mt-1 truncate text-xs leading-5 text-gray-500 dark:text-gray-400">
-                  <span>{location.notifications.length}</span> notifications
-                </p> */}
+                <p className="mt-1 truncate text-xs leading-5 text-gray-500 dark:text-gray-400">
+                  <span>{location.notifications.length}</span> الاشعارات
+                </p>
               </Link>
               <div>
                 {location.devices.length < 1 && (
@@ -42,7 +42,7 @@ const LocationsList = ({
                         setOpenAttachDeviceDialog(true);
                     }}
                   >
-                    Add device
+                    اضف جهازا
                   </Button>
                 )}
               </div>
@@ -57,13 +57,13 @@ const LocationsList = ({
                       <div className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
                     </div>
                     <p className="text-xs leading-5 text-gray-500 dark:text-gray-400">
-                      Online devices
+                      الاجهزة المتصلة
                       <span> ({location.devices.length})</span>
                     </p>
                   </>
                 ) : (
                   <p className="text-xs leading-5 text-gray-500 dark:text-gray-400">
-                    Attach a device
+                    لا توجد اجهزة متصلة
                   </p>
                 )}
               </div>

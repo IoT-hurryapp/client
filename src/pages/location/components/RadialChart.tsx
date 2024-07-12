@@ -14,7 +14,7 @@ import {
   CardContent,
 } from "../../../components/ui/card";
 import { DataReadingKey } from "../../../interfaces/global";
-import dataReadingColor from "../../../helper/getReadingColor";
+import { readingColor, readingStatus } from "../../../helper/reading";
 const chartConfig = {
   visitors: {
     label: "Data reading",
@@ -34,7 +34,7 @@ export function RadialChart({
   readKey: DataReadingKey;
 }) {
   const chartData = [
-    { browser: "chrome", value, fill: dataReadingColor(value, readKey) },
+    { browser: "chrome", value, fill: readingColor(value, readKey) },
   ];
   return (
     <Card className="flex flex-col">
@@ -94,6 +94,14 @@ export function RadialChart({
             </PolarRadiusAxis>
           </RadialBarChart>
         </ChartContainer>
+        <p
+          className={`w-fit mx-auto mb-4 text-center font-bold rounded-sm opacity-70 p-2 bg-[${readingColor(
+            value,
+            readKey
+          )}]`}
+        >
+          {readingStatus(value, readKey)}
+        </p>
       </CardContent>
     </Card>
   );

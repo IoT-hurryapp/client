@@ -6,11 +6,11 @@ const CallToAction = () => {
     <>
       <Link to="/register">
         <Button className="bg-[#16a34a] hover:bg-[#168e42]">
-          Get started for free
+          ابد الان مجانا !
         </Button>
       </Link>
       <Link to="/locations/public">
-        <Button variant={"outline"}>See public devices</Button>
+        <Button variant={"outline"}>او تصفح الاجهزة العامة</Button>
       </Link>
     </>
   );

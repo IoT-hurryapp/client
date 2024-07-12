@@ -13,6 +13,8 @@ import Location from "./pages/location";
 import Footer from "./components/Footer";
 import PublicLocations from "./pages/locations/public";
 import PublicLocation from "./pages/location/public";
+import { DirectionProvider } from "@radix-ui/react-direction";
+import NotFound from "./components/NotFound";
 function App() {
   const user = getUserQuery();
   if (user.isLoading) {
@@ -21,37 +23,42 @@ function App() {
   const isLoggedIn = !!user.data;
 
   return (
-    <ThemeProvider defaultTheme="light">
-      <Header
-        username={user.data?.username || ""}
-        notifications={user.data?.notifications || []}
-      />
-      <Toaster />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route
-          path="/locations"
-          element={isLoggedIn ? <Locations /> : <Navigate to="/login" />}
+    <DirectionProvider dir="rtl">
+      <ThemeProvider defaultTheme="light">
+        <Header
+          username={user.data?.username || ""}
+          notifications={user.data?.notifications || []}
         />
-        <Route path="/locations/public" element={<PublicLocations />} />
-        <Route path="/locations/public/:id" element={<PublicLocation />} />
-        <Route
-          path="/locations/:id"
-          element={isLoggedIn ? <Location /> : <Navigate to="/login" />}
-        />
-        <Route path="/">
+        <Toaster />
+        <Routes>
+          <Route path="/" element={<Home />} />
           <Route
-            path="login"
-            element={!isLoggedIn ? <Login /> : <Navigate to="/locations" />}
+            path="/locations"
+            element={isLoggedIn ? <Locations /> : <Navigate to="/login" />}
           />
+          <Route path="/locations/public" element={<PublicLocations />} />
+          <Route path="/locations/public/:id" element={<PublicLocation />} />
           <Route
-            path="register"
-            element={!isLoggedIn ? <Register /> : <Navigate to="/locations" />}
+            path="/locations/:id"
+            element={isLoggedIn ? <Location /> : <Navigate to="/login" />}
           />
-        </Route>
-      </Routes>
-      <Footer />
-    </ThemeProvider>
+          <Route path="/">
+            <Route
+              path="login"
+              element={!isLoggedIn ? <Login /> : <Navigate to="/locations" />}
+            />
+            <Route
+              path="register"
+              element={
+                !isLoggedIn ? <Register /> : <Navigate to="/locations" />
+              }
+            />
+          </Route>
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+        <Footer />
+      </ThemeProvider>
+    </DirectionProvider>
   );
 }
 

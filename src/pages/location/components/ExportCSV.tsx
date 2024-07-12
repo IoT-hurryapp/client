@@ -22,7 +22,7 @@ const ExportCSV = ({
         filename={filename}
         target="_blank"
       >
-        <Button className="w-full">Download me</Button>
+        <Button className="w-full">قم بتحميلي</Button>
       </CSVLink>
     )
   );

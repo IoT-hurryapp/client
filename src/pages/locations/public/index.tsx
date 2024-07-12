@@ -18,9 +18,7 @@ const Locations = () => {
   return (
     <section className="pt-[10rem] container min-h-[100vh]">
       <div className="w-[95%]">
-        <h1 className="text-xl font-bold mb-4">
-          Browse the available public locations !
-        </h1>
+        <h1 className="text-xl font-bold mb-4">تصفح الاجهزة العامة من حولك</h1>
         <Separator className="mt-8" />
         <div className="space-y-4 mt-3">
           <ul>
@@ -43,14 +41,14 @@ const Locations = () => {
                     </Link>
                   </div>
                 </div>
-                <Link key={location.id} to={`/locations/${location.id}`}>
+                <Link key={location.id} to={`/locations/public/${location.id}`}>
                   <div className="shrink-0 flex flex-row items-end gap-5">
                     <div className="mt-1 flex items-center gap-x-1.5 h-full">
                       <div className="flex-none rounded-full bg-emerald-500/20 p-1 animate-pulse">
                         <div className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
                       </div>
                       <p className="text-xs leading-5 text-gray-500 dark:text-gray-400">
-                        Online devices
+                        الاجهزة المتصلة
                         <span> ({1})</span>
                       </p>
                     </div>
@@ -58,6 +56,13 @@ const Locations = () => {
                 </Link>
               </li>
             ))}
+            {!publicLocations.data?.length && (
+              <li>
+                <span className="text-sm font-bold opacity-50">
+                  لا توجد مواقع عامة حاليا
+                </span>
+              </li>
+            )}
           </ul>
         </div>
       </div>

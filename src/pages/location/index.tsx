@@ -103,9 +103,7 @@ const Location = () => {
     <div className="container mx-auto px-4 md:px-6 py-8 pt-[10rem]">
       <div>
         <div className="w-full flex justify-between mb-3">
-          <h1 className="text-xl font-bold mb-4">
-            Real time statistics on the GO !
-          </h1>
+          <h1 className="text-xl font-bold mb-4">قراءات متعددة بشكل لحظي</h1>
           <SelectDevices
             selectDeviceId={setSelectedDevice}
             devicesList={location.data?.devices as any}
@@ -113,34 +111,98 @@ const Location = () => {
         </div>
         <Tabs defaultValue="radial" className="w-full">
           <TabsList className="grid grid-cols-2 w-[300px]">
-            <TabsTrigger value="radial">Radial</TabsTrigger>
-            <TabsTrigger value="analysis">Analysis</TabsTrigger>
+            <TabsTrigger value="radial">القراءات</TabsTrigger>
+            <TabsTrigger value="graph">الكراف</TabsTrigger>
           </TabsList>
           <TabsContent value="radial" className="w-full">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 my-4">
-              <RadialChart
-                value={realTimeData?.AQI || 0}
-                readType={"AQI"}
-                readKey="AQI"
-              />
-              <RadialChart
-                value={realTimeData?.dustPercentage || 0}
-                readType={"Pollution Percentage"}
-                readKey="dustPercentage"
-              />
-              <RadialChart
-                value={realTimeData?.temperatureC || 0}
-                readType={"Temperature °C"}
-                readKey="temperatureC"
-              />
-              <RadialChart
-                value={realTimeData?.humidity || 0}
-                readType={"Humidity Percentage"}
-                readKey="humidity"
-              />
+              <div>
+                <RadialChart
+                  value={realTimeData?.AQI || 0}
+                  readType={"فهرس جودة الهواء"}
+                  readKey="AQI"
+                />
+                <div className="flex items justify-center gap-2 p-3 m-0">
+                  <p className="bg-emerald-500 p-1 rounded-sm text-sm font-bold text-white">
+                    0-100
+                  </p>
+                  <p className="bg-yellow-500 p-1 rounded-sm text-sm font-bold text-white">
+                    101-200
+                  </p>
+                  <p className="bg-red-500 p-1 rounded-sm text-sm font-bold text-white">
+                    201-300
+                  </p>
+                  <p className="bg-red-600 p-1 rounded-sm text-sm font-bold text-white">
+                    301-500
+                  </p>
+                </div>
+              </div>
+              <div>
+                <RadialChart
+                  value={realTimeData?.dustPercentage || 0}
+                  readType={"نسبة التلوث"}
+                  readKey="dustPercentage"
+                />
+                <div className="flex items justify-center gap-2 p-3 m-0">
+                  <p className="bg-emerald-500 p-1 rounded-sm text-sm font-bold text-white">
+                    0-100
+                  </p>
+                  <p className="bg-yellow-500 p-1 rounded-sm text-sm font-bold text-white">
+                    101-200
+                  </p>
+                  <p className="bg-red-500 p-1 rounded-sm text-sm font-bold text-white">
+                    201-300
+                  </p>
+                  <p className="bg-red-600 p-1 rounded-sm text-sm font-bold text-white">
+                    301-500
+                  </p>
+                </div>
+              </div>
+              <div>
+                <RadialChart
+                  value={realTimeData?.temperatureC || 0}
+                  readType={"الحرارة °C"}
+                  readKey="temperatureC"
+                />
+                <div className="flex items justify-center gap-2 p-3 m-0">
+                  <p className="bg-sky-400 p-1 rounded-sm text-sm font-bold text-white">
+                    0
+                  </p>
+                  <p className="bg-emerald-500 p-1 rounded-sm text-sm font-bold text-white">
+                    0-16
+                  </p>
+                  <p className="bg-yellow-500 p-1 rounded-sm text-sm font-bold text-white">
+                    17-32
+                  </p>
+                  <p className="bg-red-500 p-1 rounded-sm text-sm font-bold text-white">
+                    40-60
+                  </p>
+                </div>
+              </div>
+              <div>
+                <RadialChart
+                  value={realTimeData?.humidity || 0}
+                  readType={"نسبة الرطوبة"}
+                  readKey="humidity"
+                />
+                <div className="flex items justify-center gap-2 p-3 m-0">
+                  <p className="bg-emerald-500 p-1 rounded-sm text-sm font-bold text-white">
+                    0-25
+                  </p>
+                  <p className="bg-yellow-500 p-1 rounded-sm text-sm font-bold text-white">
+                    25-50
+                  </p>
+                  <p className="bg-red-500 p-1 rounded-sm text-sm font-bold text-white">
+                    50-75
+                  </p>
+                  <p className="bg-red-600 p-1 rounded-sm text-sm font-bold text-white">
+                    75-100
+                  </p>
+                </div>
+              </div>
             </div>
           </TabsContent>
-          <TabsContent value="analysis">
+          <TabsContent value="graph">
             <AreaChart
               chartKey={chartKey}
               setChartKey={setChartKey}
@@ -165,14 +227,14 @@ const Location = () => {
           <Dialog onOpenChange={setIsDownloadReady} open={isDownloadReady}>
             <DialogTrigger asChild>
               <Button className="sr-only" variant="default">
-                Add Locations
+                حمل الفايل
               </Button>
             </DialogTrigger>
             <DialogContent className="sm:max-w-[425px]">
               <DialogHeader>
-                <DialogTitle>Download</DialogTitle>
+                <DialogTitle>حمل الفايل</DialogTitle>
                 <DialogDescription>
-                  Your download file is ready !
+                  رابط التحميل الخاص بك جاهز
                 </DialogDescription>
               </DialogHeader>
               <div className="grid gap-4 py-4">
@@ -187,7 +249,7 @@ const Location = () => {
           </Dialog>
           <Card className="w-full">
             <CardHeader className="w-full flex flex-row items-center justify-between">
-              <CardTitle>History</CardTitle>
+              <CardTitle>تاريخ القراءات</CardTitle>
               <Button
                 onClick={dataToCSV}
                 size="sm"
@@ -196,7 +258,7 @@ const Location = () => {
               >
                 <File className="h-3.5 w-3.5" />
                 <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
-                  Export CSV
+                  صدر CSV
                 </span>
               </Button>
             </CardHeader>
@@ -209,10 +271,10 @@ const Location = () => {
                   variant={"outline"}
                   disabled={page === 1}
                 >
-                  Prev
+                  السابق
                 </Button>
                 <span className="text-sm font-medium opacity-50">
-                  Current page {page}/{analysisData.data?.pages}
+                  الصفحة الحالية {page}/{analysisData.data?.pages}
                 </span>
                 <Button
                   onClick={() => setPage((prev) => prev + 1)}
@@ -220,7 +282,7 @@ const Location = () => {
                   variant={"outline"}
                   disabled={page === analysisData.data?.pages}
                 >
-                  Next
+                  التالي
                 </Button>
               </div>
             </CardContent>

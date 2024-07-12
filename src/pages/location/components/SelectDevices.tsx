@@ -19,11 +19,11 @@ export function SelectDevices({
   return (
     <Select onValueChange={(value) => selectDeviceId(value)}>
       <SelectTrigger className="w-[180px]">
-        <SelectValue placeholder="Select a device" />
+        <SelectValue placeholder="اخترا جهازا" />
       </SelectTrigger>
       <SelectContent>
         <SelectGroup>
-          <SelectLabel>Devices</SelectLabel>
+          <SelectLabel>الاجهزة المتاحة</SelectLabel>
           {devicesList?.map((device) => (
             <SelectItem key={device.id} value={device.id}>
               #{device.id}

@@ -38,20 +38,20 @@ const AddLocationDialog = ({
   return (
     <Dialog onOpenChange={onOpenChange} open={open}>
       <DialogContent className="sm:max-w-[425px]">
-        <DialogHeader>
-          <DialogTitle>Add location</DialogTitle>
+        <DialogHeader className="ml-auto">
+          <DialogTitle className="ml-auto">اضف موقعا</DialogTitle>
           <DialogDescription>
-            select your location name and the devices avilable in it
+            اضف اسم موقعك و اضف بعدها الاجهزة الخاصة بك
           </DialogDescription>
         </DialogHeader>
         <div className="grid gap-4 py-4">
           <div className="grid items-center gap-4">
             <Label htmlFor="title" className="">
-              Title
+              العنوان
             </Label>
             <Input
               id="title"
-              placeholder="enter a location name"
+              placeholder="اضف اسم الموقع"
               value={newLocationName}
               onChange={(e) => setNewLocationName(e.target.value)}
               className="col-span-3"
@@ -59,7 +59,7 @@ const AddLocationDialog = ({
           </div>
           <div className="grid grid-cols-2 items-center gap-4 relative">
             <div>
-              <Label htmlFor="devices">Devices List</Label>
+              <Label htmlFor="devices">الاجهزة</Label>
               <SelectDevice
                 deviceIdToAttach={deviceIdToAttach}
                 list={getDevices.data || []}
@@ -67,7 +67,7 @@ const AddLocationDialog = ({
               />
             </div>
             <div>
-              <Label>or use the Qr code</Label>
+              <Label>او استخدم qr code</Label>
               <br />
               <QrDialog
                 scannedResult={deviceIdToAttach}

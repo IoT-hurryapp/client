@@ -50,9 +50,9 @@ const AreaChart = ({ data, config, chartKey, setChartKey }: any) => {
     <Card className="my-4">
       <CardHeader className="flex flex-row items-center justify-between">
         <div>
-          <CardTitle>Area Chart</CardTitle>
+          <CardTitle>كراف بياني</CardTitle>
           <CardDescription className="mt-2">
-            Select a reading and see its data
+            اخترا حساسا لعرض بياناته
           </CardDescription>
         </div>
         <SelectSensor chartKey={chartKey} setChartKey={setChartKey} />
@@ -108,18 +108,6 @@ const AreaChart = ({ data, config, chartKey, setChartKey }: any) => {
           </ShadCnAreaChart>
         </ChartContainer>
       </CardContent>
-      <CardFooter>
-        <div className="flex w-full items-start gap-2 text-sm">
-          {/* <div className="grid gap-2">
-            <div className="flex items-center gap-2 font-medium leading-none">
-              Trending up by 5.2% this month <TrendingUp className="h-4 w-4" />
-            </div>
-            <div className="flex items-center gap-2 leading-none text-muted-foreground">
-              January - June 2024
-            </div>
-          </div> */}
-        </div>
-      </CardFooter>
     </Card>
   );
 };
@@ -136,22 +124,22 @@ const SelectSensor = ({
       onValueChange={(value) => setChartKey(value)}
     >
       <SelectTrigger className="w-[180px]">
-        <SelectValue placeholder="Select a sensor" />
+        <SelectValue placeholder="اختر حساسا" />
       </SelectTrigger>
       <SelectContent>
         <SelectGroup>
-          <SelectLabel>Sensors</SelectLabel>
+          <SelectLabel>الحساسات</SelectLabel>
           <SelectItem key={"aqi"} value={"AQI"}>
-            Air quality index
+            فهرس جودة الهواء
           </SelectItem>
           <SelectItem key={"dustPercentage"} value={"dustPercentage"}>
-            Pollution Percentage
+            نسبة التلوث
           </SelectItem>
           <SelectItem key={"temperatureC"} value={"temperatureC"}>
-            Temperature
+            الحرارة
           </SelectItem>
           <SelectItem key={"humidity"} value={"humidity"}>
-            Humidity
+            الرطوبة
           </SelectItem>
         </SelectGroup>
       </SelectContent>

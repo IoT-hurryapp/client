@@ -33,6 +33,7 @@ import { toast } from "./ui/use-toast";
 import { INotification } from "../interfaces/global";
 import { Socket, io } from "socket.io-client";
 import jsCookie from "js-cookie";
+import Loader from "./Loader";
 const Header = ({
   username,
   notifications,
@@ -41,8 +42,10 @@ const Header = ({
   notifications: INotification[];
 }) => {
   const logoutMutation = useLogoutMutation();
+  const [isLogoutLoading, setIsLogoutLoading] = useState(false);
   const navigate = useNavigate();
   const handleLogout = async () => {
+    setIsLogoutLoading(true);
     try {
       const res = await logoutMutation.mutateAsync({});
       if (res.success) {
@@ -54,6 +57,7 @@ const Header = ({
           navigate("/");
         }, 1000);
       }
+      setIsLogoutLoading(false);
     } catch (err) {
       console.log(err);
       toast({
@@ -98,13 +102,20 @@ const Header = ({
     return () => {
       socketRef.current?.off("connect", () => console.log("connected"));
       socketRef.current?.off("disconnect", () => console.log("disconnected"));
+      socketRef.current?.off("notification", () =>
+        console.log("disconnect data")
+      );
     };
   }, [username]);
+  if (isLogoutLoading) {
+    return <Loader />;
+  }
   return (
     <header className="absolute inset-x-0 top-0 z-50">
       <nav
         aria-label="Global"
         className="container flex items-center justify-between p-6 lg:px-8"
+        dir="ltr"
       >
         <div className="flex lg:flex-1">
           <Link to="/" className={`-m-1.5 p-1.5`}>
@@ -179,7 +190,7 @@ const Header = ({
             </>
           ) : (
             <Link to={"/login"}>
-              <Button variant={"link"}>Login</Button>
+              <Button variant={"link"}>سجل الدخول</Button>
             </Link>
           )}
           <ModeToggle />
@@ -209,6 +220,7 @@ const Notifications = ({
                 {notifications.length > 0 ? (
                   notifications.map((notification) => (
                     <NotificationItem
+                      key={notification.id}
                       date={notification.createdAt}
                       color="red"
                       status={notification.status}
@@ -220,7 +232,7 @@ const Notifications = ({
                 ) : (
                   <li>
                     <span className="text-sm font-bold opacity-50">
-                      You don't have any notifications now
+                      لا تمتلك اي شعارات في اللحظة
                     </span>
                   </li>
                 )}
@@ -243,18 +255,18 @@ const Dropdown = ({
     <DropdownMenu>
       <DropdownMenuTrigger>{username || "Login"}</DropdownMenuTrigger>
       <DropdownMenuContent>
-        <DropdownMenuLabel>My Account</DropdownMenuLabel>
+        <DropdownMenuLabel>حسابي</DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuItem>
-          <Link to={"/locations"}>Locations</Link>
+          <Link to={"/locations"}>المواقع</Link>
         </DropdownMenuItem>
         <DropdownMenuItem>
-          <Link to={"/locations/public"}>Public locations</Link>
+          <Link to={"/locations/public"}>المواقع العامة</Link>
         </DropdownMenuItem>
         <DropdownMenuSeparator />
         <DropdownMenuItem>
           <Button onClick={handleLogout} variant={"destructive"}>
-            Logout
+            سجل الخروج
           </Button>
         </DropdownMenuItem>
       </DropdownMenuContent>

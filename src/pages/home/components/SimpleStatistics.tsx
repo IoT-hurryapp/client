@@ -17,13 +17,13 @@ export default function Component() {
     socketRef.current.on("connect", () => console.log("socket connected yay"));
     socketRef.current.on("disconnect", () => console.log("disconnected"));
     socketRef.current.on("data", (data: IData) => {
-      console.log("data from socket", data);
       setRealTimeData(data);
     });
 
     return () => {
       socketRef.current?.off("connect", () => console.log("connected"));
       socketRef.current?.off("disconnect", () => console.log("disconnected"));
+      socketRef.current?.off("data", () => console.log("disconnect data"));
     };
   }, []);
   return (
@@ -31,11 +31,11 @@ export default function Component() {
       <div className="space-y-8">
         <div className="text-center">
           <h1 className="text-3xl md:text-4xl font-bold">
-            Air Quality Around You
+            جودة الهواء من حولك
             <span> (Baghdad)</span>
           </h1>
           <p className="text-muted-foreground mt-2 max-w-md mx-auto">
-            An overview of the key air quality metrics for your location.
+            لمحة بسيطة عن جودة الهواء الموجودة حاليا في موقعك
           </p>
         </div>
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 justify-center gap-10">
@@ -47,7 +47,7 @@ export default function Component() {
                 °C
               </div>
               <p className="text-muted-foreground text-sm mt-2 min-w-fit text-center text-nowrap">
-                Temperature
+                الحرارة
               </p>
             </CardContent>
           </Card>
@@ -58,7 +58,7 @@ export default function Component() {
                 <NumberTicker value={realTimeData?.humidity || 1} />%
               </div>
               <p className="text-muted-foreground text-sm mt-2 min-w-fit text-center text-wrap">
-                Humidity
+                الرطوبة
               </p>
             </CardContent>
           </Card>
@@ -69,7 +69,7 @@ export default function Component() {
                 <NumberTicker value={realTimeData?.dustPercentage || 1} />%
               </div>
               <p className="text-muted-foreground text-sm mt-2 min-w-fit text-center text-nowrap">
-                Dust percentage
+                نسبة التلوث
               </p>
             </CardContent>
           </Card>
@@ -80,7 +80,7 @@ export default function Component() {
                 <NumberTicker value={realTimeData?.AQI || 1} />
               </div>
               <p className="text-muted-foreground text-sm mt-2 min-w-fit text-center text-nowrap">
-                Air quality index
+                فهرس جودة الهواء
               </p>
             </CardContent>
           </Card>
