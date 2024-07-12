@@ -18,7 +18,7 @@ export default function Home() {
             className="relative left-[calc(50%-11rem)] aspect-[1155/678] w-[36.125rem] -translate-x-1/2 rotate-[30deg] bg-gradient-to-tr from-emerald-200 dark:from-emerald-800 dark:to-blue-800 to-blue-300 opacity-30 sm:left-[calc(50%-30rem)] sm:w-[72.1875rem]"
           />
         </div>
-        <div className="mx-auto max-w-2xl py-32 sm:py-48 lg:py-56 lg:pb-20 mb-4">
+        <div className="mx-auto max-w-2xl py-32 sm:py-48 lg:py-56 lg:pb-5 mb-4">
           <div className="hidden sm:mb-8 sm:flex sm:justify-center">
             <div className="relative rounded-full px-3 py-1 text-sm leading-6 text-gray-600 dark:text-gray-400 ring-1 ring-gray-900/10 hover:ring-gray-900/20">
               نعلن عن منصتنا التي تستخدم انترنيت الاشياء من اجل بيئة سليمة.
@@ -38,22 +38,22 @@ export default function Home() {
             </div>
           </div>
         </div>
-        <div className="flex items-center flex-col mt-[11rem]">
+        {/* <div className="flex items-center flex-col mt-[11rem]">
           <h1 className="text-3xl md:text-4xl font-bold">
             كيف تستخدم المنصة ؟
           </h1>
           <p className="text-muted-foreground mt-2 max-w-md mx-auto">
             مزودة بميزات قوية من اجل ضمان بيئة سليمة.
           </p>
-        </div>
-        <div className="container flex justify-center w-full scale-125 my-24">
+        </div> */}
+        {/* <div className="container flex justify-center w-full scale-125 my-24">
           <NeonGradientCard className="max-w-sm items-center justify-center text-center w-full">
             <iframe
               className="aspect-video w-full"
               src="https://www.youtube.com/embed/tgbNymZ7vqY?autoplay=1&mute=1"
             ></iframe>
           </NeonGradientCard>
-        </div>
+        </div> */}
         <ArrowPointing />
 
         <div
