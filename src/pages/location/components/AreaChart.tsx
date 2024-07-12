@@ -28,29 +28,12 @@ import {
   SelectTrigger,
   SelectValue,
 } from "../../../components/ui/select";
-// const chartData = [
-//   { month: "January", desktop: 186, mobile: 80 },
-//   { month: "February", desktop: 305, mobile: 200 },
-// ];
-
-// const chartConfig = {
-//   desktop: {
-//     label: "Desktop",
-//     color: "hsl(var(--chart-1))",
-//   },
-//   mobile: {
-//     label: "Mobile",
-//     color: "hsl(var(--chart-2))",
-//   },
-// } satisfies ChartConfig;
 const AreaChart = ({ data, config, chartKey, setChartKey }: any) => {
-  console.log(data);
-
   return (
     <Card className="my-4">
       <CardHeader className="flex flex-row items-center justify-between">
         <div>
-          <CardTitle>كراف بياني</CardTitle>
+          <CardTitle>المخطط البياني</CardTitle>
           <CardDescription className="mt-2">
             اخترا حساسا لعرض بياناته
           </CardDescription>

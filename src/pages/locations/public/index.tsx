@@ -1,8 +1,8 @@
 import { Separator } from "../../../components/ui/separator";
 import { getPublicLocationsQuery } from "../../../services/queries/locations";
-import { Loader } from "lucide-react";
 import { toast } from "../../../components/ui/use-toast";
 import { Link } from "react-router-dom";
+import Loader from "../../../components/Loader";
 const Locations = () => {
   const publicLocations = getPublicLocationsQuery();
   if (publicLocations.isLoading) {

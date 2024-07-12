@@ -23,10 +23,10 @@ const QrDialog = ({
         <Button variant="outline">Open qr code</Button>
       </DialogTrigger>
       <DialogContent className="min-w-fit bg-none sm:max-w-[425px] min-h-[50vh]">
-        <DialogHeader>
-          <DialogTitle className="sr-only">Add location</DialogTitle>
+        <DialogHeader className="ml-auto mt-5">
+          <DialogTitle className="sr-only">اضف موقعا</DialogTitle>
           <DialogDescription className="sr-only">
-            select your device name
+            اختر موقعك و من ثم اضف اليه جهازك
           </DialogDescription>
         </DialogHeader>
         <QrReader

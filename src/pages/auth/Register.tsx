@@ -13,13 +13,16 @@ import { toast } from "../../components/ui/use-toast";
 import { useRegisterMutation } from "../../services/queries/auth";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
+import Loader from "../../components/Loader";
 const SignUp = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
   const registerMutation = useRegisterMutation();
   const handleSubmit = async () => {
+    setIsLoading(true);
     const emailRegexp = new RegExp(
       /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
     );
@@ -53,7 +56,9 @@ const SignUp = () => {
           navigate("/locations");
         }, 1200);
       }
+      setIsLoading(false);
     } catch (err) {
+      setIsLoading(false);
       toast({
         title: "خطا",
         description: "حصل خطا اثناء انشاء الحساب",
@@ -61,6 +66,9 @@ const SignUp = () => {
       });
     }
   };
+  if (isLoading) {
+    return <Loader />;
+  }
   return (
     <div className="container h-[100vh] flex items-center justify-center">
       <Card className="md:min-w-[45vw] lg:min-w-[35vw] max-w-sm">

@@ -74,7 +74,7 @@ const LocationsList = ({
       {locations.length < 1 && (
         <li>
           <span className="text-sm font-semibold opacity-70">
-            There is no locations avilable
+            لا توجد لديك مواقع حاليا اضف الان !
           </span>
         </li>
       )}

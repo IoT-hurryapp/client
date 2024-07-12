@@ -5,7 +5,6 @@ import {
   useAttachDeviceMutation,
   useCreateLocationMutation,
 } from "../../services/queries/locations";
-import { Loader } from "lucide-react";
 import { toast } from "../../components/ui/use-toast";
 import LocationsList from "./components/LocationList";
 const AddLocationDialog = lazy(() => import("./components/AddLocationDialog"));
@@ -13,6 +12,7 @@ const AttachDeviceDialog = lazy(
   () => import("./components/AttachDeviceDialog")
 );
 import LoadWhenNeeded from "../../components/LoadWhenNeeded";
+import Loader from "../../components/Loader";
 const Locations = () => {
   const getLocations = getLocationsQuery();
   const attachDeviceMutation = useAttachDeviceMutation();

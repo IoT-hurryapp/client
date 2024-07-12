@@ -11,9 +11,9 @@ import {
 import { Input } from "../../../components/ui/input";
 import { Label } from "../../../components/ui/label";
 import { getDevicesQuery } from "../../../services/queries/locations";
-import { Loader } from "lucide-react";
 import SelectDevice from "./SelectDevice";
 import QrDialog from "./QrDialog";
+import Loader from "../../../components/Loader";
 const AddLocationDialog = ({
   newLocationName,
   deviceIdToAttach,
@@ -38,7 +38,7 @@ const AddLocationDialog = ({
   return (
     <Dialog onOpenChange={onOpenChange} open={open}>
       <DialogContent className="sm:max-w-[425px]">
-        <DialogHeader className="ml-auto">
+        <DialogHeader className="ml-auto mt-5">
           <DialogTitle className="ml-auto">اضف موقعا</DialogTitle>
           <DialogDescription>
             اضف اسم موقعك و اضف بعدها الاجهزة الخاصة بك

@@ -112,7 +112,7 @@ const Location = () => {
         <Tabs defaultValue="radial" className="w-full">
           <TabsList className="grid grid-cols-2 w-[300px]">
             <TabsTrigger value="radial">القراءات</TabsTrigger>
-            <TabsTrigger value="graph">الكراف</TabsTrigger>
+            <TabsTrigger value="graph">المخطط البياني</TabsTrigger>
           </TabsList>
           <TabsContent value="radial" className="w-full">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 my-4">
@@ -231,8 +231,8 @@ const Location = () => {
               </Button>
             </DialogTrigger>
             <DialogContent className="sm:max-w-[425px]">
-              <DialogHeader>
-                <DialogTitle>حمل الفايل</DialogTitle>
+              <DialogHeader className="ml-auto mt-5">
+                <DialogTitle className="ml-auto">حمل الفايل</DialogTitle>
                 <DialogDescription>
                   رابط التحميل الخاص بك جاهز
                 </DialogDescription>

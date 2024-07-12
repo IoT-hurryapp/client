@@ -38,7 +38,7 @@ const AddLocationDialog = ({
         <Button variant="default">اضف جهازا</Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
-        <DialogHeader className="ml-auto">
+        <DialogHeader className="ml-auto mt-5">
           <DialogTitle className="ml-auto">اضف جهازا</DialogTitle>
           <DialogDescription>اضف جهازك الى هذا الموقع</DialogDescription>
         </DialogHeader>

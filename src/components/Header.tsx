@@ -60,6 +60,7 @@ const Header = ({
       setIsLogoutLoading(false);
     } catch (err) {
       console.log(err);
+      setIsLogoutLoading(false);
       toast({
         title: "Error !",
         description: "Error while Logging out!",
