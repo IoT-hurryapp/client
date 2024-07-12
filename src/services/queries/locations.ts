@@ -1,5 +1,5 @@
 import { keepPreviousData, useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { createLocation, getLocations, getLocation, getDevices, attachDevice, getDeviceData } from "../api/locations";
+import { createLocation, getLocations, getLocation, getDevices, attachDevice, getDeviceData, getPublicLocations } from "../api/locations";
 import { DEVICES_KEY, LOCATION_KEY, DEVICES_DATA_KEY, LOCATIONS_KEY, PUBLIC_LOCATIONS_KEY } from "../keys";
 import { ILocation } from "../../interfaces/global";
 interface IGetLocationData {
@@ -44,10 +44,10 @@ export const getLocationsQuery = () => {
         })
 }
 export const getPublicLocationsQuery = () => {
-    return useQuery<ILocation[]>
+    return useQuery
         ({
             queryKey: [PUBLIC_LOCATIONS_KEY],
-            queryFn: async () => await getLocations(),
+            queryFn: async () => await getPublicLocations(),
         })
 }
 export const getLocationQuery = (locationId: string) => {

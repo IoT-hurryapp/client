@@ -12,6 +12,7 @@ import Locations from "./pages/locations";
 import Location from "./pages/location";
 import Footer from "./components/Footer";
 import PublicLocations from "./pages/locations/public";
+import PublicLocation from "./pages/location/public";
 function App() {
   const user = getUserQuery();
   if (user.isLoading) {
@@ -33,6 +34,7 @@ function App() {
           element={isLoggedIn ? <Locations /> : <Navigate to="/login" />}
         />
         <Route path="/locations/public" element={<PublicLocations />} />
+        <Route path="/locations/public/:id" element={<PublicLocation />} />
         <Route
           path="/locations/:id"
           element={isLoggedIn ? <Location /> : <Navigate to="/login" />}

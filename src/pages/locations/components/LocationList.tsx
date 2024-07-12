@@ -26,9 +26,9 @@ const LocationsList = ({
                     {location.name}
                   </p>
                 </div>
-                <p className="mt-1 truncate text-xs leading-5 text-gray-500 dark:text-gray-400">
+                {/* <p className="mt-1 truncate text-xs leading-5 text-gray-500 dark:text-gray-400">
                   <span>{location.notifications.length}</span> notifications
-                </p>
+                </p> */}
               </Link>
               <div>
                 {location.devices.length < 1 && (

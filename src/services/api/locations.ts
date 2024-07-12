@@ -15,7 +15,7 @@ export const getLocations = async () => {
     return (await axios.get<ILocation[]>(`/locations`)).data;
 };
 export const getPublicLocations = async () => {
-    return (await axios.get<ILocation[]>(`/locations`)).data;
+    return (await axios.get<Array<{ id: number, name: string }>>(`/public/devices`)).data;
 };
 export const createLocation = async (name: string) => {
     return (

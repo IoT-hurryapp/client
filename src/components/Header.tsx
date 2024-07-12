@@ -82,8 +82,6 @@ const Header = ({
       );
       socketRef.current.on("disconnect", () => console.log("disconnected"));
       socketRef.current.on("notification", (data: INotification) => {
-        console.log(data);
-
         setIncomingNotifications((prev) => [...prev, data]);
         toast({
           title: data.location.name,
