@@ -144,23 +144,23 @@ const Header = ({
                   {username ? (
                     <div className="flex flex-col gap-3">
                       <div className="flex w-full justify-between pb-2 border-b">
-                        <p className="text-xl">My Account</p>
+                        <p className="text-xl">حسابي</p>
                         <Notifications notifications={notifications} />
                       </div>
                       <ul className="flex flex-col gap-2 mt-2">
                         <li className="hover:text-blue-500 hover:underline">
-                          <Link to={"/locations"}>Locations</Link>
+                          <Link to={"/locations"}>المواقع</Link>
                         </li>
 
                         <li className="hover:text-blue-500 hover:underline">
-                          <Link to={"/locations/public"}>Public locations</Link>
+                          <Link to={"/locations/public"}>المواقع العامة</Link>
                         </li>
                         <li>
                           <Button
                             onClick={handleLogout}
                             variant={"destructive"}
                           >
-                            logout
+                            تسجيل خروج
                           </Button>
                         </li>
                       </ul>
@@ -171,7 +171,7 @@ const Header = ({
                         to="/login"
                         className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
                       >
-                        Log in
+                        سجل دخول
                       </Link>
                     </div>
                   )}
@@ -278,7 +278,6 @@ const Dropdown = ({
     </DropdownMenu>
   );
 };
-
 export function NotificationItem({
   status,
   children,

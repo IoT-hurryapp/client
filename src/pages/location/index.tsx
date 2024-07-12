@@ -258,7 +258,7 @@ const Location = () => {
               >
                 <File className="h-3.5 w-3.5" />
                 <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
-                  صدر CSV
+                  تصدير CSV
                 </span>
               </Button>
             </CardHeader>

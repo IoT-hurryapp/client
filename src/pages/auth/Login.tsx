@@ -12,12 +12,14 @@ import { useState } from "react";
 import { toast } from "../../components/ui/use-toast";
 import { useLoginMutation } from "../../services/queries/auth";
 import { useNavigate, Link } from "react-router-dom";
+import Loader from "../../components/Loader";
 
 const Login = () => {
   const [email, setEmail] = useState<string>("");
   const navigate = useNavigate();
   const [password, setPassword] = useState<string>("");
   const loginMutation = useLoginMutation();
+  const [isLoading, setIsLoading] = useState(false);
   const handleSubmit = async (e: any) => {
     e.preventDefault();
     const emailRegexp = new RegExp(
@@ -38,6 +40,7 @@ const Login = () => {
       });
     }
     try {
+      setIsLoading(true);
       const res = await loginMutation.mutateAsync({ email, password });
       if (res.success) {
         toast({
@@ -49,7 +52,9 @@ const Login = () => {
           navigate("/locations");
         }, 1200);
       }
+      setIsLoading(false);
     } catch (err: any) {
+      setIsLoading(false);
       toast({
         title: "خطا",
         description: "الرجاء تفقد الايميل و الباسوورد",
@@ -57,6 +62,11 @@ const Login = () => {
       });
     }
   };
+  console.log(isLoading);
+
+  if (isLoading) {
+    return <Loader />;
+  }
   return (
     <form
       onSubmit={handleSubmit}
